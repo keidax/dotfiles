@@ -6,6 +6,8 @@
     ~/.vimrc: vimrc
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases
+    ~/.dircolors: dircolors
+    ~/.gitconfig: gitconfig
 
 - shell:
       - [git submodule update --init --recursive, Installing submodules]
