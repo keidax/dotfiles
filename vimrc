@@ -4,6 +4,7 @@ Plug 'tpope/vim-sensible'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'zowens/vim-eclim'
 call plug#end()
 
 " Access colors present in 256 colorspace

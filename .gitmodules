@@ -17,3 +17,7 @@
 [submodule "vim-pandoc-syntax"]
     path = vim/plugged/vim-pandoc-syntax
     url = https://github.com/vim-pandoc/vim-pandoc-syntax
+
+[submodule "vim-eclim"]
+    path = vim/plugged/vim-eclim
+    url = https://github.com/zowens/vim-eclim.git
