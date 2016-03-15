@@ -1,6 +1,15 @@
 #!/bin/bash
 ## Prompt setup ##
 
+# Use nice symbols if our terminal can handle them, otherwise define fallbacks
+if ~/.dotfiles/bin/detect-utf.sh; then
+    CMD_SYMBOL=λ
+    TRIM_DIR_SYMBOL=…
+else
+    CMD_SYMBOL=$
+    TRIM_DIR_SYMBOL=..
+fi
+
 # Generate color variables
 # Using tput is more portable than writing the terminal codes directly.
 RESET=$(tput sgr0)
@@ -26,7 +35,7 @@ function jobscount(){
 
 # Trim working directory to last 3 dirs
 function trim_wd {
-    _TRIMMED_PWD=$(echo ${PWD} | sed "s&${HOME}&~&" | sed "s&.*./\([^/]*/[^/]*/[^/]*\)$&…/\1&")
+    _TRIMMED_PWD=$(echo ${PWD} | sed "s&${HOME}&~&" | sed "s&.*./\([^/]*/[^/]*/[^/]*\)$&${TRIM_DIR_SYMBOL}/\1&")
 }
 
 # Recalculate running jobs and working directory for every prompt
@@ -45,5 +54,5 @@ PROMPT_COMMAND=prompt_command
 #
 # Colors are wrapped in \[ \] escapes, because they are nonprintable.
 
-export PS1='\[$RED\]$([[ $? -eq 0 ]] || echo  "$? ")\[$GREEN\]\u \[$BLUE$BOLD\]$_TRIMMED_PWD \[$YELLOW\]$_NUM_JOBS\[$RESET\]λ '
+export PS1='\[$RED\]$([[ $? -eq 0 ]] || echo  "$? ")\[$GREEN\]\u \[$BLUE$BOLD\]$_TRIMMED_PWD \[$YELLOW\]$_NUM_JOBS\[$RESET\]$CMD_SYMBOL '
 

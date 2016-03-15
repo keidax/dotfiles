@@ -8,6 +8,9 @@
     ~/.profile: profile
     ~/.dircolors: dircolors
     ~/.gitconfig: gitconfig
+    ~/bin/detect_utf:
+        path: bin/detect-utf.sh
+        create: true
 
 - shell:
       - [git submodule update --init --recursive, Installing submodules]
