@@ -56,6 +56,19 @@ export EDITOR
 QT_STYLE_OVERRIDE=GTK+
 export QT_STYLE_OVERRIDE
 
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
 if [ "${DISTRO}" = "Arch" ]; then
     # Start an X server if we're logging in on TTY1
     ([ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]) && exec startx

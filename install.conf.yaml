@@ -6,7 +6,6 @@
     ~/.vimrc: vimrc
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases
-    ~/.bash_profile: bash_profile
     ~/.profile: profile
     ~/.dircolors: dircolors
     ~/.gitconfig: gitconfig
