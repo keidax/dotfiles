@@ -56,6 +56,14 @@ export EDITOR
 QT_STYLE_OVERRIDE=GTK+
 export QT_STYLE_OVERRIDE
 
+# Get ibus working
+GTK_IM_MODULE=ibus
+export GTK_IM_MODULE
+XMODIFIERS=@im=ibus
+export XMODIFIERS
+QT_IM_MODULE=ibus
+export QT_IM_MODULE
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
