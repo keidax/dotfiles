@@ -6,8 +6,10 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Source shell-related files
-for DOTFILE in ~/.dotfiles/shell/* ; do
+echo "Sourcing .bashrc"'!'
+
+# Source bash-specific files
+for DOTFILE in ~/.dotfiles/bash/{prompt,aliases} ; do
     [ -f "${DOTFILE}" ] && . "${DOTFILE}"
 done
 
