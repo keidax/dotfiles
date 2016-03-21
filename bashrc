@@ -14,7 +14,7 @@ for DOTFILE in ~/.dotfiles/bash/{prompt,aliases} ; do
 done
 
 # Get dircolors
-eval $(dircolors ~/.dircolors)
+eval "$(dircolors ~/.dircolors)"
 
 if [[ $TERM != "*dvtm*" && -z $_NESTED ]]; then
     export _NESTED="1"

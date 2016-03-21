@@ -26,7 +26,7 @@ BOLD=$(tput bold)
 function jobscount(){
     stopped_cnt=$(jobs -s | wc -l)
     running_cnt=$(jobs -r | wc -l)
-    if [ $stopped_cnt -eq 0 -a $running_cnt -eq 0 ]; then
+    if [ "$stopped_cnt" -eq 0 -a "$running_cnt" -eq 0 ]; then
 	_NUM_JOBS=""
     else
         _NUM_JOBS="$running_cnt|$stopped_cnt "
@@ -35,7 +35,7 @@ function jobscount(){
 
 # Trim working directory to last 3 dirs
 function trim_wd {
-    _TRIMMED_PWD=$(echo ${PWD} | sed "s&${HOME}&~&" | sed "s&.*./\([^/]*/[^/]*/[^/]*\)$&${TRIM_DIR_SYMBOL}/\1&")
+    _TRIMMED_PWD=$(echo "${PWD}" | sed "s&${HOME}&~&" | sed "s&.*./\([^/]*/[^/]*/[^/]*\)$&${TRIM_DIR_SYMBOL}/\1&")
 }
 
 # Recalculate running jobs and working directory for every prompt
