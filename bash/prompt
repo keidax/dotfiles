@@ -12,15 +12,15 @@ fi
 
 # Generate color variables
 # Using tput is more portable than writing the terminal codes directly.
-RESET=$(tput sgr0)
-RED=$(tput setaf 1)
-GREEN=$(tput setaf 2)
-YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
-PURPLE=$(tput setaf 5)
-CYAN=$(tput setaf 6)
-WHITE=$(tput setaf 7)
-BOLD=$(tput bold)
+reset=$(tput sgr0)
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
+purple=$(tput setaf 5)
+cyan=$(tput setaf 6)
+white=$(tput setaf 7)
+bold=$(tput bold)
 
 # Export jobs as <running>|<stopped>
 function jobscount(){
@@ -31,6 +31,8 @@ function jobscount(){
     else
         _NUM_JOBS="$running_cnt|$stopped_cnt "
     fi
+    # Clean up temporary variables
+    unset stopped_cnt running_cnt
 }
 
 # Trim working directory to last 3 dirs
@@ -47,12 +49,17 @@ function prompt_command {
 PROMPT_COMMAND=prompt_command
 
 # Finally, assign PS1. Output is:
+# - chroot name, if in a chroot
 # - Previous exit code, if nonzero
 # - Username
 # - Shortened working directory
 # - Number of running and suspended jobs attached to this shell
 #
 # Colors are wrapped in \[ \] escapes, because they are nonprintable.
+# Variables in double quotes are expanded now; single-quoted strings are
+# evaluated on every prompt.
 
-export PS1='\[$RED\]$([[ $? -eq 0 ]] || echo  "$? ")\[$GREEN\]\u \[$BLUE$BOLD\]$_TRIMMED_PWD \[$YELLOW\]$_NUM_JOBS\[$RESET\]$CMD_SYMBOL '
+export PS1="\[$purple\]${CHROOT_NAME:+($CHROOT_NAME) }\[$red\]"'$([[ $? -eq 0 ]] || echo  "$? ")'"\[$green\]\u \[$blue$bold\]"'$_TRIMMED_PWD '"\[$yellow\]"'$_NUM_JOBS'"\[$reset\]$CMD_SYMBOL "
 
+# Clean up color variables
+unset reset red green yellow blue purple cyan bold

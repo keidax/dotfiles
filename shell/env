@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # Set variable identifying the chroot you work in (used in prompt)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-    export debian_chroot
+if [ -z "${CHROOT_NAME:-}" ] && [ -r /etc/debian_chroot ]; then
+    CHROOT_NAME=$(cat /etc/debian_chroot)
+    export CHROOT_NAME
 fi
 
 # Determine OS
