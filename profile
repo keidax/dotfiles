@@ -8,7 +8,7 @@ echo "Sourcing .profile"'!'
 
 # Source general shell files
 for DOTFILE in "env" "path" ; do
-    [ -f "${DOTFILE}" ] && . ~/.dotfiles/shell/"${DOTFILE}"
+    [ -f ~/.dotfiles/shell/"${DOTFILE}" ] && . ~/.dotfiles/shell/"${DOTFILE}"
 done
 
 # Source .bashrc if we're running bash
