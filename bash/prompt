@@ -59,7 +59,7 @@ PROMPT_COMMAND=prompt_command
 # Variables in double quotes are expanded now; single-quoted strings are
 # evaluated on every prompt.
 
-export PS1="\[$purple\]${CHROOT_NAME:+($CHROOT_NAME) }\[$red\]"'$([[ $? -eq 0 ]] || echo  "$? ")'"\[$green\]\u \[$blue$bold\]"'$_TRIMMED_PWD '"\[$yellow\]"'$_NUM_JOBS'"\[$reset\]$CMD_SYMBOL "
+PS1="\[$purple\]${CHROOT_NAME:+($CHROOT_NAME) }\[$red\]"'$([[ $? -eq 0 ]] || echo  "$? ")'"\[$green\]\u \[$blue$bold\]"'$_TRIMMED_PWD '"\[$yellow\]"'$_NUM_JOBS'"\[$reset\]$CMD_SYMBOL "
 
 # Clean up color variables
 unset reset red green yellow blue purple cyan bold

@@ -1,7 +1,11 @@
 #!/bin/sh
 
-# set PATH so it includes user's private bin if it exists
+# Include user's local bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+# Include current dir on PATH
+PATH=".:$PATH"
+
+export PATH
