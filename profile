@@ -4,8 +4,6 @@
 #
 # System-wide settings and variable, non-bash-specific
 
-echo "Sourcing .profile"'!'
-
 # Source general shell files
 for DOTFILE in "env" "path" ; do
     [ -f ~/.dotfiles/shell/"${DOTFILE}" ] && . ~/.dotfiles/shell/"${DOTFILE}"

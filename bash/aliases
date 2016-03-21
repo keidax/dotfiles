@@ -1,7 +1,5 @@
 #!/bin/sh
 
-echo "Sourcing aliases"
-
 # When using sudo, use alias expansion
 alias sudo='sudo -E '
 
