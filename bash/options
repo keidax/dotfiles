@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# History settings
+HISTCONTROL=ignoredups # Ignore duplicate history entries (but not ones with spaces)
+HISTSIZE=5000          # History size
+HISTFILESIZE=-1        # History file size is unlimited
+shopt -s cmdhist       # Save all lines of a multiline command to same history entry
+shopt -s histappend    # Append to history file (useful for concurrent shells)
+
+# Ignore some frequent commands in history
+HISTIGNORE="pwd:l[sla]:h?top:exit"
+
+# Set various shell options
+shopt -s cdspell      # Correct misspelled directories in cd commands
+shopt -s checkjobs    # Notify of running jobs before exiting
+shopt -s checkwinsize # Update LINES and COLUMNS if terminal size has changed
+shopt -s globstar     # Recursive globbing with **
