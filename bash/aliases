@@ -4,7 +4,7 @@
 alias sudo='sudo -E '
 
 # ls personalizations
-alias ls='ls --quoting-style=literal --color=auto'
+alias ls='ls --quoting-style=literal --color=auto -F'
 alias ll='ls -l'
 alias la='ls -al'
 
