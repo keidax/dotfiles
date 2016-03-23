@@ -1,0 +1,26 @@
+$include /etc/inputrc
+
+# Only one <Tab> required to show a list of all completions
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# Show extra file information when completing, like `ls -F` does
+set visible-stats on
+
+# Color completions with LS_COLORS, similar to ls
+set colored-stats on
+
+# Make completion case-insensitive
+set completion-ignore-case on
+
+# When matching filenames, treat '_' and '-' as equivalent
+set completion-map-case on
+
+# Immediately add a trailing slash when completing symlinks to directories
+set mark-symlinked-directories on
+
+# Common prefixes greater than this value are replaced ellipsis
+set completion-prefix-display-length 4
+
+# Smarter completion when in the middle of a word
+set skip-completed-text on

@@ -8,6 +8,7 @@
     ~/.profile: profile
     ~/.dircolors: dircolors
     ~/.gitconfig: gitconfig
+    ~/.inputrc: inputrc
     ~/bin/detect_utf:
         path: bin/detect-utf.sh
         create: true
