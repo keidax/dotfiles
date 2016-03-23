@@ -7,8 +7,8 @@
 [[ $- != *i* ]] && return
 
 # Source bash-specific files
-for DOTFILE in ~/.dotfiles/bash/{options,prompt,aliases} ; do
-    [ -f "${DOTFILE}" ] && . "${DOTFILE}"
+for file in ~/.dotfiles/bash/{options,prompt,aliases} ; do
+    [ -f "${file}" ] && . "${file}"
 done
 
 # Get dircolors

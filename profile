@@ -5,8 +5,8 @@
 # System-wide settings and variable, non-bash-specific
 
 # Source general shell files
-for DOTFILE in "env" "path" ; do
-    [ -f ~/.dotfiles/shell/"${DOTFILE}" ] && . ~/.dotfiles/shell/"${DOTFILE}"
+for file in "env" "path" ; do
+    [ -f ~/.dotfiles/shell/"${file}" ] && . ~/.dotfiles/shell/"${file}"
 done
 
 # Source .bashrc if we're running bash
