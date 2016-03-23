@@ -1,6 +1,8 @@
+# Clear old symlinks in the home directory
 - clean: ['~']
 
 - link:
+    # Create a symlink to this folder
     ~/.dotfiles: ''
     ~/.vim: vim
     ~/.vimrc: vimrc
@@ -9,6 +11,7 @@
     ~/.dircolors: dircolors
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
+    # Add scripts to the ~/bin/ directory
     ~/bin/detect_utf:
         path: bin/detect-utf.sh
         create: true

@@ -58,6 +58,7 @@ export EDITOR
 QT_STYLE_OVERRIDE=GTK+
 export QT_STYLE_OVERRIDE
 
+# Locale settings
 LC_ALL=en_US.UTF-8
 export LC_ALL
 LANG=en_US.UTF-8

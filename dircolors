@@ -62,7 +62,7 @@ TERM xterm-256color
 TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
-
+# Added TERMs
 TERM xterm-termite
 TERM dvtm-256color
 TERM fbterm
