@@ -11,6 +11,9 @@
     ~/.dircolors: dircolors
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
+    ~/.config/rofi/config:
+        path: rofi
+        create: true
     # Add scripts to the ~/bin/ directory
     ~/bin/detect_utf:
         path: bin/detect-utf.sh
