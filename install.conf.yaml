@@ -18,6 +18,7 @@
     ~/bin/detect_utf:
         path: bin/detect-utf.sh
         create: true
+    ~/bin/outside-ip: bin/outside-ip.sh
 
 - shell:
       - [git submodule update --init --recursive, Installing submodules]
