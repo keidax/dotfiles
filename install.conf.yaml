@@ -1,6 +1,13 @@
 # Clear old symlinks in the home directory
 - clean: ['~']
 
+# Always create directories
+- defaults:
+    link:
+        create: true
+        relink: true
+
+
 - link:
     # Create a symlink to this folder
     ~/.dotfiles: ''
@@ -11,13 +18,9 @@
     ~/.dircolors: dircolors
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
-    ~/.config/rofi/config:
-        path: rofi
-        create: true
+    ~/.config/rofi/config: rofi
     # Add scripts to the ~/bin/ directory
-    ~/bin/detect_utf:
-        path: bin/detect-utf.sh
-        create: true
+    ~/bin/detect_utf: bin/detect-utf.sh
     ~/bin/outside-ip: bin/outside-ip.sh
 
 - shell:
