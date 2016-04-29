@@ -1,12 +1,11 @@
-# Clear old symlinks in the home directory
-- clean: ['~']
+# Clear old symlinks in the home and bin directories
+- clean: [ '~', '~/bin' ]
 
 # Always create directories
 - defaults:
     link:
         create: true
         relink: true
-
 
 - link:
     # Create a symlink to this folder
