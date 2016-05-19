@@ -7,7 +7,7 @@
 [[ $- != *i* ]] && return
 
 # Source bash-specific files
-for file in ~/.dotfiles/bash/{options,prompt,aliases} ; do
+for file in ~/.dotfiles/bash/{options,prompt,aliases,functions} ; do
     [ -f "${file}" ] && . "${file}"
 done
 

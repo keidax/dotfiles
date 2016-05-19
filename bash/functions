@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Quick way to run calculations from the prompt
+= () {
+    calc="$@"
+    bc -l <<< "scale=10; $calc"
+}
