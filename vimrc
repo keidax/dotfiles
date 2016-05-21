@@ -29,3 +29,15 @@ set expandtab
 
 " Use real tabs in makefiles, and turn off all spaces
 autocmd FileType make setlocal noexpandtab shiftwidth=0 softtabstop=0
+
+" Case-insensitive search
+set ignorecase
+
+" Show results as you type
+set incsearch
+
+" Highlight search results
+set hlsearch
+
+" Clear current search results with Ctrl-L
+nnoremap <C-l> :nohlsearch<CR><C-l>
