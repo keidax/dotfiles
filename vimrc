@@ -7,10 +7,12 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'zowens/vim-eclim'
 call plug#end()
 
-" Access colors present in 256 colorspace
-let base16colorspace=256
-set background=dark
-colorscheme base16-default
+" Use matching colorscheme from terminal theme
+if filereadable(expand("~/.vimrc_background"))
+    " Access colors present in 256 colorspace
+    let base16colorspace=256
+    source ~/.vimrc_background
+endif
 " Make background transparent
 highlight Normal ctermbg=none
 
