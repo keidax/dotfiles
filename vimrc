@@ -4,7 +4,6 @@ Plug 'tpope/vim-sensible'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'zowens/vim-eclim'
 call plug#end()
 
 " Use matching colorscheme from terminal theme
