@@ -14,8 +14,11 @@ done
 
 if [ "${DISTRO}" = "Arch" ]; then
     # Start an X server if we're logging in on TTY1
-    ([ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]) && exec startx
+    ([ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]) && exec startx
 
     # Start fbterm if we're logging in on the linux console
     [ "$TERM" = "linux" ] && exec fbterm
+
+    # Make sure our exit code is 0
+    true
 fi
