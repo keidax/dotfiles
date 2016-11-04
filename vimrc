@@ -15,9 +15,6 @@ endif
 " Make background transparent
 highlight Normal ctermbg=none
 
-" Detect file type (should be set in sensible.vim)
-"filetype plugin indent on
-
 " Turn on mouse support
 set mouse=a
 
@@ -34,11 +31,5 @@ autocmd FileType make setlocal noexpandtab shiftwidth=0 softtabstop=0
 " Case-insensitive search
 set ignorecase
 
-" Show results as you type
-set incsearch
-
-" Highlight search results
+" Highlight search results (can be cleared with Ctrl+L)
 set hlsearch
-
-" Clear current search results with Ctrl-L
-nnoremap <C-l> :nohlsearch<CR><C-l>
