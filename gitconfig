@@ -6,6 +6,9 @@
 [core]
         # Don't introduce any Windows-style line endings
         autocrlf = input
+[push]
+        # Safer default push setting (set to squelch warning message)
+	default = simple
 [branch]
         # New branches are set up to rebase on pull instead of merge
         autosetuprebase = always
