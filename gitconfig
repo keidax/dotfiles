@@ -31,3 +31,5 @@
         ui = true
 [color "status"]
 	untracked = yellow
+[color "diff"]
+	func = yellow
