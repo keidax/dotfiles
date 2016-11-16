@@ -24,3 +24,6 @@ set completion-prefix-display-length 4
 
 # Smarter completion when in the middle of a word
 set skip-completed-text on
+
+# Pasted code is not run automatically
+set enable-bracketed-paste on
