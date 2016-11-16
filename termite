@@ -1,0 +1,31 @@
+[options]
+scroll_on_output = false
+scroll_on_keystroke = true
+audible_bell = false
+mouse_autohide = false
+allow_bold = true
+dynamic_title = true
+urgent_on_bell = true
+clickable_url = true
+scrollback_lines = 1000
+search_wrap = true
+
+# "system", "on" or "off"
+cursor_blink = system
+
+# "block", "underline" or "ibeam"
+cursor_shape = block
+
+# emit escape sequences for other keys modified by Control
+#modify_other_keys = false
+
+# Font for 144 DPI
+font = Hack 8.5 
+# Font for 96 DPI
+#font = Hack 12
+
+[colors]
+# Add transparency
+background      = rgba(28, 28, 28, 0.9)
+
+# vim: ft=dosini cms=#%s
