@@ -49,6 +49,17 @@ export DISTRO
 
 EDITOR=vim
 export EDITOR
+
+if [ -z "$LESS" ]; then
+    # Rundown of options:
+    # i: ignore case when searching
+    # M: more verbose prompt (like C-g)
+    # q: ring the bell less often (causes hangs!)
+    # R: output color sequences in raw form
+    LESS=-iMR
+    export LESS
+fi
+
 QT_STYLE_OVERRIDE=GTK+
 export QT_STYLE_OVERRIDE
 
