@@ -6,18 +6,12 @@ if [ -z "${CHROOT_NAME:-}" ] && [ -r /etc/debian_chroot ]; then
     export CHROOT_NAME
 fi
 
-# Determine OS
-case "$(uname)" in
-    Linux)
-        OS="Linux" ;;
-    Darwin)
-        OS="OSX" ;;
-    *)
-        OS="Unknown" ;;
-esac
+# Determine OS (`uname` should be POSIX-safe)
+# Expected results are Linux and Darwin
+OS=$(uname)
 
 # Try several different methods to determine the Linux distro
-if [ -n "${OS}" ] && [ "${OS}" = "Linux" ]; then
+if [ "${OS}" = "Linux" ]; then
     # Check for the lsb_release command
     if [ -x "$(command -v lsb_release)" ]; then
         case "$(lsb_release --id --short)" in
