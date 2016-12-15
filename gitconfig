@@ -31,3 +31,5 @@
         untracked = yellow
 [color "diff"]
         func = yellow
+[stash]
+        showPatch = true
