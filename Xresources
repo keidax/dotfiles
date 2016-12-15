@@ -1,0 +1,17 @@
+! Reasonable xterm settings
+
+! Use a nice default font
+xterm*faceName: "DejaVu Sans Mono"
+xterm*faceSize: 13
+
+! Large scrollback
+xterm*savelines: 10000
+
+! Use UTF-8 locale
+xterm*locale: true
+
+! Specify TERM value
+xterm*termName: xterm-256color
+
+! Use CLIPBOARD buffer instead of archaic PRIMARY
+XTerm*selectToClipboard: true
