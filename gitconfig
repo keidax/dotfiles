@@ -1,28 +1,26 @@
 # vim: ft=gitconfig
-[user]
-        # Personal info
-	email = gthepiper@gmail.com
-	name = Gabriel Holodak
+[include]
+        path = ~/.gitconfig.local
 [core]
         # Don't introduce any Windows-style line endings
         autocrlf = input
 [push]
         # Safer default push setting (set to squelch warning message)
-	default = simple
+        default = simple
 [branch]
         # New branches are set up to rebase on pull instead of merge
         autosetuprebase = always
 [interactive]
         # Highlight line differences during interactive staging
-	diffFilter = diff-highlight
+        diffFilter = diff-highlight
 [diff]
         # Smarter about hunk boundaries (experimental, >=git 2.9)
-	compactionHeuristic = true
+        compactionHeuristic = true
 [pager]
         # Highlight line differences when shown in a pager
-	log = diff-highlight | less
-	show = diff-highlight | less
-	diff = diff-highlight | less
+        log = diff-highlight | less
+        show = diff-highlight | less
+        diff = diff-highlight | less
 [help]
         # Automatically use git's "Did you mean...?" after 1 second
         autocorrect = 10
@@ -30,6 +28,6 @@
         # Make sure colors are turned on
         ui = true
 [color "status"]
-	untracked = yellow
+        untracked = yellow
 [color "diff"]
-	func = yellow
+        func = yellow

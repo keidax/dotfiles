@@ -1,2 +1,5 @@
 vim/autoload/plug.vim.old
 vim/.netrwhist
+
+# Local files
+local/*
