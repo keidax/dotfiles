@@ -14,8 +14,8 @@
         # Highlight line differences during interactive staging
         diffFilter = diff-highlight
 [diff]
-        # Smarter about hunk boundaries (experimental, >=git 2.9)
-        compactionHeuristic = true
+        # Even smarter about hunk boundaries (experimental, >=git 2.11)
+        indentHeuristic = true
 [pager]
         # Highlight line differences when shown in a pager
         log = diff-highlight | less
