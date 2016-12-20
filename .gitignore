@@ -3,3 +3,6 @@ vim/.netrwhist
 
 # Local files
 local/*
+
+# Swap
+.*.swp
