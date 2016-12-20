@@ -25,3 +25,25 @@
 [submodule "vim-bracketed-paste"]
     path = vim/plugged/vim-bracketed-paste
     url = https://github.com/ConradIrwin/vim-bracketed-paste
+[submodule "vim/plugged/asyncrun.vim"]
+    path = vim/plugged/asyncrun.vim
+    url = https://github.com/skywind3000/asyncrun.vim.git
+    ignore = untracked
+[submodule "vim/plugged/vim-commentary"]
+    path = vim/plugged/vim-commentary
+    url = https://github.com/tpope/vim-commentary.git
+[submodule "vim/plugged/vim-endwise"]
+    path = vim/plugged/vim-endwise
+    url = https://github.com/tpope/vim-endwise.git
+[submodule "vim/plugged/vim-rspec"]
+    path = vim/plugged/vim-rspec
+    url = https://github.com/thoughtbot/vim-rspec.git
+[submodule "vim/plugged/vim-plugin-AnsiEsc"]
+    path = vim/plugged/vim-plugin-AnsiEsc
+    url = https://github.com/powerman/vim-plugin-AnsiEsc.git
+[submodule "vim/plugged/vim-indent-guides"]
+    path = vim/plugged/vim-indent-guides
+    url = https://github.com/nathanaelkane/vim-indent-guides.git
+[submodule "vim/plugged/vim-gitignore"]
+    path = vim/plugged/vim-gitignore
+    url = https://github.com/gisphm/vim-gitignore.git
