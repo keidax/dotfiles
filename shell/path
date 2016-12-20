@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Add brew coreutils without 'g' prefix
+if [ "$OS" = "Darwin" ] && [ -d "$(brew --prefix)/opt/coreutils/libexec/gnubin" ] ; then
+    PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+fi
+
 # Include user's local bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
@@ -8,4 +13,15 @@ fi
 # Include current dir on PATH
 PATH=".:$PATH"
 
+# Include RVM
+if [ -d "$HOME/.rvm" ] ; then
+    PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+fi
+
 export PATH
+
+# Add man pages from brew coreutils
+if [ "$OS" = "Darwin" ] && [ -d "$(brew --prefix)/opt/coreutils/libexec/gnuman" ] ; then
+    MANPATH="$(brew --prefix)/opt/coreutils/libexec/gnuman:$MANPATH"
+    export MANPATH
+fi

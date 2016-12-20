@@ -20,9 +20,14 @@ eval "$(dircolors ~/.dircolors)"
 
 # Enable extended completion
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
+
+    # Do the same for brew-installed completions
+    if [ $OS = "Darwin" ] && [ -f "$(brew --prefix)"/share/bash-completion/bash_completion ]; then
+        . "$(brew --prefix)"/share/bash-completion/bash_completion
+    fi
 fi
