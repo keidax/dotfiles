@@ -79,10 +79,12 @@ export XMODIFIERS
 QT_IM_MODULE=ibus
 export QT_IM_MODULE
 
-# Java settings
-# Forcing cross-platform look and feel may cause issues with GTK3 apps
-_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on \
--Dswing.aatext=true \
--Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel \
--Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-export _JAVA_OPTIONS
+if [ "$OS" = "Linux" ]; then
+    # Java settings
+    # Forcing cross-platform look and feel may cause issues with GTK3 apps
+    _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on \
+    -Dswing.aatext=true \
+    -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel \
+    -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+    export _JAVA_OPTIONS
+fi
