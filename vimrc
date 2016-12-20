@@ -8,10 +8,10 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
-Plug 'thoughtbot/vim-rspec'
+Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
 Plug 'gisphm/vim-gitignore'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'skywind3000/asyncrun.vim', { 'on': 'AsyncRun' }
+Plug 'powerman/vim-plugin-AnsiEsc', { 'on': 'AnsiEsc' }
 call plug#end()
 
 """""""""""""
