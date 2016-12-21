@@ -106,6 +106,30 @@ noremap <Leader>k <C-w>k
 noremap <Leader>h <C-w>h
 noremap <Leader>l <C-w>l
 
+" Same-width/height splits
+nnoremap <Leader>sh :leftabove  vsplit<CR>
+nnoremap <Leader>sj :rightbelow  split<CR>
+nnoremap <Leader>sk :leftabove   split<CR>
+nnoremap <Leader>sl :rightbelow vsplit<CR>
+
+" Same-width/height windows
+nnoremap <Leader>nh :leftabove  vnew<CR>
+nnoremap <Leader>nj :rightbelow  new<CR>
+nnoremap <Leader>nk :leftabove   new<CR>
+nnoremap <Leader>nl :rightbelow vnew<CR>
+
+" Full-width/height splits
+nnoremap <Leader>swh :topleft  vsplit<CR>
+nnoremap <Leader>swj :botright  split<CR>
+nnoremap <Leader>swk :topleft   split<CR>
+nnoremap <Leader>swl :botright vsplit<CR>
+
+" Full-width/height new windows
+nnoremap <Leader>nwh :topleft  vnew<CR>
+nnoremap <Leader>nwj :botright  new<CR>
+nnoremap <Leader>nwk :topleft   new<CR>
+nnoremap <Leader>nwl :botright vnew<CR>
+
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
