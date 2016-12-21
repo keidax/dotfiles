@@ -4,8 +4,8 @@
 # Always create directories
 - defaults:
     link:
-        create: true
-        relink: true
+      create: true
+      relink: true
 
 - link:
     # Create a symlink to this folder
@@ -26,4 +26,9 @@
     ~/bin/outside-ip: bin/outside-ip.sh
 
 - shell:
-      - [git submodule update --init --recursive, Installing submodules]
+    - [git submodule update --init --recursive, Installing submodules]
+    - description: Installing vim plugins via vim-plug
+      command: vim +PlugInstall +qall
+      stdin: true
+      stdout: true
+      stderr: true
