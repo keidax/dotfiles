@@ -6,3 +6,6 @@ local/*
 
 # Swap
 .*.swp
+
+# Vim plugins (handled by vim-plug)
+vim/plugged/*
