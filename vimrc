@@ -78,6 +78,9 @@ augroup vimrc
 
     " Use standard indentation and line size for Ruby files
     autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 colorcolumn=81
+
+    " Use recommended 2-space indent for YAML files
+    autocmd FileType yaml setlocal expandtab shiftwidth=2 softtabstop=2
 augroup END
 
 
