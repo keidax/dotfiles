@@ -12,6 +12,9 @@ Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
 Plug 'gisphm/vim-gitignore'
 Plug 'skywind3000/asyncrun.vim', { 'on': 'AsyncRun' }
 Plug 'powerman/vim-plugin-AnsiEsc', { 'on': 'AnsiEsc' }
+" Let vim-closetag work with XSD, XSLT files
+let g:closetag_filenames = "*.xml,*.html,*.xsd,*.xsl"
+Plug 'alvan/vim-closetag'
 call plug#end()
 
 """""""""""""
@@ -45,22 +48,26 @@ set hlsearch
 "  Visual  "
 """"""""""""
 
-" Use matching colorscheme from terminal theme, only on startup
 augroup vimrc
+    " Use matching colorscheme from terminal theme, only on startup
     autocmd VimEnter *
                 \ if filereadable(expand("~/.vimrc_background")) |
                 \     let base16colorspace=256 |
                 \     source ~/.vimrc_background |
                 \ endif
+
+    " Make background transparent
+    autocmd VimEnter,ColorScheme * :highlight Normal ctermbg=none
+
+    " Transparent split backgrounds
+    autocmd VimEnter,ColorScheme * :highlight VertSplit ctermbg=none
+    autocmd VimEnter,ColorScheme * :highlight StatusLineNC ctermbg=none
 augroup END
 
-" Make background transparent
-highlight Normal ctermbg=none
+" Window border styles
+set fillchars=vert:│,stl:━,stlnc:─
 
-" Configure vim-indent-guides
-let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
-" Better colors for base16 dark colorscheme
+" Better indent colors for base16 dark colorscheme
 " (The autocmds preserve our colors even if the colorscheme changes)
 let g:indent_guides_auto_colors = 0
 augroup vimrc
@@ -81,6 +88,9 @@ augroup vimrc
 
     " Use recommended 2-space indent for YAML files
     autocmd FileType yaml setlocal expandtab shiftwidth=2 softtabstop=2
+
+    " Use 2-space indent for XML and family
+    autocmd FileType xml,xsd,xslt setlocal expandtab shiftwidth=2 softtabstop=2
 augroup END
 
 
@@ -99,6 +109,8 @@ nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 " nicer ESC
 inoremap jk <ESC>
+" (also for capslock)
+inoremap JK <ESC>
 
 " Navigate splits
 noremap <Leader>j <C-w>j
@@ -141,6 +153,9 @@ augroup vimrc
     autocmd User AsyncRunStart :AnsiEsc
 augroup END
 
+" Make netrw-v open split on the right instead of left
+let g:netrw_altv=1
+
 """""""""""""""""""""
 "  Plugin Settings  "
 """""""""""""""""""""
@@ -150,3 +165,8 @@ augroup END
 " Run rspec with color forced on, through spring, asynchronously, sending
 " output to the quickfix window
 let g:rspec_command = ":AsyncRun spring rspec --color --tty {spec}"
+
+" Configure vim-indent-guides
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
