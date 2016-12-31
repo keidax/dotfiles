@@ -15,6 +15,7 @@
     ~/.bashrc: bashrc
     ~/.profile: profile
     ~/.Xresources: Xresources
+    ~/.Xresources.local: local/Xresources.local
     ~/.dircolors: dircolors
     ~/.gitconfig: gitconfig
     ~/.gitconfig.local: local/gitconfig.local

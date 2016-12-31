@@ -15,3 +15,6 @@ xterm*termName: xterm-256color
 
 ! Use CLIPBOARD buffer instead of archaic PRIMARY
 XTerm*selectToClipboard: true
+
+! Include local settings
+#include ".Xresources.local"
