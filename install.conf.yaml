@@ -28,6 +28,7 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
+    - [git update-index --skip-worktree local/*, Untracking local files in Git]
     - description: Installing vim plugins via vim-plug
       command: vim +PlugInstall +qall
       stdin: true

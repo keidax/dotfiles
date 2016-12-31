@@ -1,11 +1,7 @@
+# Files used by vim
+.*.swp
 vim/autoload/plug.vim.old
 vim/.netrwhist
-
-# Local files
-local/*
-
-# Swap
-.*.swp
 
 # Vim plugins (handled by vim-plug)
 vim/plugged/*
