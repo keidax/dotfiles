@@ -3,6 +3,7 @@
 rofi.terminal:                  termite
 rofi.sidebar-mode:              false
 !rofi.auto-select:               true
-rofi.fuzzy:                     true
 rofi.modi:                      drun,combi
 rofi.combi-modi:                run,drun,ssh,window
+rofi.matching:                  fuzzy
+rofi.fixed-num-lines:           false
