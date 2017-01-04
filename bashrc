@@ -3,7 +3,10 @@
 # ~/.bashrc
 #
 
-# If not running interactively, don't do anything
+# Load RVM into a bash session (even non-interactive)
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# If not running interactively, don't do anything else
 [[ $- != *i* ]] && return
 
 # Source bash-specific files
