@@ -84,21 +84,35 @@ augroup vimrc
     autocmd FileType make setlocal noexpandtab shiftwidth=0 tabstop=8 softtabstop=0
 
     " Use standard indentation and line size for Ruby files
-    autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 colorcolumn=81
+    autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 colorcolumn=101
 
     " Use recommended 2-space indent for YAML files
     autocmd FileType yaml setlocal expandtab shiftwidth=2 softtabstop=2
 
     " Use 2-space indent for XML and family
     autocmd FileType xml,xsd,xslt setlocal expandtab shiftwidth=2 softtabstop=2
+    " Formatting with xmllint
+    autocmd FileType xml,xsd,xslt setlocal equalprg=xmllint\ --format\ --recover\ -
 augroup END
 
 
 """"""""""""""
 "  Mappings  "
 """"""""""""""
-" For learning new habits
-inoremap <ESC> <nop>
+" For learning new habits, Konami-style
+" (Thanks to tylercipriani.com/vim.html)
+noremap <Up> <nop>
+noremap! <Up> <nop>
+noremap <Down> <nop>
+noremap! <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+noremap! <Left> <nop>
+noremap! <Right> <nop>
+" B-A-<start>
+
+cnoremap <ESC> <nop>
+vnoremap <ESC> <nop>
 
 " Leader
 let mapleader = " "
@@ -107,10 +121,11 @@ let mapleader = " "
 nnoremap <Leader>ev :tabedit $MYVIMRC<CR>
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
-" nicer ESC
+" Faster ESC
 inoremap jk <ESC>
-" (also for capslock)
-inoremap JK <ESC>
+vnoremap jk <ESC>
+" Commandline mode (<ESC> from a mapping actually executes the command!)
+cnoremap jk <C-c>
 
 " Navigate splits
 noremap <Leader>j <C-w>j
