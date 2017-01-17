@@ -22,3 +22,6 @@ alias ssh='TERM=xterm-256color ssh '
 
 # Display dd progress by default
 alias dd='dd status=progress'
+
+# Git aliases
+alias g='git'

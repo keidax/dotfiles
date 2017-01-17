@@ -33,3 +33,16 @@
         func = yellow
 [stash]
         showPatch = true
+[alias]
+        alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+
+        a = add
+        ap = add --patch
+
+        c = commit --verbose
+
+        s = status -sb
+
+        d = diff
+        ds = diff --staged
+        dw = diff -w

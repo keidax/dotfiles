@@ -5,3 +5,8 @@
     calc="$@"
     bc -l <<< "scale=10; $calc"
 }
+
+function_exists() {
+    declare -f -F $1 > /dev/null
+    return $?
+}
