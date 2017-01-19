@@ -25,6 +25,7 @@
     # Add scripts to the ~/bin/ directory
     ~/bin/detect_utf: bin/detect-utf.sh
     ~/bin/outside-ip: bin/outside-ip.sh
+    ~/bin/git-clean-merged: bin/git-clean-merged.sh
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
