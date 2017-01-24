@@ -15,6 +15,7 @@ Plug 'powerman/vim-plugin-AnsiEsc', { 'on': 'AnsiEsc' }
 " Let vim-closetag work with XSD, XSLT files
 let g:closetag_filenames = "*.xml,*.html,*.xsd,*.xsl"
 Plug 'alvan/vim-closetag'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 """""""""""""
@@ -43,6 +44,11 @@ set ignorecase
 " Highlight search results (can be cleared with Ctrl+L)
 set hlsearch
 
+" Cut-and-paste operations use the system clipboard
+set clipboard=unnamed,unnamedplus
+
+" Faster update time (pick up changes in vim-gitgutter)
+set updatetime=250
 
 """"""""""""
 "  Visual  "
