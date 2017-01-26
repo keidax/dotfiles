@@ -26,7 +26,7 @@ augroup vimrc
     " Clear previously-set local autocommands
     au!
     " Reload vimrc on write
-    autocmd BufWritePost $MYVIMRC,*/{.,}dotfiles/vimrc :source $MYVIMRC
+    autocmd BufWritePost $MYVIMRC,*/{.,}dotfiles/vimrc :source $MYVIMRC | doauto VimEnter
 augroup END
 
 " Turn on mouse support
