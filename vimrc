@@ -77,8 +77,18 @@ set fillchars=vert:│,stl:━,stlnc:─
 " (The autocmds preserve our colors even if the colorscheme changes)
 let g:indent_guides_auto_colors = 0
 augroup vimrc
-    autocmd VimEnter,Colorscheme * :highlight IndentGuidesOdd  ctermbg=18
-    autocmd VimEnter,Colorscheme * :highlight IndentGuidesEven ctermbg=19
+    autocmd VimEnter,Colorscheme * :highlight IndentGuidesOdd  ctermbg=18 ctermfg=19
+    autocmd VimEnter,Colorscheme * :highlight IndentGuidesEven ctermbg=19 ctermfg=18
+augroup END
+
+" Display invisible characters
+" EOL possibilities: ↲↵↩⤶
+set listchars=eol:↩,tab:▸-,trail:~,extends:>,precedes:<,space:·
+set list
+" Muted colors for invisible characters
+augroup vimrc
+    autocmd VimEnter,ColorScheme * :highlight SpecialKey ctermfg=19
+    autocmd VimEnter,ColorScheme * :highlight NonText ctermfg=19
 augroup END
 
 
