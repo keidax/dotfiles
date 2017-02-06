@@ -19,8 +19,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'jiangmiao/auto-pairs'
 Plug 'dahu/vim-fanfingtastic'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
+Plug 'ervandew/supertab'
+Plug 'yonchu/accelerated-smooth-scroll'
 call plug#end()
 
 """""""""""""
@@ -91,19 +92,29 @@ set fillchars=vert:│
 " (The autocmds preserve our colors even if the colorscheme changes)
 let g:indent_guides_auto_colors = 0
 augroup vimrc
-    autocmd VimEnter,Colorscheme * :highlight IndentGuidesOdd  ctermbg=18 ctermfg=19
-    autocmd VimEnter,Colorscheme * :highlight IndentGuidesEven ctermbg=19 ctermfg=18
+    autocmd VimEnter,Colorscheme * :highlight IndentGuidesOdd  ctermbg=19 ctermfg=18
+    autocmd VimEnter,Colorscheme * :highlight IndentGuidesEven ctermbg=18 ctermfg=19
 augroup END
 
 " Display invisible characters
 " EOL possibilities: ↲↵↩⤶
 set listchars=eol:↩,tab:▸-,trail:~,extends:>,precedes:<,space:·
-set list
+
+" Force escape sequences for italics, instead of messing with terminfo defs
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
 
 augroup vimrc
     " Muted colors for invisible characters
     autocmd VimEnter,ColorScheme * :highlight SpecialKey ctermfg=19
     autocmd VimEnter,ColorScheme * :highlight NonText ctermfg=19
+
+    " Muted colors for inactive statuslines
+    autocmd VimEnter,ColorScheme * :highlight StatusLineNC cterm=italic,underline
+    autocmd VimEnter,ColorScheme * :highlight StatusLine cterm=bold
+
+    " Italicised comments
+    autocmd VimEnter,ColorScheme * :highlight Comment cterm=italic
 augroup END
 
 " Turn off all folds by default
@@ -233,3 +244,6 @@ let g:rspec_command = ":AsyncRun bin/rspec --color --tty {spec}"
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 2
+
+let g:ac_smooth_scroll_du_sleep_time_msec=1
+let g:ac_smooth_scroll_fb_sleep_time_msec=1
