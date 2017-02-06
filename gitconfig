@@ -7,6 +7,9 @@
 [push]
         # Safer default push setting (set to squelch warning message)
         default = simple
+[fetch]
+        # Remove stale remote references on every fetch or pull
+        prune = true
 [branch]
         # New branches are set up to rebase on pull instead of merge
         autosetuprebase = always
@@ -34,10 +37,12 @@
 [stash]
         showPatch = true
 [alias]
+        # Complex commands and scripts
         alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
 
         bclean = !git-clean-merged
 
+        # Aliases to git commands
         a = add
         ap = add --patch
 
@@ -46,15 +51,18 @@
         co = checkout
         com = checkout master
 
+        d = diff
+        ds = diff --staged
+        dw = diff -w
+
+        h = help
+
         l = log --graph --date=relative --pretty=format:'%Cred%>|(16)%h %C(auto)%s%d %Cgreen%ad %C(dim white)%cN'
 
         riom = rebase -i origin/master
 
         sl = stash list
+        sp = stash pop
         ss = stash save
 
         s = status -sb
-
-        d = diff
-        ds = diff --staged
-        dw = diff -w
