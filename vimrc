@@ -16,6 +16,10 @@ Plug 'powerman/vim-plugin-AnsiEsc', { 'on': 'AnsiEsc' }
 let g:closetag_filenames = "*.xml,*.html,*.xsd,*.xsl"
 Plug 'alvan/vim-closetag'
 Plug 'airblade/vim-gitgutter'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'jiangmiao/auto-pairs'
+Plug 'dahu/vim-fanfingtastic'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 call plug#end()
 
 """""""""""""
@@ -50,6 +54,14 @@ set clipboard=unnamed,unnamedplus
 " Faster update time (pick up changes in vim-gitgutter)
 set updatetime=250
 
+" Commandline completion fills in longest common substring, then cycles options
+set wildmode=longest:full,full
+
+" Go to the previous tab instead of the next when closing a tab
+augroup vimrc
+    autocmd TabClosed * :tabprevious
+augroup END
+
 """"""""""""
 "  Visual  "
 """"""""""""
@@ -59,6 +71,7 @@ augroup vimrc
     autocmd VimEnter *
                 \ if filereadable(expand("~/.vimrc_background")) |
                 \     let base16colorspace=256 |
+                \     let g:base16_shell_path="~/.dotfiles/base16/base16-shell/scripts" |
                 \     source ~/.vimrc_background |
                 \ endif
 
@@ -71,7 +84,7 @@ augroup vimrc
 augroup END
 
 " Window border styles
-set fillchars=vert:│,stl:━,stlnc:─
+set fillchars=vert:│
 
 " Better indent colors for base16 dark colorscheme
 " (The autocmds preserve our colors even if the colorscheme changes)
@@ -85,11 +98,15 @@ augroup END
 " EOL possibilities: ↲↵↩⤶
 set listchars=eol:↩,tab:▸-,trail:~,extends:>,precedes:<,space:·
 set list
-" Muted colors for invisible characters
+
 augroup vimrc
+    " Muted colors for invisible characters
     autocmd VimEnter,ColorScheme * :highlight SpecialKey ctermfg=19
     autocmd VimEnter,ColorScheme * :highlight NonText ctermfg=19
 augroup END
+
+" Turn off all folds by default
+set nofoldenable
 
 
 """"""""""""""
@@ -173,6 +190,10 @@ nnoremap <Leader>nwj :botright  new<CR>
 nnoremap <Leader>nwk :topleft   new<CR>
 nnoremap <Leader>nwl :botright vnew<CR>
 
+" Faster window resizing
+nnoremap <Leader>> :exe "vertical resize " . (winwidth(0) * 4/3)<CR>
+nnoremap <Leader>< :exe "vertical resize " . (winwidth(0) * 3/4)<CR>
+
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
@@ -187,6 +208,12 @@ augroup END
 " Make netrw-v open split on the right instead of left
 let g:netrw_altv=1
 
+" Split line under cursor (opposite of J)
+nnoremap K i<CR><Esc>l
+
+" Remap Ctrl+Slash to comment in insert mode
+inoremap <C-_> <C-o>:Commentary<CR>
+
 """""""""""""""""""""
 "  Plugin Settings  "
 """""""""""""""""""""
@@ -195,7 +222,7 @@ let g:netrw_altv=1
 
 " Run rspec with color forced on, through spring, asynchronously, sending
 " output to the quickfix window
-let g:rspec_command = ":AsyncRun spring rspec --color --tty {spec}"
+let g:rspec_command = ":AsyncRun bin/rspec --color --tty {spec}"
 
 " Configure vim-indent-guides
 let g:indent_guides_guide_size = 1
