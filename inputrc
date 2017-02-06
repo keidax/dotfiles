@@ -27,3 +27,26 @@ set skip-completed-text on
 
 # Pasted code is not run automatically
 set enable-bracketed-paste on
+
+# Turn on vi mode
+set editing-mode vi
+# Vi mode keymaps
+$if mode=vi
+    set keymap vi-command
+    "gg": beginning-of-history
+    "G": end-of-history
+    set keymap vi-insert
+    "jk": vi-movement-mode
+    "\C-l": clear-screen
+    "\C-w": backward-kill-word
+    # "\C-p": history-search-backward
+$endif
+
+# Vi mode strings
+$if Bash
+    set show-mode-in-prompt on
+    set vi-ins-mode-string \1\e[34;1m\2(i) \1\e[0m\2
+    set vi-cmd-mode-string \1\e[35;1m\2(c) \1\e[0m\2
+$else
+
+$endif
