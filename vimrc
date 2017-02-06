@@ -20,6 +20,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'jiangmiao/auto-pairs'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 """""""""""""
@@ -213,6 +214,10 @@ nnoremap K i<CR><Esc>l
 
 " Remap Ctrl+Slash to comment in insert mode
 inoremap <C-_> <C-o>:Commentary<CR>
+
+" fzf mapping
+nnoremap <C-p> :FZF<CR>
+nnoremap <Leader>p :FZF<CR>
 
 """""""""""""""""""""
 "  Plugin Settings  "
