@@ -22,6 +22,7 @@
     ~/.inputrc: inputrc
     ~/.config/rofi/config: rofi
     ~/.config/termite/config: termite
+    ~/.config/yamllint/config: yamllint
     # Add scripts to the ~/bin/ directory
     ~/bin/detect_utf: bin/detect-utf.sh
     ~/bin/outside-ip: bin/outside-ip.sh
