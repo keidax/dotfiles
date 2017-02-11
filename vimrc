@@ -68,6 +68,8 @@ augroup END
 "  Visual  "
 """"""""""""
 
+" Set up highlight colors and attributes
+" (The autocmds preserve our colors even if the colorscheme changes)
 augroup vimrc
     " Use matching colorscheme from terminal theme, only on startup
     autocmd VimEnter *
@@ -77,45 +79,46 @@ augroup vimrc
                 \     source ~/.vimrc_background |
                 \ endif
 
-    " Make background transparent
+    " Transparent background colors
     autocmd VimEnter,ColorScheme * :highlight Normal ctermbg=none
-
-    " Transparent split backgrounds
     autocmd VimEnter,ColorScheme * :highlight VertSplit ctermbg=none
     autocmd VimEnter,ColorScheme * :highlight StatusLineNC ctermbg=none
-augroup END
 
-" Window border styles
-set fillchars=vert:│
-
-" Better indent colors for base16 dark colorscheme
-" (The autocmds preserve our colors even if the colorscheme changes)
-let g:indent_guides_auto_colors = 0
-augroup vimrc
+    " Better indent guide colors for base16 dark colorscheme
     autocmd VimEnter,Colorscheme * :highlight IndentGuidesOdd  ctermbg=19 ctermfg=18
     autocmd VimEnter,Colorscheme * :highlight IndentGuidesEven ctermbg=18 ctermfg=19
+
+    " Muted colors for invisible characters
+    autocmd VimEnter,ColorScheme * :highlight SpecialKey ctermfg=19
+    autocmd VimEnter,ColorScheme * :highlight NonText ctermfg=19
+
+    " Muted colors for vertical borders
+    autocmd VimEnter,ColorScheme * :highlight VertSplit ctermfg=8
+
+    " Muted colors and underline for inactive statuslines
+    autocmd VimEnter,ColorScheme * :highlight StatusLineNC cterm=italic,underline ctermfg=8
+    " Bold emphasis for active statusline
+    autocmd VimEnter,ColorScheme * :highlight StatusLine cterm=bold
+
+    " Italicised comments
+    autocmd VimEnter,ColorScheme * :highlight Comment cterm=italic
+    autocmd VimEnter,ColorScheme * :highlight Todo cterm=italic
+
+    " Red highlight for extra whitespace
+    " TODO better-whitespace should set this automatically
+    autocmd VimEnter,ColorScheme * :highlight ExtraWhitespace ctermbg=red
 augroup END
 
+" Skinny vertical borders
+set fillchars=vert:│
+
 " Display invisible characters
-" EOL possibilities: ↲↵↩⤶
+" EOL alternatives: ↲↵↩⤶
 set listchars=eol:↩,tab:▸-,trail:~,extends:>,precedes:<,space:·
 
 " Force escape sequences for italics, instead of messing with terminfo defs
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
-
-augroup vimrc
-    " Muted colors for invisible characters
-    autocmd VimEnter,ColorScheme * :highlight SpecialKey ctermfg=19
-    autocmd VimEnter,ColorScheme * :highlight NonText ctermfg=19
-
-    " Muted colors for inactive statuslines
-    autocmd VimEnter,ColorScheme * :highlight StatusLineNC cterm=italic,underline
-    autocmd VimEnter,ColorScheme * :highlight StatusLine cterm=bold
-
-    " Italicised comments
-    autocmd VimEnter,ColorScheme * :highlight Comment cterm=italic
-augroup END
 
 " Turn off all folds by default
 set nofoldenable
@@ -244,6 +247,8 @@ let g:rspec_command = ":AsyncRun bin/rspec --color --tty {spec}"
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 2
+" Allow our own indent guide colors to take effect
+let g:indent_guides_auto_colors = 0
 
 let g:ac_smooth_scroll_du_sleep_time_msec=1
 let g:ac_smooth_scroll_fb_sleep_time_msec=1
