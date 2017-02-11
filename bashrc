@@ -20,3 +20,6 @@ BASE16_SHELL="$HOME/.dotfiles/base16/base16-shell/"
 
 # Get dircolors
 eval "$(dircolors ~/.dircolors)"
+
+# Add bindings
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
