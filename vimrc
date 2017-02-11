@@ -150,6 +150,13 @@ augroup vimrc
                 \ endif
 augroup END
 
+" Expand and format XML by selecting it and pressing <Leader><Shift-X>
+function! XMLLint() range
+    execute a:firstline . ',' . a:lastline . '!xmllint --format --recover -'
+endfunction
+
+vnoremap <Leader>X !xmllint --format --recover -<CR>
+
 
 """"""""""""""
 "  Mappings  "
