@@ -22,6 +22,7 @@ Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'ervandew/supertab'
 Plug 'yonchu/accelerated-smooth-scroll'
+Plug 'w0rp/ale'
 call plug#end()
 
 """""""""""""
@@ -233,6 +234,11 @@ inoremap <C-_> <C-o>:Commentary<CR>
 nnoremap <C-p> :FZF<CR>
 nnoremap <Leader>p :FZF<CR>
 
+" ALE mappings
+nmap <silent> [w <Plug>(ale_previous_wrap)
+nmap <silent> ]w <Plug>(ale_next_wrap)
+
+
 """""""""""""""""""""
 "  Plugin Settings  "
 """""""""""""""""""""
@@ -252,3 +258,18 @@ let g:indent_guides_auto_colors = 0
 
 let g:ac_smooth_scroll_du_sleep_time_msec=1
 let g:ac_smooth_scroll_fb_sleep_time_msec=1
+
+" ALE settings
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''
+
+" GitGutter settings
+augroup vimrc
+    autocmd VimEnter,Colorscheme * :highlight GitGutterChange cterm=bold
+    autocmd VimEnter,Colorscheme * :highlight GitGutterChangeDelete cterm=bold
+augroup END
+let g:gitgutter_sign_removed = '▁▁'
+let g:gitgutter_sign_removed_first_line = '▔▔'
+let g:gitgutter_sign_added = '' "octicons (shifted in nerd font)
+let g:gitgutter_sign_modified = '~~'
+let g:gitgutter_sign_modified_removed = '≃≃'
