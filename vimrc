@@ -20,9 +20,9 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'jiangmiao/auto-pairs'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-Plug 'ervandew/supertab'
 Plug 'yonchu/accelerated-smooth-scroll'
 Plug 'w0rp/ale'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 call plug#end()
 
 """""""""""""
@@ -142,6 +142,12 @@ augroup vimrc
     autocmd FileType xml,xsd,xslt setlocal expandtab shiftwidth=2 softtabstop=2
     " Formatting with xmllint
     autocmd FileType xml,xsd,xslt setlocal equalprg=xmllint\ --format\ --recover\ -
+
+    " Set fallback omnicompletion
+    autocmd Filetype *
+                \ if &omnifunc == '' |
+                \     setlocal omnifunc=syntaxcomplete#Complete |
+                \ endif
 augroup END
 
 
