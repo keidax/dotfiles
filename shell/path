@@ -5,7 +5,10 @@ if [ "$OS" = "Darwin" ] && [ -d "$(brew --prefix)/opt/coreutils/libexec/gnubin" 
     PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
 fi
 
-# Include user's local bin if it exists
+# Include user's local bin folder(s)
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
@@ -16,6 +19,11 @@ PATH=".:$PATH"
 # Include RVM
 if [ -d "$HOME/.rvm" ] ; then
     PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+fi
+
+# Include RubyGems bin folder
+if command -v gem >/dev/null 2>&1 ; then
+    PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
 fi
 
 export PATH
