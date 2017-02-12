@@ -1,7 +1,7 @@
 ! Reasonable xterm settings
 
 ! Use a nice default font
-xterm*faceName: "DejaVu Sans Mono"
+xterm*faceName: "Knack Nerd Font"
 xterm*faceSize: 13
 
 ! Large scrollback

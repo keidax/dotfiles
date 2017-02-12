@@ -27,6 +27,8 @@
     ~/bin/detect_utf: bin/detect-utf.sh
     ~/bin/outside-ip: bin/outside-ip.sh
     ~/bin/git-clean-merged: bin/git-clean-merged.sh
+    # Add local fonts
+    ~/.local/share/fonts/Knack: fonts/Knack
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
