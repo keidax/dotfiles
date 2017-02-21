@@ -23,6 +23,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 Plug 'yonchu/accelerated-smooth-scroll'
 Plug 'w0rp/ale'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'step-/securemodelines'
 call plug#end()
 
 """""""""""""
@@ -286,3 +287,7 @@ let g:gitgutter_sign_removed_first_line = '▔▔'
 let g:gitgutter_sign_added = '' "octicons (shifted in nerd font)
 let g:gitgutter_sign_modified = '~~'
 let g:gitgutter_sign_modified_removed = '≃≃'
+
+" Securemodelines options
+set nomodeline " Silence warning on startup
+let g:secure_modelines_verbose = 1
