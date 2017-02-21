@@ -47,6 +47,7 @@
         ap = add --patch
 
         c = commit --verbose
+        ca = commit --verbose --amend
 
         co = checkout
         com = checkout master
@@ -59,6 +60,8 @@
 
         l = log --graph --date=relative --pretty=format:'%Cred%>|(16)%h %C(auto)%s%d %Cgreen%ad %C(dim white)%cN'
 
+        pfwl = push --force-with-lease
+
         riom = rebase -i origin/master
 
         sl = stash list
@@ -66,3 +69,5 @@
         ss = stash save
 
         s = status -sb
+
+        su = submodule update --init --recursive
