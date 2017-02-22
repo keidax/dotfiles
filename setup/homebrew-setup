@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# A setup script to install Homebrew packages, including Homebrew and Homebrew
+# Bundle if necessary.
+
+if [ "$OS" != "Darwin" ]; then
+    echo "You are not running macOS!"
+    exit 1
+fi
+
+command_exists ruby || { echo "Ruby is not installed!"; exit 1; }
+
+command_exists brew || {
+    # Try to install Homebrew if it's missing
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    command_exists brew || { echo 'Homebrew installation failed!'; exit 1; }
+}
+
+brew_bundle_exists() {
+    brew commands --quiet | grep '^bundle$'
+}
+
+brew_bundle_exists || {
+    brew tap Homebrew/bundle
+    brew_bundle_exists || { echo 'Homebrew Bundle installation failed!'; exit 1; }
+}
+
+brew bundle --file=~/.dotfiles/Brewfile

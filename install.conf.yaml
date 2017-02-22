@@ -6,6 +6,10 @@
     link:
       create: true
       relink: true
+    shell:
+      stdin: true
+      stdout: true
+      stderr: true
 
 - link:
     # Create a symlink to this folder
@@ -35,16 +39,9 @@
     - [git update-index --skip-worktree local/*, Untracking local files in Git]
     - description: Installing vim plugins via vim-plug
       command: vim +PlugInstall +qall
-      stdin: true
-      stdout: true
-      stderr: true
     - description: Installing Python packages via Pip
       command: pip install --user -r ./pip_requirements.txt
-      stdin: true
-      stdout: true
-      stderr: true
     - description: Installing Ruby gems via RubyGems
       command: gem install --file ./Gemfile
-      stdin: true
-      stdout: true
-      stderr: true
+    - description: Installing packages via Homebrew
+      command: ./setup/homebrew-setup

@@ -12,3 +12,9 @@ function_exists() {
     return $?
 }
 export -f function_exists
+
+command_exists() {
+    # POSIX-compliant, portable method to check if something is on the path
+    command -v "$1" &> /dev/null
+}
+export -f command_exists
