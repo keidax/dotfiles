@@ -16,10 +16,11 @@ done
 
 # Base16 Shell
 BASE16_SHELL="$HOME/.dotfiles/base16/base16-shell/"
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+[ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+    eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 # Get dircolors
 eval "$(dircolors ~/.dircolors)"
 
-# Add bindings
+# Add fzf bindings
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
