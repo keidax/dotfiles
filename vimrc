@@ -24,6 +24,7 @@ Plug 'yonchu/accelerated-smooth-scroll'
 Plug 'w0rp/ale'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'step-/securemodelines'
+Plug 'tpope/vim-eunuch'
 call plug#end()
 
 """""""""""""
