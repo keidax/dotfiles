@@ -278,6 +278,8 @@ let g:ac_smooth_scroll_fb_sleep_time_msec=1
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
 
+let g:ale_linters_sh_shellcheck_exclusions = 'SC1090'
+
 " GitGutter settings
 augroup vimrc
     autocmd VimEnter,Colorscheme * :highlight GitGutterChange cterm=bold
