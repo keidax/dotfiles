@@ -18,7 +18,8 @@ PATH=".:$PATH"
 
 # Include RVM
 if [ -d "$HOME/.rvm" ] ; then
-    PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+    # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+    PATH="$PATH:$HOME/.rvm/bin"
 fi
 
 # Include RubyGems bin folder
