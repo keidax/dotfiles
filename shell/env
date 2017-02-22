@@ -88,3 +88,7 @@ if [ "$OS" = "Linux" ]; then
     -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
     export _JAVA_OPTIONS
 fi
+
+# Get non-interactive bash shells to use our functions
+BASH_ENV="$HOME/.bashrc"
+export BASH_ENV

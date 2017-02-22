@@ -3,11 +3,14 @@
 # ~/.bashrc
 #
 
+# Load functions (necessary for some non-interactive scripts)
+[ -f "$HOME/.dotfiles/bash/functions" ] && . "$HOME/.dotfiles/bash/functions"
+
 # If not running interactively, don't do anything else
 [[ $- != *i* ]] && return
 
 # Source bash-specific files
-for file in ~/.dotfiles/bash/{options,prompt,aliases,functions,completions} ; do
+for file in ~/.dotfiles/bash/{options,prompt,aliases,completions} ; do
     [ -f "${file}" ] && . "${file}"
 done
 
