@@ -7,6 +7,8 @@ rules:
   brackets:
     max-spaces-inside: 1
 
+  document-start: disable
+
   # 100 chars should be enough, but don't fail if a line is longer
   line-length:
     max: 100
