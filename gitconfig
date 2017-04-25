@@ -63,6 +63,7 @@
         pfwl = push --force-with-lease
 
         riom = rebase -i origin/master
+        rom = rebase origin/master
 
         sl = stash list
         sp = stash pop
