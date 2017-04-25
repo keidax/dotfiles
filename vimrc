@@ -22,9 +22,16 @@ Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'yonchu/accelerated-smooth-scroll'
 Plug 'w0rp/ale'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'step-/securemodelines'
 Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'vim-utils/vim-man'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 """""""""""""
@@ -125,6 +132,8 @@ let &t_ZR="\e[23m"
 
 " Turn off all folds by default
 set nofoldenable
+" For filetypes with folding enabled, don't start completely folded
+set foldlevelstart=2
 
 
 """"""""""""""
@@ -135,7 +144,7 @@ augroup vimrc
     autocmd FileType make setlocal noexpandtab shiftwidth=0 tabstop=8 softtabstop=0
 
     " Use standard indentation and line size for Ruby files
-    autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 colorcolumn=101
+    autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 colorcolumn=101 foldenable
 
     " Use recommended 2-space indent for YAML files
     autocmd FileType yaml setlocal expandtab shiftwidth=2 softtabstop=2
