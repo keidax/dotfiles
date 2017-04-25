@@ -11,7 +11,6 @@ Plug 'tpope/vim-endwise'
 Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
 Plug 'gisphm/vim-gitignore'
 Plug 'skywind3000/asyncrun.vim', { 'on': 'AsyncRun' }
-Plug 'powerman/vim-plugin-AnsiEsc', { 'on': 'AnsiEsc' }
 " Let vim-closetag work with XSD, XSLT files
 let g:closetag_filenames = "*.xml,*.html,*.xsd,*.xsl"
 Plug 'alvan/vim-closetag'
@@ -239,10 +238,30 @@ map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>r :call RunLastSpec()<CR>
 
+" Load quickfix window in a new tab, and reuse that tab
+set switchbuf=usetab,newtab
+
+function! SwitchOrOpenQF()
+    for i in range(tabpagenr('$'))
+        for j in range(tabpagewinnr(i + 1, '$'))
+            let l:found_qf = gettabwinvar(i + 1, j + 1, "quickfix_title")
+            let l:fil = @%
+            if found_qf != "" && found_qf =~# @%
+                exe "tabn ".(i+1)
+                exe (j+1)."wincmd w"
+                set nowrap
+                return
+            endif
+        endfor
+    endfor
+    " Didn't find the right quickfix window, so open a new one
+    vertical botright copen 70
+    set nowrap
+endfunction
+
 " When running vim-rspec
 augroup vimrc
-    autocmd User AsyncRunStart tab copen
-    autocmd User AsyncRunStart :AnsiEsc
+    autocmd User AsyncRunStart :call SwitchOrOpenQF()
 augroup END
 
 " Make netrw-v open split on the right instead of left
