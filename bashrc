@@ -24,3 +24,6 @@ eval "$(dircolors ~/.dircolors)"
 
 # Add fzf bindings
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Add quick foreground binding
+bind -x '"\C-f":"fg"'
