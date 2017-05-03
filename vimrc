@@ -128,6 +128,9 @@ augroup vimrc
     autocmd VimEnter,ColorScheme * :highlight Comment cterm=italic
     autocmd VimEnter,ColorScheme * :highlight Todo cterm=italic
 
+    " More visible operators
+    autocmd VimEnter,Colorscheme * :highlight Operator ctermfg=1
+
     " Red highlight for extra whitespace
     " TODO better-whitespace should set this automatically
     autocmd VimEnter,ColorScheme * :highlight ExtraWhitespace ctermbg=red
@@ -210,7 +213,7 @@ augroup vimrc
     autocmd FileType xml,xsd,xslt setlocal equalprg=xmllint\ --format\ --recover\ -
 
     " Set fallback omnicompletion
-    autocmd Filetype *
+    autocmd FileType *
                 \ if &omnifunc == '' |
                 \     setlocal omnifunc=syntaxcomplete#Complete |
                 \ endif
@@ -368,7 +371,7 @@ let g:ale_sign_warning = ''
 " Various linter settings
 let g:ale_ruby_rubocop_options = '-D -R -E'
 
-let g:ale_linters_sh_shellcheck_exclusions = 'SC1090'
+let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
 
 " GitGutter settings
 augroup vimrc
