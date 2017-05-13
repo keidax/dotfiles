@@ -24,6 +24,8 @@
     ~/.gitconfig: gitconfig
     ~/.gitconfig.local: local/gitconfig.local
     ~/.inputrc: inputrc
+    ~/.hammerspoon: hammerspoon
+    ~/.config/karabiner/karabiner.json: karabiner/karabiner.json
     ~/.config/rofi/config: rofi
     ~/.config/termite/config: termite
     ~/.config/yamllint/config: yamllint
