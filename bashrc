@@ -27,3 +27,4 @@ eval "$(dircolors ~/.dircolors)"
 
 # Add quick foreground binding
 bind -x '"\C-f":"fg"'
+bind -m "vi-command" -x '"\C-f":"fg"'
