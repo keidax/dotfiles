@@ -50,6 +50,7 @@
         ca = commit --verbose --amend
 
         co = checkout
+        cob = checkout -b
         com = checkout master
 
         d = diff
