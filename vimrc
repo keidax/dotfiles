@@ -235,6 +235,7 @@ nnoremap <Leader>< :exe "vertical resize " . (winwidth(0) * 3/4)<CR>
 
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>T :silent call system("spring stop") \| :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>r :call RunLastSpec()<CR>
 
@@ -290,7 +291,7 @@ nmap <silent> ]w <Plug>(ale_next_wrap)
 
 " Run rspec with color forced on, through spring, asynchronously, sending
 " output to the quickfix window
-let g:rspec_command = ":AsyncRun bin/rspec --color --tty {spec}"
+let g:rspec_command = ":AsyncRun bin/rspec {spec}"
 
 " Configure vim-indent-guides
 let g:indent_guides_guide_size = 1
