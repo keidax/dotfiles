@@ -1,4 +1,12 @@
+local func = hs.fnutils
+local eventTypes = hs.eventtap.event.types
+
 log = hs.logger.new("config", "debug")
+
+function keyIsSynthetic(event)
+    local flags = event:getRawEventData().CGEventData.flags
+    return (flags & 0x20000000) ~= 0
+end
 
 function simultaneousKeyPress(mods, keys, replacement, delay)
     -- Default delay value
@@ -23,26 +31,37 @@ function simultaneousKeyPress(mods, keys, replacement, delay)
     -- Declare eventtap beore initialization
     local keyEventTap
 
-    local function passThroughKeyEvent(evt)
+    local function passThroughKeyEvent(event)
         keyEventTap:stop()
-        evt:post()
+        event:post()
         keyEventTap:start()
     end
 
-    -- If the key is pending release, release it
-    local function releaseKeyIfPending(keysym)
+    -- If the key is pending release, release it. If a table is provided, append to the table,
+    -- otherwise post the event.
+    -- Return true if a key was released, false otherwise.
+    local function releaseKeyIfPending(keysym, tbl)
         if pendingKeys[keysym] then
             local downEvent = hs.eventtap.event.newKeyEvent(simulMods, keysym, true)
-            passThroughKeyEvent(downEvent)
+            if tbl == nil then
+                passThroughKeyEvent(downEvent)
+            else
+                table.insert(tbl, downEvent)
+            end
             pendingKeys[keysym] = false
+            return true
         end
+        return false
     end
 
-    -- Release all pending keys and reset pending state
-    local function releaseAllPendingKeys()
+    -- Release all pending keys and reset pending state.
+    -- Return true if any keys were released, false otherwise.
+    local function releaseAllPendingKeys(tbl)
+        local released = false
         for key, _ in pairs(pendingKeys) do
-            releaseKeyIfPending(key)
+            released = releaseKeyIfPending(key, tbl) or released
         end
+        return released
     end
 
     -- Reset pending state without releasing keys
@@ -54,21 +73,23 @@ function simultaneousKeyPress(mods, keys, replacement, delay)
 
     -- Return true if all keys are pending release
     local function allKeysPending()
-        local pendingAll = true
-        for _, isPending in pairs(pendingKeys) do
-            pendingAll = pendingAll and isPending
-        end
-        return pendingAll
+        return func.every(pendingKeys, function(isPending)
+            return isPending
+        end)
     end
 
-    keyEventTap = hs.eventtap.new({keyDown, keyUp}, function(evt)
-        local keysym = hs.keycodes.map[evt:getKeyCode()]
-        local isDown = evt:getType() == keyDown
+    keyEventTap = hs.eventtap.new({keyDown, keyUp}, function(event)
+        local keysym = hs.keycodes.map[event:getKeyCode()]
+        local isDown = event:getType() == keyDown
+        if keyIsSynthetic(event) then
+            return false
+        end
 
+        local returnKeys = {}
         local shouldDeleteEvent = false
+        local shouldDuplicateEvent = false
 
-        if simulKeys[keysym] and evt:getFlags():containExactly(simulMods) then
-            log.d("got " .. keysym .. (isDown and " down" or " up"))
+        if simulKeys[keysym] and event:getFlags():containExactly(simulMods) then
             if isDown then
                 pendingKeys[keysym] = true
                 hs.timer.doAfter(delay, function () releaseKeyIfPending(keysym) end)
@@ -76,22 +97,30 @@ function simultaneousKeyPress(mods, keys, replacement, delay)
 
                 -- Test for substitution
                 if allKeysPending() then
-                    -- log.d("All keys down!")
                     hs.eventtap.keyStrokes(replacement)
                     cancelAllPendingKeys()
-                    -- print_r(pendingKeys)
                 end
             else -- keyUp
-                releaseKeyIfPending(keysym)
+                shouldDuplicateEvent = releaseKeyIfPending(keysym, returnKeys)
             end
-            log.d((shouldDelete and "not " or "") .. "posting")
         else -- different key or modifiers
             if isDown then
-                releaseAllPendingKeys()
+                shouldDuplicateEvent = releaseAllPendingKeys(returnKeys)
             end
         end
 
-        return shouldDeleteEvent
+        shouldDeleteEvent = shouldDeleteEvent or shouldDuplicateEvent
+
+        if shouldDuplicateEvent then
+            local flagList = {}
+            for k, _ in pairs(event:getFlags()) do
+                table.insert(flagList, k)
+            end
+            local copyOfEvent = hs.eventtap.event.newKeyEvent(flagList, keysym, isDown)
+            table.insert(returnKeys, copyOfEvent)
+        end
+
+        return shouldDeleteEvent, returnKeys
     end):start()
     return keyEventTap
 end
