@@ -5,7 +5,7 @@ brew 'coreutils'
 brew 'git'
 brew 'htop', args: ['with-ncurses']
 brew 'shellcheck'
-# brew 'vim'
+brew 'vim'
 brew 'watch'
 
 tap 'homebrew/dupes'
