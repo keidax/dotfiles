@@ -306,6 +306,8 @@ let g:ac_smooth_scroll_fb_sleep_time_msec=1
 " ALE settings
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
+" Various linter settings
+let g:ale_ruby_rubocop_options = '-D -R -E'
 
 let g:ale_linters_sh_shellcheck_exclusions = 'SC1090'
 
