@@ -28,15 +28,6 @@ function simultaneousKeyPress(mods, keys, replacement, delay)
     local keyDown = hs.eventtap.event.types["keyDown"]
     local keyUp = hs.eventtap.event.types["keyUp"]
 
-    -- Declare eventtap beore initialization
-    local keyEventTap
-
-    local function passThroughKeyEvent(event)
-        keyEventTap:stop()
-        event:post()
-        keyEventTap:start()
-    end
-
     -- If the key is pending release, release it. If a table is provided, append to the table,
     -- otherwise post the event.
     -- Return true if a key was released, false otherwise.
@@ -44,7 +35,7 @@ function simultaneousKeyPress(mods, keys, replacement, delay)
         if pendingKeys[keysym] then
             local downEvent = hs.eventtap.event.newKeyEvent(simulMods, keysym, true)
             if tbl == nil then
-                passThroughKeyEvent(downEvent)
+                downEvent:post()
             else
                 table.insert(tbl, downEvent)
             end
@@ -78,7 +69,7 @@ function simultaneousKeyPress(mods, keys, replacement, delay)
         end)
     end
 
-    keyEventTap = hs.eventtap.new({keyDown, keyUp}, function(event)
+    local keyEventTap = hs.eventtap.new({keyDown, keyUp}, function(event)
         local keysym = hs.keycodes.map[event:getKeyCode()]
         local isDown = event:getType() == keyDown
         if keyIsSynthetic(event) then
@@ -120,6 +111,8 @@ function simultaneousKeyPress(mods, keys, replacement, delay)
             table.insert(returnKeys, copyOfEvent)
         end
 
+        -- Seems to be necessary to prevent keystrokes from occasionally disappearing
+        hs.timer.usleep(100)
         return shouldDeleteEvent, returnKeys
     end):start()
     return keyEventTap
