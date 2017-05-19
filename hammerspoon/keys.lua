@@ -50,9 +50,9 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
     local keyTimers = {}
 
     -- Our timer posts a new keydown event for the keysym, without turning off the pendingKeys
-    -- entry. This allows our eventtap handler to treat timer-flagged events differently. We need
-    -- this workaround to avoid a race condition that may occur if the timer fires while a
-    -- different keyDown event is being handled by the eventtaps.
+    -- entry. This allows our eventtap handler to treat timer-flagged events differently. We
+    -- need this workaround to avoid a race condition that may occur if the timer fires while
+    -- a different keyDown event is being handled by the eventtaps.
     local function timerForKey(keysym)
         return timer.doAfter(delay, function ()
             if pendingKeys[keysym] then
@@ -123,6 +123,7 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
     local keyEventTap = eventtap.new({types.keyDown, types.keyUp}, function(evt)
         local keysym = keyCodes[evt:getKeyCode()]
         local isDown = evt:getType() == types.keyDown
+        -- Simply ignore any events with the ignoreFlag set.
         if eventHasFlag(evt, eventFlags.ignoreFlag) then
             return false
         end
@@ -134,13 +135,20 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
         if simulKeys[keysym] and evt:getFlags():containExactly(simulMods) then
             if isDown then
                 if eventHasFlag(evt, eventFlags.timerFlag) then
-                    -- If this event has been fired from a timer, we don't want to start _another_
-                    -- timer, so we'll pass it through and mark it as completed.
-                    pendingKeys[keysym] = false
+                    if pendingKeys[keysym] then
+                        -- If this event has been fired from a timer, we don't want to start
+                        -- _another_ timer, so we'll pass it through and mark it as completed.
+                        pendingKeys[keysym] = false
+                    else
+                        -- If this event is coming from a timer, but the key is no longer
+                        -- pending, then another keyEvent must have already been in the
+                        -- stream. In this case, we can just delete this event.
+                        shouldDeleteEvent = true
+                    end
                 else
                     -- If this event is raw from the user, we need a slight delay to check for
-                    -- the other "simultaneous" events. So, we delete this event, and start a timer
-                    -- that will fire if the user doesn't press another key.
+                    -- the other "simultaneous" events. So, we delete this event, and start a
+                    -- timer that will fire if the user doesn't press another key.
                     pendingKeys[keysym] = true
                     keyTimers[keysym]:start()
                     shouldDeleteEvent = true
