@@ -9,7 +9,7 @@ local keyCodes = hs.keycodes.map
 local inspect = hs.inspect
 local timer = hs.timer
 
-local log = hs.logger.new("keys", "debug")
+log = hs.logger.new("keys", "info")
 
 local eventFlags = {
     ignoreFlag  = 0x00010000,
@@ -48,6 +48,8 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
     local pendingKeys = {}
     -- Store delay timers for each key
     local keyTimers = {}
+    -- Remember which keyUp events need to be `post`ed
+    local timerFiredForKey = {}
 
     -- Our timer posts a new keydown event for the keysym, without turning off the pendingKeys
     -- entry. This allows our eventtap handler to treat timer-flagged events differently. We
@@ -60,6 +62,7 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
                 local evt = event.newKeyEvent(simulMods, keysym, true)
                 eventAddFlag(evt, eventFlags.timerFlag)
                 evt:post()
+                timerFiredForKey[keysym] = true
             end
         end):stop()
     end
@@ -68,13 +71,14 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
         simulKeys[key] = true
         pendingKeys[key] = false
         keyTimers[key] = timerForKey(key)
+        timerFiredForKey[key] = false
     end
 
     local function createKeyEvent(keysym, isDown)
         if isDown == nil then isDown = true end
 
         local keyEvent = event.newKeyEvent(simulMods, keysym, isDown)
-        return eventAddFlag(keyEvent, eventFlags.ignoreFlag)
+        return keyEvent
     end
 
     -- If the key is pending release, release it. If a table is provided, append to the table,
@@ -84,7 +88,7 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
         if pendingKeys[keysym] then
             local downEvent = createKeyEvent(keysym)
             if tbl == nil  then
-                timer.usleep(100)
+                eventAddFlag(downEvent, eventFlags.ignoreFlag) -- TODO: necessary?
                 downEvent:post()
             else
                 table.insert(tbl, downEvent)
@@ -144,12 +148,14 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
                         -- pending, then another keyEvent must have already been in the
                         -- stream. In this case, we can just delete this event.
                         shouldDeleteEvent = true
+                        timerFiredForKey[keysym] = false
                     end
                 else
                     -- If this event is raw from the user, we need a slight delay to check for
                     -- the other "simultaneous" events. So, we delete this event, and start a
                     -- timer that will fire if the user doesn't press another key.
                     pendingKeys[keysym] = true
+                    timerFiredForKey[keysym] = false
                     keyTimers[keysym]:start()
                     shouldDeleteEvent = true
 
@@ -160,17 +166,46 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
                     end
                 end
             else -- keyUp
-                releaseKeyIfPending(keysym, returnKeys)
-                -- Regardless of if we just released a key, we have to generate an up event to
-                -- match the generated down events.
-                shouldDuplicateEvent = true
+                -- We have to generate an up event using the same method as the down event.
+                if releaseKeyIfPending(keysym, returnKeys) then
+                    -- If we just released the key, that means the timer did not fire and no
+                    -- other key was pressed. So, we'll just return an artifical keyUp
+                    -- TODO: is this necessary? Seems to work fine without.
+                    shouldDuplicateEvent = true
+                elseif timerFiredForKey[keysym] then
+                    -- The key wasn't pending, but the timer was fired, so we want to generate
+                    -- the keyUp the same way, via post
+                    timerFiredForKey[keysym] = false
+                    shouldDeleteEvent = true
+                    local upEvent = createKeyEvent(keysym, false)
+                    -- We don't need to see this event again, so add the ignore flag
+                    eventAddFlag(upEvent, eventFlags.ignoreFlag):post()
+                else
+                    -- The key wasn't pending, and the timer didn't go off either. This means
+                    -- a different keyDown event must have triggered this key. So, we'll just
+                    -- return an artificial keyUp.
+                    -- TODO: is this necessary? Seems to work fine without.
+                    shouldDuplicateEvent = true
+                end
             end
         else -- different key or modifiers
             if isDown then
                 -- If any keys get released, we have to send the current event again.
                 -- Otherwise, the current event will finish propagating through the various
                 -- eventtaps before the downEvent(s) we are releasing.
-                shouldDuplicateEvent = releaseAllPendingKeys(returnKeys)
+                if releaseAllPendingKeys(returnKeys) then
+                    if eventHasFlag(evt, eventFlags.timerFlag) then
+                        -- If we released some keys but we are handling an outside event fired
+                        -- by a timer, then the outside timer fired before our own timer. We
+                        -- should let that event go first, so we add it to the beginning of the
+                        -- table.
+                        table.insert(returnKeys, 1, evt)
+                        shouldDeleteEvent = true
+                    else
+                        -- TODO: is this necessary? Seems to work fine without.
+                        -- shouldDuplicateEvent = true
+                    end
+                end
             end
         end
 
