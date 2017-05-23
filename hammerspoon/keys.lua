@@ -150,7 +150,7 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
                         shouldDeleteEvent = true
                         timerFiredForKey[keysym] = false
                     end
-                else
+                elseif evt:getProperty(properties.keyboardEventAutorepeat) == 0 then
                     -- If this event is raw from the user, we need a slight delay to check for
                     -- the other "simultaneous" events. So, we delete this event, and start a
                     -- timer that will fire if the user doesn't press another key.
@@ -164,6 +164,13 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
                         eventtap.keyStrokes(replacement)
                         cancelAllPendingKeys()
                     end
+                else
+                    -- This is an autorepeating event -- just send it through. We do want to
+                    -- turn off the timerFired flag, so that the keyUp after a series of
+                    -- repeating keyDowns doesn't get posted.
+                    -- TODO: check if timer is still pending?
+                    -- TODO: add option for autorepeating substitution
+                    timerFiredForKey[keysym] = false
                 end
             else -- keyUp
                 -- We have to generate an up event using the same method as the down event.
