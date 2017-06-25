@@ -149,6 +149,46 @@ set nofoldenable
 " For filetypes with folding enabled, don't start completely folded
 set foldlevelstart=2
 
+set foldtext=MyFoldText()
+" Inspired by https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
+function! MyFoldText()
+    let l:padding = &foldcolumn + &number * &numberwidth
+
+    " Test if any signs exist
+    redir => l:signs
+      execute 'silent sign place buffer='.bufnr('%')
+    redir End
+    let l:padding += l:signs =~# 'id=' ? 2 : 0
+
+    let l:windowwidth = winwidth(0) - l:padding
+    let l:windowwidth = min([l:windowwidth, 100])
+
+    let l:starttext = substitute(getline(v:foldstart), '\s*$', '', '')
+    let l:endtext = substitute(getline(v:foldend), '^\s*', '', '')
+    if v:foldend - v:foldstart > 1
+        let l:midtext = ' … '
+    else
+        let l:midtext = ' '
+    endif
+    let l:fulltext = l:starttext . l:midtext . l:endtext
+
+    let l:numtext = '[' . (v:foldend - v:foldstart - 1) . ']'
+
+    let l:spacesize = l:windowwidth - strwidth(l:fulltext) - strwidth(l:numtext)
+
+    " If we have an overflow from two combined lines, just trim the first line
+    if l:spacesize < 0
+        let l:numtext = '[' . (v:foldend - v:foldstart) . ']'
+        let l:fulltextlen = l:windowwidth - strwidth(l:numtext) - 3 " 3 = strwidth(' … ')
+        let l:fulltext = strcharpart(l:starttext, 0, l:fulltextlen) . ' …'
+        let l:spacesize = l:windowwidth - strwidth(l:fulltext) - strwidth(l:numtext)
+    endif
+
+    let l:spacetext = repeat(' ', l:spacesize)
+
+    return l:fulltext . l:spacetext . l:numtext
+endfunction
+
 
 """"""""""""""
 "  Filetype  "
