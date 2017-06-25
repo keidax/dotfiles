@@ -5,7 +5,7 @@
 
 if [ "$OS" != "Darwin" ]; then
     echo "You are not running macOS!"
-    exit 1
+    exit 0
 fi
 
 command_exists ruby || { echo "Ruby is not installed!"; exit 1; }
