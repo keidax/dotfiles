@@ -31,6 +31,18 @@ Plug 'tpope/vim-repeat'
 Plug 'vim-utils/vim-man'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
+Plug 'mileszs/ack.vim'
+" Better performance on e.g. large Ruby files
+Plug 'Konfekt/FastFold'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
+
+" Set modern alt/meta mappings: most modern terminals will output Alt-x as Esc-x
+" instead of setting the meta bit. This plugin updates Vim's expectations.
+"
+" In iTerm2, this requires the "Esc+" setting for the Option keys (since Macs
+" use Option+key for different characters).
+Plug 'drmikehenry/vim-fixkey'
 call plug#end()
 
 """""""""""""
@@ -72,6 +84,9 @@ set wildmode=longest:full,full
 augroup vimrc
     autocmd TabClosed * :tabprevious
 augroup END
+
+" New windows open where expected
+set splitbelow splitright
 
 """"""""""""
 "  Visual  "
@@ -142,8 +157,9 @@ augroup vimrc
     " Use real tabs in makefiles, and turn off all spaces
     autocmd FileType make setlocal noexpandtab shiftwidth=0 tabstop=8 softtabstop=0
 
-    " Use standard indentation and line size for Ruby files
-    autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 colorcolumn=101 foldenable
+    " Use standard indentation and line size for Ruby files. The old RE engine
+    " also seems to give better performance for Ruby syntax highlighting
+    autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 colorcolumn=101 foldenable regexpengine=1
 
     " Use recommended 2-space indent for YAML files
     autocmd FileType yaml setlocal expandtab shiftwidth=2 softtabstop=2
@@ -239,6 +255,9 @@ map <Leader>T :silent call system("spring stop") \| :call RunCurrentSpecFile()<C
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>r :call RunLastSpec()<CR>
 
+" Search for visually-selected text
+vnoremap / y/\V<C-R>=escape(@",'/\')<CR><CR>
+
 " Load quickfix window in a new tab, and reuse that tab
 set switchbuf=usetab,newtab
 
@@ -256,7 +275,7 @@ function! SwitchOrOpenQF()
         endfor
     endfor
     " Didn't find the right quickfix window, so open a new one
-    vertical botright copen 70
+    belowright copen
     set nowrap
 endfunction
 
@@ -300,8 +319,8 @@ let g:indent_guides_start_level = 2
 " Allow our own indent guide colors to take effect
 let g:indent_guides_auto_colors = 0
 
-let g:ac_smooth_scroll_du_sleep_time_msec=1
-let g:ac_smooth_scroll_fb_sleep_time_msec=1
+let g:ac_smooth_scroll_du_sleep_time_msec=0
+let g:ac_smooth_scroll_fb_sleep_time_msec=0
 
 " ALE settings
 let g:ale_sign_error = ''
@@ -322,6 +341,16 @@ let g:gitgutter_sign_added = '' "octicons (shifted in nerd font)
 let g:gitgutter_sign_modified = '~~'
 let g:gitgutter_sign_modified_removed = '≃≃'
 
+" Ruby syntax settings
+let g:ruby_fold = 1
+let g:ruby_foldable_groups = 'ALL'
+
 " Securemodelines options
 set nomodeline " Silence warning on startup
 let g:secure_modelines_verbose = 1
+
+" better-whitespace options
+" This doesn't seem to actually turn off current line highlighting, but it
+" does give a necessary performance boost.
+let g:current_line_whitespace_disabled_soft = 1
+let g:better_whitespace_verbosity = 1
