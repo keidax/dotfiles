@@ -47,3 +47,5 @@
       command: gem install --file ./Gemfile
     - description: Installing packages via Homebrew
       command: ./setup/homebrew-setup
+    - description: Linking diff-highlight script
+      command: ./setup/diff-highlight-link

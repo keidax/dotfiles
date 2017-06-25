@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# A setup script to provide the diff-highlight script for prettier git diffs.
+# This script is usually included in git installations, but not on the path by
+# default.
+
+command_exists diff-highlight && exit 0
+
+# Observed locations:
+# macOS homebrew:
+# /usr/local/share/git-core/contrib/diff-highlight/
+#
+# ChromeOS chromebrew:
+# /usr/local/share/git-core/contrib/diff-highlight/
+#
+# Ubuntu yakkety chroot:
+# /usr/share/doc/git/contrib/diff-highlight/
+#
+# Arch:
+# /usr/share/git/diff-highlight
+
+for location in /usr/{local/,}share/{,doc/}git{,-core}/{contrib/,}diff-highlight; do
+    [ -f "$location/diff-highlight" ] && {
+        ln -s "$location/diff-highlight" ~/bin/
+        unset location
+        exit 0
+    }
+done
+
+unset location
+echo "Could not locate diff-highlight script!"; exit 1
