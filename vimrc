@@ -28,7 +28,9 @@ Plug 'step-/securemodelines'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
-Plug 'vim-utils/vim-man'
+if !has('nvim')
+    Plug 'vim-utils/vim-man'
+endif
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
 Plug 'mileszs/ack.vim'
@@ -266,8 +268,12 @@ vnoremap <ESC> <nop>
 let mapleader = " "
 
 " Quickly edit and source vimrc
-nnoremap <Leader>ev :tabedit $MYVIMRC<CR>
 nnoremap <Leader>sv :source $MYVIMRC<CR>
+if !has('nvim')
+    nnoremap <Leader>ev :$tabedit $MYVIMRC<CR>
+else
+    nnoremap <Leader>ev :$tabedit $MYVIMRC \| vsp ~/.vimrc<CR>
+endif
 
 " Faster ESC
 inoremap jk <ESC>

@@ -16,6 +16,7 @@
     ~/.dotfiles: ''
     ~/.vim: vim
     ~/.vimrc: vimrc
+    ~/.config/nvim/init.vim: nvim
     ~/.bashrc: bashrc
     ~/.profile: profile
     ~/.Xresources: Xresources
