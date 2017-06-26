@@ -212,6 +212,9 @@ augroup vimrc
     " Formatting with xmllint
     autocmd FileType xml,xsd,xslt setlocal equalprg=xmllint\ --format\ --recover\ -
 
+    " Use shell folding
+    autocmd FileType sh setlocal foldenable
+
     " Set fallback omnicompletion
     autocmd FileType *
                 \ if &omnifunc == '' |
