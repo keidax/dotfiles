@@ -44,7 +44,9 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 "
 " In iTerm2, this requires the "Esc+" setting for the Option keys (since Macs
 " use Option+key for different characters).
-Plug 'drmikehenry/vim-fixkey'
+if !has('nvim')
+    Plug 'drmikehenry/vim-fixkey'
+endif
 call plug#end()
 
 """""""""""""

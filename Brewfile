@@ -6,6 +6,7 @@ brew 'git'
 brew 'htop', args: ['with-ncurses']
 brew 'shellcheck'
 brew 'vim'
+brew 'neovim'
 brew 'watch'
 
 tap 'homebrew/dupes'

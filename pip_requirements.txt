@@ -1,2 +1,3 @@
 vim-vint >=0.3.11
 yamllint >=1.6.0
+neovim

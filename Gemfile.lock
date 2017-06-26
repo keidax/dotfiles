@@ -2,6 +2,9 @@ GEM
   remote: https://api.rubygems.org/
   specs:
     ast (2.3.0)
+    msgpack (1.1.0)
+    neovim (0.4.0)
+      msgpack (~> 1.0)
     parser (2.4.0.0)
       ast (~> 2.2)
     powerpack (0.1.1)
@@ -19,4 +22,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  neovim
   rubocop
