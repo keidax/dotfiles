@@ -27,7 +27,7 @@ function jobscount(){
     stopped_cnt=$(jobs -s | wc -l)
     running_cnt=$(jobs -r | wc -l)
     if [ "$stopped_cnt" -eq 0 ] && [ "$running_cnt" -eq 0 ]; then
-	_NUM_JOBS=""
+        _NUM_JOBS=""
     else
         _NUM_JOBS="$running_cnt|$stopped_cnt "
     fi
