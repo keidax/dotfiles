@@ -219,6 +219,20 @@ augroup vimrc
                 \ endif
 augroup END
 
+
+""""""""""""
+"  Syntax  "
+""""""""""""
+
+" Ruby syntax settings
+let g:ruby_fold = 1
+let g:ruby_foldable_groups = 'ALL'
+
+" Shell syntax settings
+let g:sh_fold_enabled = 7   " Enable all types of folding
+let g:is_posix = 1          " We can assume /bin/sh is POSIX-compatible
+
+
 " Expand and format XML by selecting it and pressing <Leader><Shift-X>
 function! XMLLint() range
     execute a:firstline . ',' . a:lastline . '!xmllint --format --recover -'
@@ -370,7 +384,6 @@ let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
 " Various linter settings
 let g:ale_ruby_rubocop_options = '-D -R -E'
-
 let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
 
 " GitGutter settings
@@ -383,10 +396,6 @@ let g:gitgutter_sign_removed_first_line = '▔▔'
 let g:gitgutter_sign_added = '' "octicons (shifted in nerd font)
 let g:gitgutter_sign_modified = '~~'
 let g:gitgutter_sign_modified_removed = '≃≃'
-
-" Ruby syntax settings
-let g:ruby_fold = 1
-let g:ruby_foldable_groups = 'ALL'
 
 " Securemodelines options
 set nomodeline " Silence warning on startup
