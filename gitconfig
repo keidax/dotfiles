@@ -73,6 +73,7 @@
         l = log --graph --date=relative --pretty=format:'%Cred%>|(16)%h %C(auto)%s%d %Cgreen%ad %C(dim white)%cN'
 
         pfwl = push --force-with-lease
+        push-first = ! git push --set-upstream origin $(git symbolic-ref --short HEAD)
 
         riom = rebase -i origin/master
         rom = rebase origin/master
