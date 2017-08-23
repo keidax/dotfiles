@@ -47,6 +47,8 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 if !has('nvim')
     Plug 'drmikehenry/vim-fixkey'
 endif
+Plug 'szw/vim-maximizer'
+Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
 
 """""""""""""
@@ -288,9 +290,14 @@ vnoremap jk <ESC>
 " Commandline mode (<ESC> from a mapping actually executes the command!)
 cnoremap jk <C-c>
 
+function! g:CheckCmdWin()
+    return getcmdwintype() !=# ''
+endfunction
 " Navigate splits
 noremap <Leader>j <C-w>j
-noremap <Leader>k <C-w>k
+" The command window is a special case, we can't navigate out and must quit
+" instead. This mapping is the only one likely to be called in this case.
+noremap <silent> <expr> <Leader>k g:CheckCmdWin() ? ":q\<CR>" : "\<C-w>k"
 noremap <Leader>h <C-w>h
 noremap <Leader>l <C-w>l
 
@@ -326,10 +333,14 @@ nnoremap <Leader>< :exe "vertical resize " . (winwidth(0) * 3/4)<CR>
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>T :silent call system("spring stop") \| :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>S :silent call system("spring stop") \| :call RunNearestSpec()<CR>
 map <Leader>r :call RunLastSpec()<CR>
 
 " Search for visually-selected text
 vnoremap / y/\V<C-R>=escape(@",'/\')<CR><CR>
+
+nnoremap zh 5zh
+nnoremap zl 5zl
 
 " Load quickfix window in a new tab, and reuse that tab
 set switchbuf=usetab,newtab
@@ -374,7 +385,19 @@ nnoremap <Leader>p :FZF<CR>
 nmap <silent> [w <Plug>(ale_previous_wrap)
 nmap <silent> ]w <Plug>(ale_next_wrap)
 
+" Close extraneous or temporary windows
+function! g:CloseExtra()
+    pclose
+    cclose
+    lclose
+    " helpclose
+endfunction
 
+nnoremap <silent> <Leader>w :call g:CloseExtra()<CR>
+nnoremap <Leader>W :tabc<CR>
+
+nnoremap <Leader>m :MaximizerToggle!<CR>
+vnoremap <Leader>m :MaximizerToggle!<CR>gv
 """""""""""""""""""""
 "  Plugin Settings  "
 """""""""""""""""""""
@@ -423,3 +446,10 @@ let g:secure_modelines_verbose = 1
 " does give a necessary performance boost.
 let g:current_line_whitespace_disabled_soft = 1
 let g:better_whitespace_verbosity = 1
+
+" Maximizer settings
+" Turn off mappings since we don't want them in insert mode
+let g:maximizer_set_default_mapping = 0
+
+" Splitjoin settings
+let g:splitjoin_ruby_hanging_args = 0
