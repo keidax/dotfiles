@@ -1,2 +1,2 @@
-gem 'rubocop', require: false
 gem 'neovim', require: false
+gem 'rubocop', require: false

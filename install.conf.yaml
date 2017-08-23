@@ -41,9 +41,9 @@
     - [git submodule update --init --recursive, Installing submodules]
     - [git update-index --skip-worktree local/*, Untracking local files in Git]
     - description: Installing vim plugins via vim-plug
-      command: vim +PlugInstall +qall
+      command: nvim +PlugInstall +qall
     - description: Installing Python packages via Pip
-      command: pip install --user -r ./pip_requirements.txt
+      command: pip2 install --upgrade -r ./pip_requirements.txt
     - description: Installing Ruby gems via RubyGems
       command: gem install --file ./Gemfile
     - description: Installing packages via Homebrew

@@ -26,3 +26,7 @@ brew_bundle_exists || {
 }
 
 brew bundle --file=~/.dotfiles/Brewfile
+
+# Remove old brew versions and cached downloads
+brew cleanup
+brew cask cleanup --outdated
