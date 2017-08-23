@@ -57,7 +57,7 @@ augroup vimrc
     " Clear previously-set local autocommands
     au!
     " Reload vimrc on write
-    autocmd BufWritePost $MYVIMRC,*/{.,}dotfiles/vimrc :source $MYVIMRC | doauto VimEnter
+    autocmd BufWritePost $MYVIMRC,*/{.,}vimrc :source $MYVIMRC | doauto VimEnter
 augroup END
 
 " Turn on mouse support
@@ -219,6 +219,9 @@ augroup vimrc
     " Use shell folding
     autocmd FileType sh setlocal foldenable
 
+    " Use JSON folding
+    autocmd FileType json setlocal foldenable foldmethod=syntax
+
     " Set fallback omnicompletion
     autocmd FileType *
                 \ if &omnifunc == '' |
@@ -239,6 +242,8 @@ let g:ruby_foldable_groups = 'ALL'
 let g:sh_fold_enabled = 7   " Enable all types of folding
 let g:is_posix = 1          " We can assume /bin/sh is POSIX-compatible
 
+
+let g:ft_man_folding_enable = 1 " Fold manpages with foldmethod=indent foldnestmax=1.
 
 " Expand and format XML by selecting it and pressing <Leader><Shift-X>
 function! XMLLint() range
@@ -386,7 +391,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 2
 " Allow our own indent guide colors to take effect
 let g:indent_guides_auto_colors = 0
-let g:indent_guides_exclude_filetypes = ['help', 'man']
+let g:indent_guides_exclude_filetypes = ['diff', 'gitcommit', 'help', 'man']
 
 let g:ac_smooth_scroll_du_sleep_time_msec=0
 let g:ac_smooth_scroll_fb_sleep_time_msec=0

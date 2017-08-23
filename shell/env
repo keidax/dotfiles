@@ -47,8 +47,10 @@ fi
 export OS
 export DISTRO
 
-EDITOR=vim
+EDITOR=nvim
 export EDITOR
+
+export MANPAGER="nvim -c 'set ft=man' -"
 
 if [ -z "$LESS" ]; then
     # Rundown of options:
@@ -56,6 +58,8 @@ if [ -z "$LESS" ]; then
     # M: more verbose prompt (like C-g)
     # q: ring the bell less often (causes hangs!)
     # R: output color sequences in raw form
+    # F: quit if the file fits on one screen
+    # X: Don't clear the screen on quit
     LESS=-iMR
     export LESS
 fi
