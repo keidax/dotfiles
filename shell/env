@@ -50,7 +50,8 @@ export DISTRO
 EDITOR=nvim
 export EDITOR
 
-export MANPAGER="nvim -c 'set ft=man' -"
+MANPAGER=nvman
+export MANPAGER
 
 if [ -z "$LESS" ]; then
     # Rundown of options:

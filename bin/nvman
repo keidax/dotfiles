@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# A script to use Neovim as a man pager. It can handle the man file as
+# an argument or on stdin.
+
+page_cmd() {
+    exec nvim -c "set ft=man" "$@"
+}
+
+if [ -t 0 ]; then
+    # If stdin is a terminal, no data is being piped in, so man file
+    # must be an argument
+    if [ $# -eq 0 ]; then
+        echo "No man page given!"
+        exit 1
+    fi
+
+    page_cmd "$@"
+else
+    # The man file is on stdin
+    page_cmd -
+fi
