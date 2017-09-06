@@ -6,9 +6,18 @@ if [ -z "${CHROOT_NAME:-}" ] && [ -r /etc/debian_chroot ]; then
     export CHROOT_NAME
 fi
 
-# Determine OS (`uname` should be POSIX-safe)
-# Expected results are Linux and Darwin
-OS=$(uname)
+# Determine OS
+# Expected results are Linux, Darwin, and Android
+if [ $(uname -o 2>/dev/null) ]; then
+    case "$(uname -o)" in
+        "GNU/Linux") OS="Linux" ;;
+        "Darwin") OS="Darwin" ;;
+        "Android") OS="Android" ;;
+    esac
+else
+    # Fallback (`uname` should be POSIX-safe)
+    OS=$(uname)
+fi
 
 # Try several different methods to determine the Linux distro
 if [ "${OS}" = "Linux" ]; then
@@ -39,6 +48,16 @@ if [ "${OS}" = "Linux" ]; then
     # Chrome OS has the /etc/lsb-release file, but not the lsb_release command
     elif ([ -f /etc/lsb-release ] && grep -q -i "chromeos" /etc/lsb-release); then
         DISTRO="ChromeOS"
+    elif [ -f /system/build.prop ]; then
+        OS="Android"
+    else
+        DISTRO="Unknown"
+    fi
+fi
+
+if [ "${OS}" = "Android" ]; then
+    if command -v termux-info >/dev/null 2>&1; then
+        DISTRO="Termux"
     else
         DISTRO="Unknown"
     fi
