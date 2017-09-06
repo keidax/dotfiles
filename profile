@@ -9,6 +9,26 @@ for file in "env" "path" ; do
     [ -f ~/.dotfiles/shell/"${file}" ] && . ~/.dotfiles/shell/"${file}"
 done
 
+# Handle termux environment
+if [ "$OS" = "Android" -a "$DISTRO" = "Termux" ]; then
+    # POSIX alternative to pgrep
+    is_running () {
+        ps -Aocomm= | grep -q "$@"
+    }
+
+    if is_running "proot"; then
+        echo "[chroot is running]"
+    else
+        echo "[Starting chroot...]" && exec termux-chroot
+    fi
+
+    if is_running "sshd"; then
+        echo "[sshd is running]"
+    else
+        echo "[Starting sshd...]" && sshd && echo "[OK]"
+    fi
+fi
+
 # Source .bashrc if we're running bash
 ([ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]) && . "$HOME/.bashrc"
 
