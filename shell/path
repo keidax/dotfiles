@@ -1,31 +1,37 @@
 #!/bin/sh
 
+# Some helper functions
+prepend_to_path () {
+    if [ -d "$1" ] ; then
+        PATH="$1:$PATH"
+    fi
+}
+
+append_to_path () {
+    if [ -d "$1" ] ; then
+        PATH="$PATH:$1"
+    fi
+}
+
 # Add brew coreutils without 'g' prefix
-if [ "$OS" = "Darwin" ] && [ -d "$(brew --prefix)/opt/coreutils/libexec/gnubin" ] ; then
-    PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+if [ "$OS" = "Darwin" ] ; then
+    prepend_to_path "$(brew --prefix)/opt/coreutils/libexec/gnubin"
 fi
 
 # Include user's local bin folder(s)
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
+prepend_to_path "$HOME/.local/bin"
+prepend_to_path "$HOME/bin"
 
 # Include current dir on PATH
 PATH=".:$PATH"
 
-# Include RVM
-if [ -d "$HOME/.rvm" ] ; then
-    # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-    PATH="$PATH:$HOME/.rvm/bin"
-fi
-
 # Include RubyGems bin folder
 if command -v gem >/dev/null 2>&1 ; then
-    PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
+    append_to_path "$(ruby -e 'print Gem.user_dir')/bin"
 fi
+
+# Ensure RVM is at the end of PATH
+append_to_path "$HOME/.rvm/bin"
 
 export PATH
 
