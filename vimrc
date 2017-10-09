@@ -94,6 +94,13 @@ augroup END
 " New windows open where expected
 set splitbelow splitright
 
+" Read changed files into vim
+set autoread
+" Automatically check for changed files
+augroup vimrc
+    autocmd FocusGained,BufEnter * checktime
+augroup END
+
 """"""""""""
 "  Visual  "
 """"""""""""
@@ -397,6 +404,11 @@ nnoremap <Leader>W :tabc<CR>
 
 nnoremap <Leader>m :MaximizerToggle!<CR>
 vnoremap <Leader>m :MaximizerToggle!<CR>gv
+
+" Vim doesn't normally fire events on suspend/resume, so hack around this and
+" fire FocusLost/Gained events.
+nnoremap <C-z> :doautocmd FocusLost \| suspend \| doautocmd FocusGained <CR>
+
 """""""""""""""""""""
 "  Plugin Settings  "
 """""""""""""""""""""
