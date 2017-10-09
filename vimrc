@@ -140,6 +140,9 @@ augroup vimrc
     " Red highlight for extra whitespace
     " TODO better-whitespace should set this automatically
     autocmd VimEnter,ColorScheme * :highlight ExtraWhitespace ctermbg=red
+
+    " Different highlight for current quickfix item
+    autocmd VimEnter,Colorscheme * :highlight QuickFixLine cterm=bold ctermbg=18
 augroup END
 
 " Skinny vertical borders
@@ -278,11 +281,7 @@ let mapleader = " "
 
 " Quickly edit and source vimrc
 nnoremap <Leader>sv :source $MYVIMRC<CR>
-if !has('nvim')
-    nnoremap <Leader>ev :$tabedit $MYVIMRC<CR>
-else
-    nnoremap <Leader>ev :$tabedit $MYVIMRC \| vsp ~/.vimrc<CR>
-endif
+nnoremap <Leader>ev :$tabedit ~/.vimrc<CR>
 
 " Faster ESC
 inoremap jk <ESC>
@@ -414,7 +413,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 2
 " Allow our own indent guide colors to take effect
 let g:indent_guides_auto_colors = 0
-let g:indent_guides_exclude_filetypes = ['diff', 'gitcommit', 'help', 'man']
+let g:indent_guides_exclude_filetypes = ['diff', 'git', 'gitcommit', 'help', 'man']
 
 let g:ac_smooth_scroll_du_sleep_time_msec=0
 let g:ac_smooth_scroll_fb_sleep_time_msec=0
