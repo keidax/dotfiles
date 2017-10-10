@@ -23,7 +23,6 @@ Plug 'yonchu/accelerated-smooth-scroll'
 Plug 'w0rp/ale'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'step-/securemodelines'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
@@ -49,6 +48,18 @@ if !has('nvim')
 endif
 Plug 'szw/vim-maximizer'
 Plug 'AndrewRadev/splitjoin.vim'
+
+let b:ycm_cmd = './install.py'
+let b:ycm_cmd .= ' --clang-completer'
+if executable('rustc')
+    let b:ycm_cmd .= ' --racer-completer'
+endif
+" In nvim, we can run the YCM install script in a term window, so it doesn't
+" block the whole editor.
+if has('nvim')
+    let b:ycm_cmd = ":new | call termopen('" . b:ycm_cmd . "')"
+endif
+Plug 'Valloric/YouCompleteMe', { 'do': b:ycm_cmd }
 call plug#end()
 
 """""""""""""
