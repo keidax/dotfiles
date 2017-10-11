@@ -48,6 +48,7 @@ if !has('nvim')
 endif
 Plug 'szw/vim-maximizer'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'wvffle/vimterm'
 
 let b:ycm_cmd = './install.py'
 let b:ycm_cmd .= ' --clang-completer'
@@ -419,6 +420,10 @@ vnoremap <Leader>m :MaximizerToggle!<CR>gv
 " Vim doesn't normally fire events on suspend/resume, so hack around this and
 " fire FocusLost/Gained events.
 nnoremap <C-z> :doautocmd FocusLost \| suspend \| doautocmd FocusGained <CR>
+
+nnoremap <silent> <A-v> :call vimterm#toggle() <CR>
+tnoremap <silent> <A-v> <C-\><C-n>:call vimterm#toggle()<CR>
+tnoremap <Esc> <C-\><C-n>
 
 """""""""""""""""""""
 "  Plugin Settings  "
