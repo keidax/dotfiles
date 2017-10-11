@@ -35,6 +35,7 @@
     ~/bin/outside-ip: bin/outside-ip.sh
     ~/bin/git-clean-merged: bin/git-clean-merged.sh
     ~/bin/nvman: bin/nvman
+    ~/bin/keycode-debug: bin/keycode-debug.sh
     # Add local fonts
     ~/.local/share/fonts/Knack: fonts/Knack
 
