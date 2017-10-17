@@ -1,14 +1,8 @@
 #!/bin/bash
 ## Prompt setup ##
 
-# Use nice symbols if our terminal can handle them, otherwise define fallbacks
-if ~/.dotfiles/bin/detect-utf.sh; then
-    CMD_SYMBOL=λ
-    TRIM_DIR_SYMBOL=…
-else
-    CMD_SYMBOL=$
-    TRIM_DIR_SYMBOL=..
-fi
+CMD_SYMBOL=λ
+TRIM_DIR_SYMBOL=…
 
 # Generate color variables
 # Using tput is more portable than writing the terminal codes directly.
