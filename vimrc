@@ -4,7 +4,6 @@ Plug 'tpope/vim-sensible'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -37,6 +36,11 @@ Plug 'mileszs/ack.vim'
 Plug 'Konfekt/FastFold'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
+
+" Bring some of neovim's goodies like focus reporting and cursor shaping to
+" terminal vim. Also activates bracketed paste and full mouse support, and
+" handles `:checktime` on focus.
+Plug 'wincent/terminus'
 
 " Set modern alt/meta mappings: most modern terminals will output Alt-x as Esc-x
 " instead of setting the meta bit. This plugin updates Vim's expectations.
@@ -74,9 +78,6 @@ augroup vimrc
     autocmd BufWritePost $MYVIMRC,*/{.,}vimrc :source $MYVIMRC | doauto VimEnter
 augroup END
 
-" Turn on mouse support
-set mouse=a
-
 " Set indentation settings
 set expandtab       " Spaces are used instead of tab characters
 set tabstop=8       " This should be 8 for compatibility purposes
@@ -106,11 +107,10 @@ augroup END
 " New windows open where expected
 set splitbelow splitright
 
-" Read changed files into vim
-set autoread
-" Automatically check for changed files
+" Terminus handles the FocusGained events, but we also want to check when
+" leaving a terminal buffer.
 augroup vimrc
-    autocmd FocusGained,BufEnter * checktime
+    autocmd BufEnter * checktime
 augroup END
 
 """"""""""""
