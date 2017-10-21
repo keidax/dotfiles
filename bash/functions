@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# Functions exported for use by bash
 
 # Quick way to run calculations from the prompt
 = () {
@@ -7,14 +9,8 @@
 }
 declare -fx =
 
-function_exists() {
-    declare -f -F $1 > /dev/null
-    return $?
-}
-export -f function_exists
+source ~/.dotfiles/shell/functions
 
-command_exists() {
-    # POSIX-compliant, portable method to check if something is on the path
-    command -v "$1" &> /dev/null
-}
+# Function exporting only works in Bash
 export -f command_exists
+export -f is_running

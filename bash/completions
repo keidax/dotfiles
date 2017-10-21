@@ -16,7 +16,7 @@ if ! shopt -oq posix; then
 fi
 
 # Git completions
-if function_exists __git_complete; then
+if command_exists __git_complete; then
     __git_complete g __git_main
 
 fi

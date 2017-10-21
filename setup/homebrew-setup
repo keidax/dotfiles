@@ -1,7 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # A setup script to install Homebrew packages, including Homebrew and Homebrew
 # Bundle if necessary.
+
+# Load common functions
+. ~/.dotfiles/shell/functions
 
 if [ "$OS" != "Darwin" ]; then
     echo "You are not running macOS!"

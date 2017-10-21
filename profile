@@ -5,17 +5,12 @@
 # System-wide settings and variable, non-bash-specific
 
 # Source general shell files
-for file in "env" "path" ; do
+for file in "env" "path" "functions" ; do
     [ -f ~/.dotfiles/shell/"${file}" ] && . ~/.dotfiles/shell/"${file}"
 done
 
 # Handle termux environment
-if [ "$OS" = "Android" -a "$DISTRO" = "Termux" ]; then
-    # POSIX alternative to pgrep
-    is_running () {
-        ps -Aocomm= | grep -q "$@"
-    }
-
+if [ "$OS" = "Android" ] && [ "$DISTRO" = "Termux" ]; then
     if is_running "proot"; then
         echo "[chroot is running]"
     else
@@ -41,4 +36,4 @@ if [ "${DISTRO}" = "Arch" ]; then
 fi
 
 # Load RVM into a shell session *as a function*
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+[ -s "$HOME/.rvm/scripts/rvm" ] && . "$HOME/.rvm/scripts/rvm"
