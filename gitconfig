@@ -19,6 +19,8 @@
 [diff]
         # Even smarter about hunk boundaries (experimental, >=git 2.11)
         indentHeuristic = true
+        # Show full submodule diffs
+        submodule = diff
 [pager]
         # Highlight line differences when shown in a pager
         log = diff-highlight | less
