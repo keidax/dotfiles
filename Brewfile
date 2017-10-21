@@ -28,3 +28,5 @@ cask 'iterm2-beta'
 
 tap 'caskroom/fonts'
 cask 'font-hack-nerd-font'
+
+tap 'buo/cask-upgrade'
