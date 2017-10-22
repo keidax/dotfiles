@@ -85,6 +85,6 @@
         ss = stash save
         sw = stash show
 
-        s = status -sb
+        s = status
 
         su = submodule update --init --recursive

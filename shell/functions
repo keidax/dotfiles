@@ -11,3 +11,12 @@ command_exists() {
 is_running () {
     ps -Aocomm= | grep -q "$@"
 }
+
+# Print git status quicker than ever
+git () {
+    if [ $# -gt 0 ]; then
+        command git "$@"
+    else
+        command git status --short --branch
+    fi
+}
