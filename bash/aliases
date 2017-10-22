@@ -1,27 +1,3 @@
-#!/bin/sh
+#!/bin/bash
 
-# When using sudo, use alias expansion
-alias sudo='sudo -E '
-
-# ls personalizations
-alias ls='ls --quoting-style=literal --color=auto -F'
-alias ll='ls -l'
-alias la='ls -al'
-alias lh='ll -h'
-alias l='ll'
-
-# Quicker folder movement
-alias ..='cd ..'
-alias ...='cd ../..'
-
-alias syssus='systemctl suspend'
-alias syshib='systemctl hibernate'
-
-# Set TERM to something reasonable over ssh
-alias ssh='TERM=xterm-256color ssh '
-
-# Display dd progress by default
-alias dd='dd status=progress'
-
-# Git aliases
-alias g='git'
+[[ -f ~/.dotfiles/shell/aliases ]] && source ~/.dotfiles/shell/aliases
