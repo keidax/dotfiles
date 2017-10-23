@@ -406,6 +406,20 @@ nnoremap K i<CR><Esc>l
 " Remap Ctrl+Slash to comment in insert mode
 inoremap <C-_> <C-o>:Commentary<CR>
 
+function! g:EnterWithoutComments()
+    let l:orig_formatting = &formatoptions
+    set formatoptions -=r
+
+    " Enter insert mode, and perform our <Enter>. :normal implicitly adds
+    " <Esc> at the end of an insert command, and <Enter><Esc> removes any
+    " autoindenting, so we insert a dummy space to keep the indent.
+    execute "normal! a\<CR>\<Space>\<BS>"
+
+    let &formatoptions = l:orig_formatting
+endfunction
+" <Alt-Enter> on a comment line will force the next line to be regular text.
+inoremap <silent> <A-CR> <C-c>:call EnterWithoutComments()<CR>I
+
 " fzf mapping
 nnoremap <C-p> :FZF<CR>
 nnoremap <Leader>p :FZF<CR>
