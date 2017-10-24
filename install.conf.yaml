@@ -38,10 +38,16 @@
     ~/bin/keycode-debug: bin/keycode-debug.sh
     # Add local fonts
     ~/.local/share/fonts/Knack: fonts/Knack
+    # Zsh files
+    ~/.zshenv: zsh/zshenv
+    ~/.zprofile: zsh/zprofile
+    ~/.zshrc: zsh/zshrc
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     - [git update-index --skip-worktree local/*, Untracking local files in Git]
+    - description: Installing zsh plugins via zplug
+      command: ./setup/zsh-setup
     - description: Installing vim plugins via vim-plug
       command: nvim +PlugInstall +qall
     - description: Installing Python packages via Pip

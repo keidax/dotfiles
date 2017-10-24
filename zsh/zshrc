@@ -1,0 +1,12 @@
+# Apply base16 colorscheme first
+source ~/.dotfiles/base16/base16-shell/base16-shell.plugin.zsh
+
+typeset -U config_files
+config_files=(~/.dotfiles/zsh/configs/*.zsh)
+
+for file in $config_files; do
+    source $file
+done
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

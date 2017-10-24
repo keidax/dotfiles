@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# Load zplug installation, if zsh is installed
+
+# Load common functions
+. ~/.dotfiles/shell/functions
+
+zplug_install_url="https://raw.githubusercontent.com/zplug/installer/27e930022a6ac91b2b31698991784a30c0663b45/installer.zsh"
+
+command_exists zsh || { echo "Zsh is not installed"; exit 0; }
+
+[ -n "$ZSH_VERSION" ] || {
+    echo "Switching to Zsh"
+    exec zsh ~/.dotfiles/setup/zsh-setup
+}
+
+# This likely isn't interactive zsh, so zplug won't load automatically
+[ -f "$HOME/.zplug/init.zsh" ] && . ~/.zplug/init.zsh
+
+command_exists zplug || {
+    curl -fsSL --proto-redir -all,https "$zplug_install_url" | zsh
+    [ -f "$HOME/.zplug/init.zsh" ] && . ~/.zplug/init.zsh
+    command_exists zplug || { echo "Zplug installation failed!"; exit 1; }
+}
+
+# Load just our zplug config
+[ -f "$HOME/.dotfiles/zsh/configs/zplug.zsh" ] && . ~/.dotfiles/zsh/configs/zplug.zsh
+
+command_exists zplug && {
+    zplug check --verbose || zplug install
+}

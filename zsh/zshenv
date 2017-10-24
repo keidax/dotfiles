@@ -1,0 +1,5 @@
+# We want these shared functions for scripting
+emulate sh -c "source ~/.dotfiles/shell/functions"
+
+# Prevent duplicates in these paths
+typeset -U path cdpath fpath manpath
