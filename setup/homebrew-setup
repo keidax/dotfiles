@@ -4,7 +4,7 @@
 # Bundle if necessary.
 
 # Load common functions
-. ~/.dotfiles/shell/functions
+. "$DOTDIR/shell/functions"
 
 if [ "$OS" != "Darwin" ]; then
     echo "You are not running macOS!"
@@ -28,7 +28,7 @@ brew_bundle_exists || {
     brew_bundle_exists || { echo 'Homebrew Bundle installation failed!'; exit 1; }
 }
 
-brew bundle --file=~/.dotfiles/Brewfile
+brew bundle --file="$DOTDIR/Brewfile"
 
 # Remove old brew versions and cached downloads
 brew cleanup

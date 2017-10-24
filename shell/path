@@ -26,7 +26,7 @@ prepend_to_path "$HOME/bin"
 PATH=".:$PATH"
 
 # Include RubyGems bin folder
-if command -v gem >/dev/null 2>&1 ; then
+if command_exists gem ; then
     append_to_path "$(ruby -e 'print Gem.user_dir')/bin"
 fi
 

@@ -9,8 +9,9 @@
 }
 declare -fx =
 
-source ~/.dotfiles/shell/functions
+[ -f "$DOTDIR/shell/functions" ] && . "$DOTDIR/shell/functions"
 
 # Function exporting only works in Bash
 export -f command_exists
 export -f is_running
+export -f source_if_exists

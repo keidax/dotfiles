@@ -14,6 +14,7 @@
 - link:
     # Create a symlink to this folder
     ~/.dotfiles: ''
+    ~/.env: shell/env
     ~/.vim: vim
     ~/.vimrc: vimrc
     ~/.config/nvim/init.vim: nvim

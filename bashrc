@@ -4,18 +4,18 @@
 #
 
 # Load functions (necessary for some non-interactive scripts)
-[ -f "$HOME/.dotfiles/bash/functions" ] && . "$HOME/.dotfiles/bash/functions"
+[ -f "$DOTDIR/bash/functions" ] && . "$DOTDIR/bash/functions"
 
 # If not running interactively, don't do anything else
 [[ $- != *i* ]] && return
 
 # Source bash-specific files
-for file in ~/.dotfiles/bash/{options,prompt,aliases,completions} ; do
-    [ -f "${file}" ] && . "${file}"
+for file in "$DOTDIR"/bash/{options,prompt,aliases,completions} ; do
+    source_if_exists "$file"
 done
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.dotfiles/base16/base16-shell/"
+BASE16_SHELL="$DOTDIR/base16/base16-shell/"
 [ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
     eval "$("$BASE16_SHELL/profile_helper.sh")"
 
@@ -23,7 +23,10 @@ BASE16_SHELL="$HOME/.dotfiles/base16/base16-shell/"
 eval "$(dircolors ~/.dircolors)"
 
 # Add fzf bindings
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+source_if_exists ~/.fzf.bash
+
+# Load RVM into a shell session *as a function*
+source_if_exists "$HOME/.rvm/scripts/rvm"
 
 # Add quick foreground binding
 bind -x '"\C-f":"fg"'

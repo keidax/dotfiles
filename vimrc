@@ -128,7 +128,7 @@ augroup vimrc
     autocmd VimEnter *
                 \ if filereadable(expand("~/.vimrc_background")) |
                 \     let base16colorspace=256 |
-                \     let g:base16_shell_path="~/.dotfiles/base16/base16-shell/scripts" |
+                \     let g:base16_shell_path=$DOTDIR . "/base16/base16-shell/scripts" |
                 \     source ~/.vimrc_background |
                 \ endif
 

@@ -9,7 +9,13 @@ command_exists() {
 
 # POSIX alternative to pgrep
 is_running () {
+    # shellcheck disable=SC2009
     ps -Aocomm= | grep -q "$@"
+}
+
+# Test and source at once
+source_if_exists () {
+    [ -f "$1" ] && . "$1"
 }
 
 # Print git status quicker than ever

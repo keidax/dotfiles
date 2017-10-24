@@ -1,14 +1,24 @@
 #!/bin/sh
+#
+# ~/.env
+#
+# Common environment variables for all shells.
+# shellcheck disable=SC2034
+
+# Export all variable assignments
+set -a
+
+# Define the common location for other dotfiles
+DOTDIR="$HOME/.dotfiles"
 
 # Set variable identifying the chroot you work in (used in prompt)
 if [ -z "${CHROOT_NAME:-}" ] && [ -r /etc/debian_chroot ]; then
     CHROOT_NAME=$(cat /etc/debian_chroot)
-    export CHROOT_NAME
 fi
 
 # Determine OS
 # Expected results are Linux, Darwin, and Android
-if [ $(uname -o 2>/dev/null) ]; then
+if [ "$(uname -o 2>/dev/null)" ]; then
     case "$(uname -o)" in
         "GNU/Linux") OS="Linux" ;;
         "Darwin") OS="Darwin" ;;
@@ -20,7 +30,7 @@ else
 fi
 
 # Try several different methods to determine the Linux distro
-if [ "${OS}" = "Linux" ]; then
+if [ "$OS" = "Linux" ]; then
     # Check for the lsb_release command
     if [ -x "$(command -v lsb_release)" ]; then
         case "$(lsb_release --id --short)" in
@@ -55,7 +65,7 @@ if [ "${OS}" = "Linux" ]; then
     fi
 fi
 
-if [ "${OS}" = "Android" ]; then
+if [ "$OS" = "Android" ]; then
     if command -v termux-info >/dev/null 2>&1; then
         DISTRO="Termux"
     else
@@ -63,14 +73,10 @@ if [ "${OS}" = "Android" ]; then
     fi
 fi
 
-export OS
-export DISTRO
-
 EDITOR=nvim
-export EDITOR
+VISUAL=$EDITOR
 
 MANPAGER=nvman
-export MANPAGER
 
 if [ -z "$LESS" ]; then
     # Rundown of options:
@@ -81,27 +87,19 @@ if [ -z "$LESS" ]; then
     # F: quit if the file fits on one screen
     # X: Don't clear the screen on quit
     LESS=-iMR
-    export LESS
 fi
 
 QT_STYLE_OVERRIDE=GTK+
-export QT_STYLE_OVERRIDE
 
 # Locale settings
 LC_ALL=en_US.UTF-8
-export LC_ALL
 LANG=en_US.UTF-8
-export LANG
 LANGUAGE=en_US.UTF-8
-export LANGUAGE
 
 # Get ibus working
 GTK_IM_MODULE=ibus
-export GTK_IM_MODULE
 XMODIFIERS=@im=ibus
-export XMODIFIERS
 QT_IM_MODULE=ibus
-export QT_IM_MODULE
 
 if [ "$OS" = "Linux" ]; then
     # Java settings
@@ -110,9 +108,10 @@ if [ "$OS" = "Linux" ]; then
     -Dswing.aatext=true \
     -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel \
     -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-    export _JAVA_OPTIONS
 fi
 
 # Get non-interactive bash shells to use our functions
-BASH_ENV="$HOME/.bashrc"
-export BASH_ENV
+[ -n "$BASH_VERSION" ] && BASH_ENV="$HOME/.bashrc"
+
+# Make sure we turn off automatic exports
+set +a

@@ -4,9 +4,12 @@
 #
 # System-wide settings and variable, non-bash-specific
 
+# Source the environment file (must come first since it defines $DOTDIR)
+[ -f "$HOME/.env" ] && . "$HOME/.env"
+
 # Source general shell files
-for file in "env" "path" "functions" ; do
-    [ -f ~/.dotfiles/shell/"${file}" ] && . ~/.dotfiles/shell/"${file}"
+for file in "functions" "path"; do
+    [ -f "$DOTDIR/shell/$file" ] && . "$DOTDIR/shell/$file"
 done
 
 # Handle termux environment
@@ -34,6 +37,3 @@ if [ "${DISTRO}" = "Arch" ]; then
     # Make sure our exit code is 0
     true
 fi
-
-# Load RVM into a shell session *as a function*
-[ -s "$HOME/.rvm/scripts/rvm" ] && . "$HOME/.rvm/scripts/rvm"

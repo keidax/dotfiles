@@ -1,5 +1,8 @@
+# Include our common environment file
+emulate sh -c "source ~/.env"
+
 # We want these shared functions for scripting
-emulate sh -c "source ~/.dotfiles/shell/functions"
+emulate sh -c "source $DOTDIR/shell/functions"
 
 # Prevent duplicates in these paths
 typeset -U path cdpath fpath manpath

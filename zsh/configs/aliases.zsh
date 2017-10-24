@@ -1,2 +1,2 @@
 # Include common aliases
-[[ -f ~/.dotfiles/shell/aliases ]] && source ~/.dotfiles/shell/aliases
+source_if_exists "$DOTDIR/shell/aliases"
