@@ -2,6 +2,13 @@
 #
 # Functions for shell scripting. Should be usable by POSIX sh, bash, and zsh.
 
+# Quick way to run calculations from the prompt
+_calc () {
+    bc -l <<-END
+	scale=10; $@
+	END
+}
+
 # POSIX-compliant, portable method to check if something is on the path
 command_exists() {
     command -v "$1" > /dev/null
@@ -26,3 +33,5 @@ git () {
         command git status --short --branch
     fi
 }
+
+# vim: ts=4

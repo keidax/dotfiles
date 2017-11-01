@@ -2,16 +2,15 @@
 #
 # Functions exported for use by bash
 
-# Quick way to run calculations from the prompt
-= () {
-    calc="$@"
-    bc -l <<< "scale=10; $calc"
-}
-declare -fx =
-
 [ -f "$DOTDIR/shell/functions" ] && . "$DOTDIR/shell/functions"
 
 # Function exporting only works in Bash
 export -f command_exists
 export -f is_running
 export -f source_if_exists
+
+# Bash won't accept '=' as an alias, but will as a function
+= () {
+    _calc "$@"
+}
+declare -fx =
