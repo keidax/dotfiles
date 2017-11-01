@@ -20,10 +20,12 @@ bindkey '^w' backward-kill-word
 
 # https://stackoverflow.com/a/35874797
 function Resume {
-    fg
-    zle push-input
-    BUFFER=""
-    zle accept-line
+    jobs %% >/dev/null 2>&1 && {
+        # zle push-input
+        fg
+        zle reset-prompt
+        # zle get-line
+    }
 }
 zle -N Resume
 bindkey '^f' Resume
