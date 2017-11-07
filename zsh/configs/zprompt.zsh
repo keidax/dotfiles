@@ -37,38 +37,6 @@ cmd_symbol="$FX[bold]%(!.#.λ)$FX[reset]"
 # to force re-evaluation of the `shrink_path` command substitution.
 PROMPT='$error_status${(e)working_directory} $job_count$cmd_symbol '
 
-# Set up VCS prompt
-autoload -Uz vcs_info
-add-zsh-hook precmd vcs_info
-
-# Only need git for now
-zstyle ':vcs_info:*' enable git
-
-zstyle ':vcs_info:*' formats \
-    "%c%u"'$_extra_git_format_str'"$FG[005]⦗$FG[002]%b$FG[005]⦘%f"
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr "$FG[002]+"
-zstyle ':vcs_info:*' unstagedstr "$FG[001]*"
-
-_is_git() {
-    git rev-parse --is-inside-work-tree &>/dev/null
-}
-
-_extra_git_format() {
-    _extra_git_format_str=""
-    _is_git || return
-
-    # Red '%' for untracked files
-    if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-        _extra_git_format_str+="$FG[001]%%"
-    fi
-
-    # Blue '$' for saved stashes
-    if [[ -s $(git rev-parse --git-dir)/logs/refs/stash ]]; then
-        _extra_git_format_str+="$FG[004]\$"
-    fi
-}
-
 _ruby_info() {
     # Nerd font ruby icons:     
     local ruby_str=" $FG[001] "
@@ -90,10 +58,54 @@ _extra_env_info() {
     _extra_env_info_str+="$(_ruby_info)"
 }
 
-add-zsh-hook precmd _extra_git_format
-add-zsh-hook precmd _extra_env_info
+_git_format() {
+    eval $("$DOTDIR/bin/git-parse-status.sh")
 
-RPROMPT='${(e)vcs_info_msg_0_}${_extra_env_info_str}'
+    [[ $git_present -eq 0 ]] && return
+
+    #   
+    #   
+    #   
+    if [[ $git_ahead -ne 0 && $git_behind -ne 0 ]]; then
+        echo -n "$FG[005]"
+    elif [[ $git_ahead -ne 0 ]]; then
+        echo -n "$FG[002]"
+    elif [[ $git_behind -ne 0 ]]; then
+        echo -n "$FG[001]"
+    fi
+
+    [[ $git_staged -gt 0 ]] && echo -n "$FG[002]+"
+
+    [[ $git_unstaged -gt 0 ]] && echo -n "$FG[001]*"
+
+    [[ $git_untracked -gt 0 ]] && echo -n "$FG[001]%%"
+
+    [[ $git_stashed -gt 0 ]] && echo -n "$FG[004]\$"
+
+    echo -n " $FG[002]$git_branch_name$FX[reset]"
+}
+
+# Top-level async job
+# Expect to receive the current directory as $1
+_rprompt_job() {
+    builtin cd "$1"
+    _git_format
+}
+
+_rprompt_callback() {
+    RPROMPT="$3"
+    [[ -o zle ]] && zle reset-prompt
+}
+
+# This forks to start the worker, so any job commands must already be defined
+async_start_worker rprompt_worker
+async_register_callback rprompt_worker _rprompt_callback
+
+_start_rprompt_job() {
+    async_flush_jobs rprompt_worker
+    async_job rprompt_worker _rprompt_job "$PWD"
+}
+add-zsh-hook precmd _start_rprompt_job
 
 # Remove pesky right-hand space
 # ZLE_RPROMPT_INDENT=0
