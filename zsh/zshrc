@@ -1,10 +1,13 @@
 # Apply base16 colorscheme first
 source_if_exists "$DOTDIR/base16/base16-shell/base16-shell.plugin.zsh"
 
-typeset -U config_files
-config_files=(~/.dotfiles/zsh/configs/*.zsh)
+typeset -U preconfig_files config_files postconfig_files
 
-for file in $config_files; do
+preconfig_files=($DOTDIR/zsh/configs/before/*.zsh)
+config_files=($DOTDIR/zsh/configs/*.zsh)
+# postconfig_files=($DOTDIR/zsh/configs/after/*.zsh)
+
+for file in $preconfig_files $config_files $postconfig_files; do
     source $file
 done
 
