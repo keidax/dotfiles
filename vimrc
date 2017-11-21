@@ -124,49 +124,52 @@ set hidden
 " Set up highlight colors and attributes
 " (The autocmds preserve our colors even if the colorscheme changes)
 augroup vimrc
-    " Use matching colorscheme from terminal theme, only on startup
-    autocmd VimEnter *
-                \ if filereadable(expand("~/.vimrc_background")) |
-                \     let base16colorspace=256 |
-                \     let g:base16_shell_path=$DOTDIR . "/base16/base16-shell/scripts" |
-                \     source ~/.vimrc_background |
-                \ endif
-
     " Transparent background colors
-    autocmd VimEnter,ColorScheme * :highlight Normal ctermbg=none
-    autocmd VimEnter,ColorScheme * :highlight VertSplit ctermbg=none
-    autocmd VimEnter,ColorScheme * :highlight StatusLineNC ctermbg=none
+    autocmd ColorScheme * :highlight Normal ctermbg=none
+    autocmd ColorScheme * :highlight VertSplit ctermbg=none
+    autocmd ColorScheme * :highlight StatusLineNC ctermbg=none
 
     " Better indent guide colors for base16 dark colorscheme
-    autocmd VimEnter,Colorscheme * :highlight IndentGuidesOdd  ctermbg=19 ctermfg=18
-    autocmd VimEnter,Colorscheme * :highlight IndentGuidesEven ctermbg=18 ctermfg=19
+    autocmd ColorScheme * :highlight IndentGuidesOdd  ctermbg=19 ctermfg=18
+    autocmd ColorScheme * :highlight IndentGuidesEven ctermbg=18 ctermfg=19
 
     " Muted colors for invisible characters
-    autocmd VimEnter,ColorScheme * :highlight SpecialKey ctermfg=19
-    autocmd VimEnter,ColorScheme * :highlight NonText ctermfg=19
+    autocmd ColorScheme * :highlight SpecialKey ctermfg=19
+    autocmd ColorScheme * :highlight NonText ctermfg=19
 
     " Muted colors for vertical borders
-    autocmd VimEnter,ColorScheme * :highlight VertSplit ctermfg=8
+    autocmd ColorScheme * :highlight VertSplit ctermfg=8
 
     " Muted colors and underline for inactive statuslines
-    autocmd VimEnter,ColorScheme * :highlight StatusLineNC cterm=italic,underline ctermfg=8
+    autocmd ColorScheme * :highlight StatusLineNC cterm=italic,underline ctermfg=8
     " Bold emphasis for active statusline
-    autocmd VimEnter,ColorScheme * :highlight StatusLine cterm=bold
+    autocmd ColorScheme * :highlight StatusLine cterm=bold
 
     " Italicised comments
-    autocmd VimEnter,ColorScheme * :highlight Comment cterm=italic
-    autocmd VimEnter,ColorScheme * :highlight Todo cterm=italic
+    autocmd ColorScheme * :highlight Comment cterm=italic
+    autocmd ColorScheme * :highlight Todo cterm=italic
 
     " More visible operators
-    autocmd VimEnter,Colorscheme * :highlight Operator ctermfg=1
+    autocmd ColorScheme * :highlight Operator ctermfg=1
 
     " Red highlight for extra whitespace
     " TODO better-whitespace should set this automatically
-    autocmd VimEnter,ColorScheme * :highlight ExtraWhitespace ctermbg=red
+    autocmd ColorScheme * :highlight ExtraWhitespace ctermbg=red
 
     " Different highlight for current quickfix item
-    autocmd VimEnter,Colorscheme * :highlight QuickFixLine cterm=bold ctermbg=18
+    autocmd ColorScheme * :highlight QuickFixLine cterm=bold ctermbg=18
+
+    " Special highlighting for gitgutter signs
+    autocmd ColorScheme * :highlight GitGutterChange cterm=bold
+    autocmd ColorScheme * :highlight GitGutterChangeDelete cterm=bold
 augroup END
+
+" Use matching colorscheme from terminal theme
+if filereadable(expand('~/.vimrc_background'))
+    let g:base16colorspace=256
+    let g:base16_shell_path=$DOTDIR . '/base16/base16-shell/scripts'
+    source ~/.vimrc_background
+endif
 
 " Skinny vertical borders
 set fillchars=vert:│
@@ -538,10 +541,6 @@ let g:ale_ruby_rubocop_options = '-D -R -E'
 let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
 
 " GitGutter settings
-augroup vimrc
-    autocmd VimEnter,Colorscheme * :highlight GitGutterChange cterm=bold
-    autocmd VimEnter,Colorscheme * :highlight GitGutterChangeDelete cterm=bold
-augroup END
 let g:gitgutter_sign_removed = '▁▁'
 let g:gitgutter_sign_removed_first_line = '▔▔'
 let g:gitgutter_sign_added = '' "octicons (shifted in nerd font)
