@@ -111,7 +111,7 @@ if [ "$OS" = "Linux" ]; then
 fi
 
 # Get non-interactive bash shells to use our functions
-[ -n "$BASH_VERSION" ] && BASH_ENV="$HOME/.bashrc"
+BASH_ENV="$HOME/.bashrc"
 
 # Make sure we turn off automatic exports
 set +a
