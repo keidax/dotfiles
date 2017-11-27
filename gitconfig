@@ -23,7 +23,7 @@
         submodule = diff
 [pager]
         # Highlight line differences when shown in a pager
-        log = diff-highlight | less
+        log = diff-highlight | less -S
         show = diff-highlight | less
         diff = diff-highlight | less
 [help]
@@ -72,7 +72,7 @@
 
         h = help
 
-        l = log --graph --date=relative --pretty=format:'%Cred%>|(16)%h %C(auto)%s%d %Cgreen%ad %C(dim white)%cN'
+        l = log --graph --date=relative --pretty=format:'%Cred%>|(16)%h %C(auto)%s%d %Cgreen%ad %C(dim white)%cN%C(nodim)'
 
         pfwl = push --force-with-lease
         push-first = ! git push --set-upstream origin $(git symbolic-ref --short HEAD)
