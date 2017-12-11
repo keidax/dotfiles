@@ -18,7 +18,6 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'jiangmiao/auto-pairs'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-Plug 'yonchu/accelerated-smooth-scroll'
 Plug 'w0rp/ale'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
@@ -529,9 +528,6 @@ let g:indent_guides_start_level = 2
 " Allow our own indent guide colors to take effect
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_exclude_filetypes = ['diff', 'git', 'gitcommit', 'help', 'man']
-
-let g:ac_smooth_scroll_du_sleep_time_msec=0
-let g:ac_smooth_scroll_fb_sleep_time_msec=0
 
 " ALE settings
 let g:ale_sign_error = ''
