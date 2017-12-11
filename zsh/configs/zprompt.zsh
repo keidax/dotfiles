@@ -1,22 +1,3 @@
-# Indicate vi mode with cursor shape
-# Inspired by https://emily.st/2013/05/03/zsh-vi-cursor/
-_set_cursor_type() {
-    case $KEYMAP in
-        vicmd)      print -n -- "\E[2 q";;  # block cursor
-        viins|main) print -n -- "\E[6 q";;  # line cursor
-    esac
-}
-
-# Return to a block cursor when leaving ZLE
-_unset_cursor_type() {
-    print -n -- "\E[2 q"  # block cursor
-}
-
-add-zle-hook-widget line-init _set_cursor_type
-add-zle-hook-widget keymap-select _set_cursor_type
-add-zle-hook-widget line-finish _unset_cursor_type
-
-# Ensure proper substitutions
 setopt prompt_subst prompt_percent
 
 # Red error code if previous command failed
