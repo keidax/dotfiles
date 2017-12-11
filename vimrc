@@ -453,6 +453,11 @@ nnoremap <silent> <A-v> :call vimterm#toggle() <CR>
 tnoremap <silent> <A-v> <C-\><C-n>:call vimterm#toggle()<CR>
 tnoremap <Esc> <C-\><C-n>
 
+" Change gitgutter map prefix
+nmap <Leader>gs <Plug>GitGutterStageHunk
+nmap <Leader>gu <Plug>GitGutterUndoHunk
+nmap <Leader>gp <Plug>GitGutterPreviewHunk
+
 " Copied from vim-specky
 " SpecSwitcher() {{{
 "
