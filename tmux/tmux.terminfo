@@ -1,0 +1,9 @@
+# vim: ft=terminfo
+# Terminfo definition for systems with outdated data (a.k.a. macOS)
+# Must be compiled once with a command such as `tic -x tmux/tmux.terminfo`
+tmux|tmux terminal multiplexer,
+	ritm=\E[23m, rmso=\E[27m, sitm=\E[3m, smso=\E[7m, Ms@,
+	use=xterm, use=screen,
+
+tmux-256color|tmux with 256 colors,
+	use=xterm-256color, use=tmux,
