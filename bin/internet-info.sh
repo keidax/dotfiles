@@ -11,6 +11,10 @@ elif [ "$OS" = "Linux" ]; then
         devname=$(nmcli -t -f type,device dev status | egrep '^wifi' | cut -c 6-)
         network_name="$(nmcli -t -f ap dev show $devname | grep 'SSID' | cut -c 12-)"
         local_ip=$(nmcli -t -f ip4 dev show $devname | grep 'ADDRESS' | cut -d: -f2 | cut -d/ -f1)
+    elif command_exists /sbin/iw && command_exists ip; then
+        devname=$(/sbin/iw dev | grep 'Interface' | cut -d' ' -f2)
+        network_name="$(/sbin/iw dev $devname link | grep 'SSID' | cut -c 8-)"
+        local_ip=$(ip addr show $devname | awk '/inet / {print $2}' | cut -d/ -f1)
     fi
 fi
 
