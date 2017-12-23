@@ -16,6 +16,12 @@ elif [ "$OS" = "Linux" ]; then
         network_name="$(/sbin/iw dev $devname link | grep 'SSID' | cut -c 8-)"
         local_ip=$(ip addr show $devname | awk '/inet / {print $2}' | cut -d/ -f1)
     fi
+elif [ "$OS" = "Android" ]; then
+    if command_exists termux-wifi-connectioninfo && command_exists jq; then
+        info="$(termux-wifi-connectioninfo)"
+        network_name="$(echo "$info" | jq -r '.ssid')"
+        local_ip=$(echo "$info" | jq -r '.ip')
+    fi
 fi
 
 printf "#[fg=green] %s#[fg=colour15]|#[fg=green]%s" "$network_name" "$local_ip"
