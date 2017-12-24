@@ -54,7 +54,7 @@
     - description: Installing vim plugins via vim-plug
       command: nvim +PlugInstall +qall
     - description: Installing Python packages via Pip
-      command: pip2 install --upgrade -r ./pip_requirements.txt
+      command: ./setup/pip-install
     - description: Installing Ruby gems via RubyGems
       command: gem install --file ./Gemfile
     - description: Installing packages via Homebrew
