@@ -11,20 +11,23 @@ tty_state=$("$STTY_PROG" -g)
 finish() {
     "$STTY_PROG" "$tty_state"
     echo "[TTY restored]"
+    exit 0
 }
-trap finish QUIT
+trap finish EXIT
+# Catch signals so our EXIT trap runs
+trap ':' INT TERM QUIT
 
 # Stty settings
 #   raw:    raw input, no delay
 #   opost:  do output processing (for newlines)
+#   -echo:  make sure input is not echoed
 #   isig:   enable control characters
-#   susp:   disable Ctrl-Z
-#   intr:   disable Ctrl-C
-#   quit:   enable Ctrl-\ (just in case)
+#   susp:   disable
+#   intr:   enable as Ctrl-\
+#   quit:   disable
 # The end result is that all input is sent, except Ctrl-\ is used to quit.
-"$STTY_PROG" raw opost isig susp "undef" intr "undef" quit '^\'
+"$STTY_PROG" raw opost -echo isig susp "undef" intr '^\' quit 'undef'
 
 echo "[TTY captured, quit with Ctrl-\\]"
 
-xxd -i || true
-# TODO: figure out how to silence 'Quit: 3' message produced by bash
+hexdump -v -e '/1 "%4_ad# 0x%x"' -e '/1 " = %3_u\n"'
