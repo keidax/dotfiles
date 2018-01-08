@@ -6,6 +6,9 @@ zplug "zsh-users/zsh-completions"
 # Reminders for aliases
 zplug "djui/alias-tips"
 
+# FZF bindings
+zplug "~/", use:".fzf.zsh", from:local
+
 # Improved command-line syntax highlighting
 zplug "zdharma/fast-syntax-highlighting"
 

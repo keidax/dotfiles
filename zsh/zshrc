@@ -10,6 +10,3 @@ config_files=($DOTDIR/zsh/configs/*.zsh)
 for file in $preconfig_files $config_files $postconfig_files; do
     source $file
 done
-
-source_if_exists ~/.fzf.zsh
-
