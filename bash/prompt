@@ -16,6 +16,10 @@ CYAN=$(tput setaf 6)
 WHITE=$(tput setaf 7)
 BOLD=$(tput bold)
 
+# Pull in git functions
+source_if_exists /usr/share/git/git-prompt.sh
+command_exists __git_ps1 || echo "Missing git prompt functions"
+
 # Export jobs as <running>|<stopped>
 function jobscount(){
     stopped_cnt=$(jobs -s | wc -l)
