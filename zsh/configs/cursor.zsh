@@ -1,5 +1,9 @@
 # Indicate vi mode with cursor shape
 # Inspired by https://emily.st/2013/05/03/zsh-vi-cursor/
+
+# Cursor-shape escapes don't work in the linux console
+[[ $TERM == "linux" ]] && return
+
 _cursor_shape_beam() {
     print -n -- "\E[6 q"
 }
