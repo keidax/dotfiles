@@ -48,3 +48,10 @@ function Resume {
 }
 zle -N Resume
 bindkey '^f' Resume
+
+select-word-style normal
+
+# Allows Ctrl-W to delete one path segment at a time
+zstyle ':zle:*' word-context '*/*' filename
+zstyle ':zle:*kill*:filename' word-style normal
+zstyle ':zle:*kill*:filename' word-chars '-_'
