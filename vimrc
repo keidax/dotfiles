@@ -238,10 +238,6 @@ augroup vimrc
     " Use real tabs in makefiles, and turn off all spaces
     autocmd FileType make setlocal noexpandtab shiftwidth=0 tabstop=8 softtabstop=0
 
-    " Use standard indentation and line size for Ruby files. The old RE engine
-    " also seems to give better performance for Ruby syntax highlighting
-    autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 colorcolumn=101 foldenable regexpengine=1
-
     " Use recommended 2-space indent for YAML files
     autocmd FileType yaml setlocal expandtab shiftwidth=2 softtabstop=2
 
