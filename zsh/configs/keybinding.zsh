@@ -36,6 +36,9 @@ bindkey-terminfo vicmd khome vi-beginning-of-line
 bindkey-terminfo viins kend vi-end-of-line
 bindkey-terminfo vicmd kend vi-end-of-line
 
+# Load help for the current command/alias/builtin with Alt-H
+bindkey '^[h' run-help
+bindkey -M vicmd '^[h' run-help
 
 # https://stackoverflow.com/a/35874797
 function Resume {
