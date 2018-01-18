@@ -12,7 +12,6 @@ Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-Plug 'w0rp/ale'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
@@ -373,14 +372,6 @@ nnoremap <silent> <Leader>x :call SpecSwitcher()<CR>
 " Run rspec with color forced on, through spring, asynchronously, sending
 " output to the quickfix window
 let g:rspec_command = ":AsyncRun bin/rspec {spec}"
-
-" ALE settings
-let g:ale_sign_error = ''
-let g:ale_sign_warning = ''
-" Various linter settings
-let g:ale_ruby_rubocop_options = '-D -R -E'
-let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
-
 
 " Maximizer settings
 " Turn off mappings since we don't want them in insert mode
