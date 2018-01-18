@@ -1,7 +1,6 @@
 call plug#begin()
 " Make sure to use single quotes
 Plug 'tpope/vim-sensible'
-Plug 'chriskempson/base16-vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -14,12 +13,10 @@ Plug 'skywind3000/asyncrun.vim', { 'on': 'AsyncRun' }
 let g:closetag_filenames = "*.xml,*.html,*.xsd,*.xsl"
 Plug 'alvan/vim-closetag'
 Plug 'airblade/vim-gitgutter'
-Plug 'ntpeters/vim-better-whitespace'
 Plug 'jiangmiao/auto-pairs'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
-Plug 'tpope/vim-rails'
 Plug 'step-/securemodelines'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
@@ -117,67 +114,6 @@ set hidden
 """"""""""""
 "  Visual  "
 """"""""""""
-
-" Set up highlight colors and attributes
-" (The autocmds preserve our colors even if the colorscheme changes)
-augroup vimrc
-    " Transparent background colors
-    autocmd ColorScheme * :highlight Normal ctermbg=none
-    autocmd ColorScheme * :highlight VertSplit ctermbg=none
-    autocmd ColorScheme * :highlight StatusLineNC ctermbg=none
-
-    " Better indent guide colors for base16 dark colorscheme
-    autocmd ColorScheme * :highlight IndentGuidesOdd  ctermbg=19 ctermfg=18
-    autocmd ColorScheme * :highlight IndentGuidesEven ctermbg=18 ctermfg=19
-
-    " Muted colors for invisible characters
-    autocmd ColorScheme * :highlight SpecialKey ctermfg=19
-    autocmd ColorScheme * :highlight NonText ctermfg=19
-
-    " Muted colors for vertical borders
-    autocmd ColorScheme * :highlight VertSplit ctermfg=8
-
-    " Muted colors and underline for inactive statuslines
-    autocmd ColorScheme * :highlight StatusLineNC cterm=italic,underline ctermfg=8
-    " Bold emphasis for active statusline
-    autocmd ColorScheme * :highlight StatusLine cterm=bold
-
-    " Italicised comments
-    autocmd ColorScheme * :highlight Comment cterm=italic
-    autocmd ColorScheme * :highlight Todo cterm=italic
-
-    " More visible operators
-    autocmd ColorScheme * :highlight Operator ctermfg=1
-
-    " Red highlight for extra whitespace
-    " TODO better-whitespace should set this automatically
-    autocmd ColorScheme * :highlight ExtraWhitespace ctermbg=red
-
-    " Different highlight for current quickfix item
-    autocmd ColorScheme * :highlight QuickFixLine cterm=bold ctermbg=18
-
-    " Special highlighting for gitgutter signs
-    autocmd ColorScheme * :highlight GitGutterChange cterm=bold
-    autocmd ColorScheme * :highlight GitGutterChangeDelete cterm=bold
-augroup END
-
-" Use matching colorscheme from terminal theme
-if filereadable(expand('~/.vimrc_background'))
-    let g:base16colorspace=256
-    let g:base16_shell_path=$DOTDIR . '/base16/base16-shell/scripts'
-    source ~/.vimrc_background
-endif
-
-" Skinny vertical borders
-set fillchars=vert:│
-
-" Display invisible characters
-" EOL alternatives: ↲↵↩⤶
-set listchars=eol:↩,tab:▸-,trail:~,extends:>,precedes:<,space:·
-
-" Force escape sequences for italics, instead of messing with terminfo defs
-let &t_ZH="\e[3m"
-let &t_ZR="\e[23m"
 
 " Turn off all folds by default
 set nofoldenable
@@ -511,12 +447,6 @@ let g:gitgutter_sign_modified_removed = '≃≃'
 " Securemodelines options
 set nomodeline " Silence warning on startup
 let g:secure_modelines_verbose = 1
-
-" better-whitespace options
-" This doesn't seem to actually turn off current line highlighting, but it
-" does give a necessary performance boost.
-let g:current_line_whitespace_disabled_soft = 1
-let g:better_whitespace_verbosity = 1
 
 " Maximizer settings
 " Turn off mappings since we don't want them in insert mode
