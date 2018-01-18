@@ -14,7 +14,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
-Plug 'step-/securemodelines'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
@@ -420,9 +419,6 @@ let g:ale_sign_warning = ''
 let g:ale_ruby_rubocop_options = '-D -R -E'
 let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
 
-" Securemodelines options
-set nomodeline " Silence warning on startup
-let g:secure_modelines_verbose = 1
 
 " Maximizer settings
 " Turn off mappings since we don't want them in insert mode
