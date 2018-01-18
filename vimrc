@@ -42,17 +42,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'wvffle/vimterm'
 Plug 'tpope/vim-unimpaired'
 
-let b:ycm_cmd = './install.py'
-let b:ycm_cmd .= ' --clang-completer'
-if executable('rustc')
-    let b:ycm_cmd .= ' --racer-completer'
-endif
-" In nvim, we can run the YCM install script in a term window, so it doesn't
-" block the whole editor.
-if has('nvim')
-    let b:ycm_cmd = ":new | call termopen('" . b:ycm_cmd . "')"
-endif
-Plug 'Valloric/YouCompleteMe', { 'do': b:ycm_cmd }
 
 """""""""""""
 "  General  "
