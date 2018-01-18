@@ -17,9 +17,6 @@ Plug 'w0rp/ale'
 Plug 'step-/securemodelines'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
-if !has('nvim')
-    Plug 'vim-utils/vim-man'
-endif
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
 Plug 'mileszs/ack.vim'
@@ -176,8 +173,6 @@ augroup END
 """"""""""""
 "  Syntax  "
 """"""""""""
-
-let g:ft_man_folding_enable = 1 " Fold manpages with foldmethod=indent foldnestmax=1.
 
 vnoremap <Leader>X !xmllint --format --recover -<CR>
 
