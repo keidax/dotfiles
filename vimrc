@@ -19,7 +19,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
-Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'step-/securemodelines'
 Plug 'tpope/vim-eunuch'
@@ -65,7 +64,6 @@ if has('nvim')
     let b:ycm_cmd = ":new | call termopen('" . b:ycm_cmd . "')"
 endif
 Plug 'Valloric/YouCompleteMe', { 'do': b:ycm_cmd }
-call plug#end()
 
 """""""""""""
 "  General  "
@@ -247,21 +245,7 @@ augroup END
 "  Syntax  "
 """"""""""""
 
-" Ruby syntax settings
-let g:ruby_fold = 1
-let g:ruby_foldable_groups = 'ALL'
-
-" Shell syntax settings
-let g:sh_fold_enabled = 7   " Enable all types of folding
-let g:is_posix = 1          " We can assume /bin/sh is POSIX-compatible
-
-
 let g:ft_man_folding_enable = 1 " Fold manpages with foldmethod=indent foldnestmax=1.
-
-" Expand and format XML by selecting it and pressing <Leader><Shift-X>
-function! XMLLint() range
-    execute a:firstline . ',' . a:lastline . '!xmllint --format --recover -'
-endfunction
 
 vnoremap <Leader>X !xmllint --format --recover -<CR>
 
@@ -540,3 +524,7 @@ let g:maximizer_set_default_mapping = 0
 
 " Splitjoin settings
 let g:splitjoin_ruby_hanging_args = 0
+
+runtime! vimrc.d/**/*.vim
+
+call plug#end()
