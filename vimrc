@@ -235,26 +235,6 @@ endfunction
 "  Filetype  "
 """"""""""""""
 augroup vimrc
-    " Use real tabs in makefiles, and turn off all spaces
-    autocmd FileType make setlocal noexpandtab shiftwidth=0 tabstop=8 softtabstop=0
-
-    " Use recommended 2-space indent for YAML files
-    autocmd FileType yaml setlocal expandtab shiftwidth=2 softtabstop=2
-
-    " Use 2-space indent for XML and family
-    autocmd FileType xml,xsd,xslt setlocal expandtab shiftwidth=2 softtabstop=2
-    " Formatting with xmllint
-    autocmd FileType xml,xsd,xslt setlocal equalprg=xmllint\ --format\ --recover\ -
-
-    " Use shell folding
-    autocmd FileType sh setlocal foldenable
-
-    " Use JSON folding
-    autocmd FileType json setlocal foldenable foldmethod=syntax
-
-    " Quick quit on help buffers
-    autocmd FileType help map <buffer> <silent> q :bd<CR>
-
     " Set fallback omnicompletion
     autocmd FileType *
                 \ if &omnifunc == '' |
