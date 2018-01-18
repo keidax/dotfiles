@@ -3,23 +3,19 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
-Plug 'gisphm/vim-gitignore'
 Plug 'skywind3000/asyncrun.vim', { 'on': 'AsyncRun' }
 " Let vim-closetag work with XSD, XSLT files
 let g:closetag_filenames = "*.xml,*.html,*.xsd,*.xsl"
 Plug 'alvan/vim-closetag'
-Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
 Plug 'step-/securemodelines'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 if !has('nvim')
     Plug 'vim-utils/vim-man'
@@ -422,27 +418,12 @@ nnoremap <silent> <Leader>x :call SpecSwitcher()<CR>
 " output to the quickfix window
 let g:rspec_command = ":AsyncRun bin/rspec {spec}"
 
-" Configure vim-indent-guides
-let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
-" Allow our own indent guide colors to take effect
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_exclude_filetypes = ['diff', 'git', 'gitcommit', 'help', 'man']
-
 " ALE settings
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
 " Various linter settings
 let g:ale_ruby_rubocop_options = '-D -R -E'
 let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
-
-" GitGutter settings
-let g:gitgutter_sign_removed = '▁▁'
-let g:gitgutter_sign_removed_first_line = '▔▔'
-let g:gitgutter_sign_added = '' "octicons (shifted in nerd font)
-let g:gitgutter_sign_modified = '~~'
-let g:gitgutter_sign_modified_removed = '≃≃'
 
 " Securemodelines options
 set nomodeline " Silence warning on startup
