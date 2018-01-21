@@ -1,3 +1,4 @@
+" vim: ft=vim
 " Wrapper around vimrc
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
