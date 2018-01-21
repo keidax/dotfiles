@@ -114,5 +114,8 @@ fi
 # Get non-interactive bash shells to use our functions
 BASH_ENV="$HOME/.bashrc"
 
+# Include local enviroment modifications
+[ -e "$HOME/.env.local" ] && . "$HOME/.env.local"
+
 # Make sure we turn off automatic exports
 set +a
