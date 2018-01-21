@@ -13,6 +13,16 @@ append_to_path () {
     fi
 }
 
+prepend_to_manpath () {
+    if [ -d "$1" ] ; then
+        if [ -n "$MANPATH" ]; then
+            MANPATH="$1:$MANPATH"
+        else
+            MANPATH="$1"
+        fi
+    fi
+}
+
 # Add brew coreutils without 'g' prefix
 if [ "$OS" = "Darwin" ] ; then
     prepend_to_path "$(brew --prefix)/opt/coreutils/libexec/gnubin"
@@ -36,7 +46,17 @@ append_to_path "$HOME/.rvm/bin"
 export PATH
 
 # Add man pages from brew coreutils
-if [ "$OS" = "Darwin" ] && [ -d "$(brew --prefix)/opt/coreutils/libexec/gnuman" ] ; then
-    MANPATH="$(brew --prefix)/opt/coreutils/libexec/gnuman:$MANPATH"
-    export MANPATH
+if [ "$OS" = "Darwin" ] ; then
+    prepend_to_manpath "$(brew --prefix)/opt/coreutils/libexec/gnuman"
 fi
+
+# Include local utility documentation
+prepend_to_manpath "$HOME/.zplug/doc/man"
+prepend_to_manpath "$HOME/.fzf/man"
+
+# MANPATH should be prefixed by a colon, so it is appended to the default
+# man search path instead of overriding it.
+[ -n "$MANPATH" ] && {
+    [ "$MANPATH" = "${MANPATH#:}" ] && MANPATH=":$MANPATH"
+    export MANPATH
+}
