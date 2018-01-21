@@ -5,6 +5,10 @@ Plug 'w0rp/ale'
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
 
+" Don't touch the lists
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 0
+
 " Linter settings
 " Display cop names & extra details, and run extra Rails cops
 let g:ale_ruby_rubocop_options = '-D -E -R'
