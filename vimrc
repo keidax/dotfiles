@@ -234,12 +234,10 @@ nnoremap <Leader>nwl :botright vnew<CR>
 nnoremap <Leader>> :exe "vertical resize " . (winwidth(0) * 4/3)<CR>
 nnoremap <Leader>< :exe "vertical resize " . (winwidth(0) * 3/4)<CR>
 
-" vim-rspec mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>T :silent call system("spring stop") \| :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>S :silent call system("spring stop") \| :call RunNearestSpec()<CR>
-map <Leader>r :call RunLastSpec()<CR>
+" vim-test mappings
+map <Leader>t :TestFile<CR>
+map <Leader>s :TestNearest<CR>
+map <Leader>r :TestLast<CR>
 
 " Search for visually-selected text
 vnoremap / y/\V<C-R>=escape(@",'/\')<CR><CR>
@@ -367,12 +365,6 @@ nnoremap <silent> <Leader>x :call SpecSwitcher()<CR>
 """""""""""""""""""""
 "  Plugin Settings  "
 """""""""""""""""""""
-
-" vim-rspec settings
-
-" Run rspec with color forced on, through spring, asynchronously, sending
-" output to the quickfix window
-let g:rspec_command = ":AsyncRun bin/rspec {spec}"
 
 " Maximizer settings
 " Turn off mappings since we don't want them in insert mode
