@@ -42,15 +42,20 @@ _git_format() {
 
     [[ $git_present -eq 0 ]] && return
 
+    # Nerd Font arrows:
     #   
     #   
     #   
+    # Unicode arrows:
+    #⭥ ⮁ ⮃ ⭡ ⭣
+    # ⬍ ⇵ ↧↥ ↦ ⇿ ⇳ ⟷ ⥈ ⥮ ⥯
+
     if [[ $git_ahead -ne 0 && $git_behind -ne 0 ]]; then
-        echo -n "$FG[005]"
+        echo -n "$FG[005]⮁ "
     elif [[ $git_ahead -ne 0 ]]; then
-        echo -n "$FG[002]"
+        echo -n "$FG[002]⭡ "
     elif [[ $git_behind -ne 0 ]]; then
-        echo -n "$FG[001]"
+        echo -n "$FG[001]⭣ "
     fi
 
     [[ $git_staged -gt 0 ]] && echo -n "$FG[002]+"
