@@ -24,4 +24,4 @@ elif [ "$OS" = "Android" ]; then
     fi
 fi
 
-printf "#[fg=green] %s#[fg=colour15]|#[fg=green]%s" "$network_name" "$local_ip"
+printf "#[fg=green]%s#[fg=colour15]|#[fg=green]%s" "$network_name" "$local_ip"
