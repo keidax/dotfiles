@@ -32,6 +32,8 @@
 [help]
         # Automatically use git's "Did you mean...?" after 1 second
         autocorrect = 10
+[advice]
+        waitingForEditor = false
 [color]
         # Make sure colors are turned on
         ui = true
