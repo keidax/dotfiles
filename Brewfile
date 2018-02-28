@@ -2,6 +2,7 @@
 brew 'ack'
 brew 'bash'
 brew 'coreutils'
+brew 'diff-so-fancy'
 brew 'git'
 brew 'htop', args: ['with-ncurses']
 brew 'less'
