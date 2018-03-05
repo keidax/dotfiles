@@ -10,4 +10,4 @@ if has('nvim')
 endif
 
 " Heavyweight completion engine
-Plug 'Valloric/YouCompleteMe', { 'do': b:ycm_cmd }
+" Plug 'Valloric/YouCompleteMe', { 'do': b:ycm_cmd }
