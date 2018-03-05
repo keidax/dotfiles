@@ -7,3 +7,6 @@ aliases[=]='_calc'
 # Shorter shell help name
 unalias run-help
 alias help=run-help
+
+# Reverse of cd
+alias pd=popd
