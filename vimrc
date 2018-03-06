@@ -316,6 +316,95 @@ endfunction
 
 nnoremap <Leader>x :call AltCommand(expand('%'), ':e')<CR>
 
+" Cross-plugin compatibilty mappings
+
+" Disable plugin mappings that are covered below
+let g:endwise_no_mappings = 1
+let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:AutoPairsMapCR = 0
+let g:UltiSnipsExpandTrigger = '<NUL>'
+let g:UltiSnipsListSnippets = '<NUL>'
+
+" True if the cursor is preceded by whitespace
+function! s:check_back_space() abort
+    let l:col = col('.') - 1
+    return !l:col || getline('.')[l:col - 1] =~# '\s'
+endfunction
+
+" Handle jumping backwards and forwards between snippet placeholders
+function! SnippetJumpOnKey(forwards, fallback)
+    if a:forwards
+        call UltiSnips#JumpForwards()
+        let l:res = g:ulti_jump_forwards_res
+    else
+        call UltiSnips#JumpBackwards()
+        let l:res = g:ulti_jump_backwards_res
+    endif
+
+    if l:res
+        return ''
+    else
+        return a:fallback
+    endif
+endfunction
+
+" Expand snippet, or list snippets if none can be expanded
+function! SnippetExpandOrList()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res == 0
+        call UltiSnips#ListSnippets()
+    endif
+    return ''
+endfunction
+
+" Gracefully combine endwise and autopairs <Enter> functionality
+function! EnterCombined()
+    let l:autopairs = AutoPairsReturn()
+    " Endwise expects to be called from a blank line, so give it one
+    if getline('.') !~# '^\s*$'
+        normal! O
+        let l:endwise = EndwiseDiscretionary()
+        normal! dd
+    else
+        let l:endwise = EndwiseDiscretionary()
+    endif
+
+    if len(l:endwise) == 0
+        return l:autopairs
+    elseif len(l:autopairs) == 0
+        return l:endwise
+    else
+        return "\<C-o>o" . l:endwise . "\<C-o>k" . l:autopairs
+    endif
+endfunction
+
+" Cycle or start completion on Tab. If following whitespace, normal Tab
+" behavior.
+inoremap <silent> <expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \   <SID>check_back_space() ? "\<TAB>" :
+            \   deoplete#mappings#manual_complete()
+" Reverse cycle on Shift-Tab, or jump to previous snippet placeholder.
+inoremap <silent> <expr> <S-Tab>
+            \ pumvisible() ? "\<C-p>" : SnippetJumpOnKey(0, "\<S-Tab>")
+
+" When inside a snippet, <Tab> and <Shift-Tab> will jump between placeholders.
+smap <expr> <Tab> SnippetJumpOnKey(1, "\<Tab>")
+smap <expr> <S-Tab> SnippetJumpOnKey(0, "\<S-Tab>")
+
+" Ctrl-E will revert to original text and restart completion
+inoremap <expr> <C-e> pumvisible() ? deoplete#smart_close_popup() : "\<C-e>"
+
+" NOTE: In this case it's necessary to use the <C-r>=expr<CR> hack instead of
+" map <expr> because the latter prevents changing the buffer text.
+imap <C-s> <C-r>=SnippetExpandOrList()<CR>
+
+" When working inside a snippet, <Enter> will jump to the next placeholder.
+" Otherwise it behaves as expected, with functionality combined from several
+" plugins.
+let g:enter_fallback_string = "\<CR>\<C-r>=EnterCombined()\<CR>"
+inoremap <silent> <CR> <C-r>=SnippetJumpOnKey(1, g:enter_fallback_string)<CR>
+
 
 """""""""""""""""""""
 "  Plugin Settings  "
