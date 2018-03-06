@@ -1,3 +1,4 @@
 vim-vint
 yamllint
 neovim
+solargraph-utils.py
