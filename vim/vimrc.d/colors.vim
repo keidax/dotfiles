@@ -41,9 +41,9 @@ augroup vimrc
     " Different highlight for current quickfix item
     autocmd ColorScheme * :highlight QuickFixLine cterm=bold ctermbg=18
 
-    " Special highlighting for gitgutter signs
+    " Special highlighting for signs
     autocmd ColorScheme * :highlight GitGutterChange cterm=bold
-    autocmd ColorScheme * :highlight GitGutterChangeDelete cterm=bold
+    autocmd ColorScheme * :highlight ALEWarningSign ctermfg=3 ctermbg=18
 augroup END
 
 " Use matching colorscheme from terminal theme

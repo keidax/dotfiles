@@ -2,8 +2,8 @@
 Plug 'w0rp/ale'
 
 " Nicer symbols (require nerd font)
-let g:ale_sign_error = ''
-let g:ale_sign_warning = ''
+let g:ale_sign_error = '✕'
+let g:ale_sign_warning = '⚠'
 
 " Don't touch the lists
 let g:ale_set_loclist = 0
