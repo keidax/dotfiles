@@ -28,6 +28,13 @@ if [ "$OS" = "Darwin" ] ; then
     prepend_to_path "$(brew --prefix)/opt/coreutils/libexec/gnubin"
 fi
 
+# Include user pip packages
+if command_exists python3 ; then
+    prepend_to_path "$(python3 -c "import os, site; print(os.path.join(site.USER_BASE, 'bin'))")"
+elif command_exists python2 ; then
+    prepend_to_path "$(python2 -c "import os, site; print(os.path.join(site.USER_BASE, 'bin'))")"
+fi
+
 # Include user's local bin folder(s)
 prepend_to_path "$HOME/.local/bin"
 prepend_to_path "$HOME/bin"
