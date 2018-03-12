@@ -186,8 +186,8 @@ vnoremap <ESC> <nop>
 let mapleader = " "
 
 " Quickly edit and source vimrc
-nnoremap <Leader>sv :source $MYVIMRC<CR>
-nnoremap <Leader>ev :$tabedit ~/.vimrc<CR>
+nnoremap <Leader>vs :source $MYVIMRC<CR>
+nnoremap <Leader>ve :$tabedit ~/.vimrc<CR>
 
 " Faster ESC
 inoremap jk <ESC>
@@ -206,23 +206,11 @@ noremap <silent> <expr> <Leader>k g:CheckCmdWin() ? ":q\<CR>" : "\<C-w>k"
 noremap <Leader>h <C-w>h
 noremap <Leader>l <C-w>l
 
-" Same-width/height splits
-nnoremap <Leader>sh :leftabove  vsplit<CR>
-nnoremap <Leader>sj :rightbelow  split<CR>
-nnoremap <Leader>sk :leftabove   split<CR>
-nnoremap <Leader>sl :rightbelow vsplit<CR>
-
 " Same-width/height windows
 nnoremap <Leader>nh :leftabove  vnew<CR>
 nnoremap <Leader>nj :rightbelow  new<CR>
 nnoremap <Leader>nk :leftabove   new<CR>
 nnoremap <Leader>nl :rightbelow vnew<CR>
-
-" Full-width/height splits
-nnoremap <Leader>swh :topleft  vsplit<CR>
-nnoremap <Leader>swj :botright  split<CR>
-nnoremap <Leader>swk :topleft   split<CR>
-nnoremap <Leader>swl :botright vsplit<CR>
 
 " Full-width/height new windows
 nnoremap <Leader>nwh :topleft  vnew<CR>
@@ -314,7 +302,7 @@ function! AltCommand(path, command)
     endif
 endfunction
 
-nnoremap <Leader>x :call AltCommand(expand('%'), ':e')<CR>
+nnoremap <silent> <Leader>x :call AltCommand(expand('%'), ':silent e')<CR>
 
 " Cross-plugin compatibilty mappings
 
