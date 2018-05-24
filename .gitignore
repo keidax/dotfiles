@@ -5,3 +5,6 @@ vim/.netrwhist
 
 # Vim plugins (handled by vim-plug)
 vim/plugged/*
+
+# Tmux plugins (handled by tpm)
+tmux/plugins

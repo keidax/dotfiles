@@ -28,6 +28,7 @@
     ~/.gitconfig.local: local/gitconfig.local
     ~/.inputrc: inputrc
     ~/.hammerspoon: hammerspoon
+    ~/.tmux: tmux
     ~/.tmux.conf: tmux/tmux.conf
     ~/.config/karabiner: karabiner
     ~/.config/rofi/config: rofi
