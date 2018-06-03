@@ -15,3 +15,7 @@ let g:ale_ruby_rubocop_options = '-D -E -R'
 
 " Ignore errors occuring when shellcheck can't follow a sourced file
 let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
+
+let g:ale_linters = {
+      \ 'javascript': ['eslint']
+      \ }
