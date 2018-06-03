@@ -35,6 +35,7 @@
     ~/.config/termite/config: termite
     ~/.config/yamllint/config: yamllint
     # Add scripts to the ~/bin/ directory
+    ~/bin/battery-info: bin/battery-info.sh
     ~/bin/detect_utf: bin/detect-utf.sh
     ~/bin/outside-ip: bin/outside-ip.sh
     ~/bin/internet-info: bin/internet-info.sh
