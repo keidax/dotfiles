@@ -1,4 +1,5 @@
--- Eventtaps to simulate some Karabiner functionality
+--- Eventtaps to simulate some Karabiner functionality
+-- @module keys
 
 local eventtap = hs.eventtap
 local event = eventtap.event
@@ -34,8 +35,33 @@ local function eventAddFlag(evt, flag)
     return evt:setProperty(properties.eventSourceUserData, userData)
 end
 
+local function keyEventToString(evt)
+    local str = ""
+    if eventHasFlag(evt, eventFlags.ignoreFlag) then
+        str = "FAKE "
+    end
+    for mod, _ in pairs(evt:getFlags()) do
+        str = str .. mod .. " + "
+    end
+    str = str .. keyCodes[evt:getKeyCode()] .. (evt:getType() == types.keyDown and " down" or " up")
+    return str
+end
+
+--- Several keys pressed together to generate a different key.
+-- @function simultaneousKeyPress
+-- @param mods modifiers to be pressed together
+-- @param keys keys to be pressed together
+-- @param replacement replacement keys, passed to `hs.eventtap.keyStrokes()`
+-- @param[opt] options table of optional arguments
+-- @param[opt=0.1] options.delay the delay in which all keys must be pressed
+-- @param[opt=false] options.repeat whether to repeat the replacement if the keys are held down
+-- @return the eventtap object controlling key replacement, already active
+-- @usage underTap = keys.simultaneousKeyPress({}, {"h", "g"}, "_", {delay=0.05})
 local function simultaneousKeyPress(mods, keys, replacement, options)
     options = options or {}
+    -- DEBUG
+    local keyTapTitle = "<" .. keys[1] .. " " .. keys[2] .. " tap>"
+    log.d(keyTapTitle .. " initialized")
 
     -- Default delay value
     local delay = options.delay or 0.1
@@ -88,7 +114,9 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
         if pendingKeys[keysym] then
             local downEvent = createKeyEvent(keysym)
             if tbl == nil  then
+                -- timer.usleep(100)
                 eventAddFlag(downEvent, eventFlags.ignoreFlag) -- TODO: necessary?
+                log.d(keyTapTitle .. " posting event " .. keyEventToString(downEvent))
                 downEvent:post()
             else
                 table.insert(tbl, downEvent)
@@ -129,6 +157,7 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
         local isDown = evt:getType() == types.keyDown
         -- Simply ignore any events with the ignoreFlag set.
         if eventHasFlag(evt, eventFlags.ignoreFlag) then
+            log.d(keyTapTitle .. " ignoring event " .. keyEventToString(evt))
             return false
         end
 
@@ -226,6 +255,17 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
             local copyOfEvent = event.newKeyEvent(flagList, keysym, isDown)
             eventAddFlag(copyOfEvent, eventFlags.ignoreFlag)
             table.insert(returnKeys, copyOfEvent)
+            log.d(keyTapTitle .. " duplicated " .. keyEventToString(evt))
+        end
+
+        for _, e in ipairs(returnKeys) do
+            log.d(keyTapTitle .. " returning " .. keyEventToString(e))
+        end
+
+        if shouldDeleteEvent then
+            log.d(keyTapTitle .. " deleting " .. keyEventToString(evt))
+        else
+            log.d(keyTapTitle .. " returning " .. keyEventToString(evt))
         end
 
         -- Seems to be necessary to prevent keystrokes from occasionally disappearing
@@ -234,6 +274,194 @@ local function simultaneousKeyPress(mods, keys, replacement, options)
     end):start()
     return keyEventTap
 end
+
+-- Modified from
+-- https://gist.github.com/rjhilgefort/07ce5cdd3832083d7e94113d54372b1c
+-- and
+-- https://gist.github.com/otijhuis/6bdbfaa25a8e3773f4c13ba2fe2ab5d1
+local function overlayModifier(mod, replacement, options)
+    options = options or {}
+    local delay = options.delay or 0.1
+
+    local sendReplace = false
+    local modKeyTimer = timer.delayed.new(delay, function()
+        sendReplace = false
+    end)
+
+    local flagClass = {
+        shift       = "shift",
+        rightshift  = "shift",
+        ctrl        = "ctrl",
+        rightctrl   = "ctrl",
+        alt         = "alt",
+        rightalt    = "alt",
+        cmd         = "cmd",
+        rightcmd    = "cmd",
+        fn          = "fn"
+    }
+    local simpleFlag = flagClass[mod]
+
+    local lastMods = {}
+
+    local keyEventTap
+
+    local function passThroughKeyEvent(evt)
+        keyEventTap:stop()
+        evt:post()
+        keyEventTap:start()
+    end
+
+
+    local flagsChangedHandler = function(evt)
+        local newMods = evt:getFlags()
+
+        -- Only match the specific modifier key
+        if mod ~= hs.keycodes.map[evt:getKeyCode()] then return false end
+
+        -- This modifer was not changed
+        if lastMods[simpleFlag] == newMods[simpleFlag] then return false end
+
+        -- This modifer was pressed
+        if newMods[simpleFlag] then
+            sendReplace = true
+            modKeyTimer:start()
+        else -- This modifier was released
+            if sendReplace then hs.eventtap.keyStroke({}, replacement, 10000) end
+            modKeyTimer:stop()
+        end
+
+        lastMods = newMods
+        return false
+    end
+
+    local keyDownHandler = function(evt)
+        -- Cancel any replacement if a normal key is pressed
+        sendReplace = false
+        return false
+    end
+
+    keyEventTap = hs.eventtap.new({types.flagsChanged, types.keyDown}, function(evt)
+        if evt:getType() == types.flagChanged then
+            flagsChangedHandler(evt)
+        elseif evt:getType() == types.keyDown then
+            keyDownHandler(evt)
+        end
+    end):start()
+    return keyEventTap
+end
+
+-- local debugTap = hs.eventtap.new({10, 11, 12}, function(e)
+--     inspect(e:getRawEventData().NSEventData)
+-- end):start()
+
+-------------------
+-- J TIMER STUFF --
+-------------------
+local jDown = false
+local jPosted = false
+local keyUp = hs.eventtap.event.types["keyUp"]
+local keyDown = hs.eventtap.event.types["keyDown"]
+
+local jStartTimer = nil
+local jDelayTimer = nil
+local jIntervalTimer = nil
+
+jStartTimer = timer.doAfter(0.1, function()
+    if jDown then
+        log.d("posting j down from jStartTimer")
+        hs.eventtap.event.newKeyEvent({}, "j", true):post()
+        jPosted = true
+        jDelayTimer:start()
+    end
+end):stop()
+
+jDelayTimer = timer.doAfter(hs.eventtap.keyRepeatDelay(), function()
+    if jDown then
+        log.d("posting j down repeat from jDelayTimer")
+        hs.eventtap.event.newKeyEvent({}, "j", true):setProperty(hs.eventtap.event.properties.keyboardEventAutorepeat, 1):post()
+        jIntervalTimer:start()
+    end
+end):stop()
+
+jIntervalTimer = timer.doEvery(hs.eventtap.keyRepeatInterval(), function()
+    if jDown then
+        log.d("posting j down repeat from jIntervalTimer")
+        hs.eventtap.event.newKeyEvent({}, "j", true):setProperty(hs.eventtap.event.properties.keyboardEventAutorepeat, 1):post()
+    else
+        jIntervalTimer:stop()
+    end
+end):stop()
+
+local function stopAllTimers()
+    jStartTimer:stop()
+    jDelayTimer:stop()
+    jIntervalTimer:stop()
+end
+
+local keyEventTap = hs.eventtap.new({keyUp, keyDown}, function(event)
+    local keysym = hs.keycodes.map[event:getKeyCode()]
+    local isDown = event:getType() == keyDown
+    local raw_flags = event:getRawEventData().CGEventData.flags
+    if (raw_flags & 0x20000000) ~= 0 then
+        log.d("skipping fake "..keysym .." "..(isDown and "down" or "up"))
+        return false
+    end
+
+    local shouldDeleteEvent = false
+
+    if keysym == "j" and event:getFlags():containExactly({}) then
+        if event:getProperty(hs.eventtap.event.properties.keyboardEventAutorepeat) ~= 0 then
+            log.d("skipping repeating j down")
+            return true
+        end
+        log.d("got j ".. (isDown and "down" or "up"))
+        if isDown then
+            jDown = true
+            jPosted = false
+            stopAllTimers()
+            log.d("starting timer sequence")
+            jStartTimer:start()
+
+            shouldDeleteEvent = true
+        else -- keyUp
+            jDown = false
+            stopAllTimers()
+            if not jPosted then
+                log.d("posting j down before up")
+                hs.eventtap.event.newKeyEvent({}, "j", true):post()
+            end
+            log.d("posting j up")
+            hs.eventtap.event.newKeyEvent({}, "j", false):post()
+
+            shouldDeleteEvent = true
+        end
+    else -- different key or modifiers
+        log.d("got "..keysym)
+        if isDown then
+            stopAllTimers()
+            if jDown and not jPosted then
+                log.d("posting j down from other key")
+                hs.eventtap.event.newKeyEvent({}, "j", true):post()
+                jPosted = true
+            end
+        end
+    end
+
+    timer.usleep(1000)
+    return shouldDeleteEvent
+end):stop()
+
+-- with none:   0x00000100
+-- with l_cmd:  0x00100108
+-- with r_cmd:  0x00100110
+-- with l_opt:  0x00080120
+-- with r_opt:  0x00080140
+-- with l_ctl:  0x00040101
+-- with r_ctl:  0x00042100
+-- with l_shft: 0x00020102
+-- with r_shft: 0x00020104
+--
+-- fake: 0x20000000
 
 return {
     simultaneousKeyPress = simultaneousKeyPress
