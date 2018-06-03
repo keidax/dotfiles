@@ -25,7 +25,7 @@ cask 'hammerspoon'
 cask 'karabiner-elements'
 
 tap 'caskroom/versions'
-cask 'iterm2-beta'
+cask 'iterm2-nightly'
 
 tap 'caskroom/fonts'
 cask 'font-hack-nerd-font'
