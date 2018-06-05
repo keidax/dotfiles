@@ -18,6 +18,19 @@ if [[ "$OS" = "Darwin" ]]; then
     else
         batt_symbol=$PLUG
     fi
+elif [ "$OS" = "Linux" ]; then
+    if command_exists upower; then
+        battery_path="$(upower --enumerate | grep "BAT")"
+        battery_info="$(upower --show-info "$battery_path")"
+        current_charge="$(awk '/percentage:/ {print $2}' <<< "$battery_info" | tr -d '%')"
+
+        battery_state="$(awk '/state:/ {print $2}' <<< "$battery_info")"
+        if [[ "$battery_state" =~ "discharging" ]]; then
+            batt_symbol=$BATT
+        else
+            batt_symbol=$PLUG
+        fi
+    fi
 fi
 
 if [[ "$current_charge" -lt 20 ]]; then
