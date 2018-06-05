@@ -44,6 +44,9 @@ augroup vimrc
     " Special highlighting for signs
     autocmd ColorScheme * :highlight GitGutterChange cterm=bold
     autocmd ColorScheme * :highlight ALEWarningSign ctermfg=3 ctermbg=18
+
+    " No annoying blue highlighting
+    autocmd ColorScheme * :highlight SpellCap ctermbg=none
 augroup END
 
 " Use matching colorscheme from terminal theme
