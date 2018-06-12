@@ -4,8 +4,18 @@
 # https://github.com/jldeen/bad-ass-terminal/blob/master/bin/internet_info.sh
 
 if [ "$OS" = "Darwin" ]; then
-    network_name="$(networksetup -getairportnetwork en0 | cut -c 24-)"
-    local_ip=$(ipconfig getifaddr en0)
+    # Try Wi-Fi
+    network_name="$(networksetup -getairportnetwork en0 | grep "^Current" |  cut -c 24-)"
+    if [ -n "$network_name" ]; then
+        # Connected to Wi-Fi
+        local_ip=$(ipconfig getifaddr en0)
+    else
+        # Try Ethernet
+        local_ip="$(networksetup -getinfo "Thunderbolt Ethernet" | awk '/^IP address/ {print $3}')"
+        if [ -n "$local_ip" ]; then
+            network_name="Ethernet"
+        fi
+    fi
 elif [ "$OS" = "Linux" ]; then
     if command_exists nmcli; then
         devname=$(nmcli -t -f type,device dev status | grep -e '^wifi' | cut -c 6-)
