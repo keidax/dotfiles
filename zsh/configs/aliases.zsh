@@ -5,7 +5,7 @@ source_if_exists "$DOTDIR/shell/aliases"
 aliases[=]='_calc'
 
 # Shorter shell help name
-unalias run-help
+alias run-help && unalias run-help
 alias help=run-help
 
 # Reverse of cd
