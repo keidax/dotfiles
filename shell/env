@@ -34,10 +34,12 @@ if [ "$OS" = "Linux" ]; then
     # Check for the lsb_release command
     if [ -x "$(command -v lsb_release)" ]; then
         case "$(lsb_release --id --short)" in
-            Ubuntu)
-                DISTRO="Ubuntu" ;;
             Arch)
                 DISTRO="Arch" ;;
+            Raspbian)
+                DISTRO="Raspbian" ;;
+            Ubuntu)
+                DISTRO="Ubuntu" ;;
             *)
                 DISTRO="Unknown" ;;
         esac

@@ -30,6 +30,10 @@ elif [ "$OS" = "Linux" ]; then
         else
             batt_symbol=$PLUG
         fi
+    elif [ "$DISTRO" = "Raspbian" ]; then
+        # Raspberry Pi doesn't support the usual BAT0 interface
+        batt_symbol=$PLUG
+        current_charge='100'
     fi
 fi
 
