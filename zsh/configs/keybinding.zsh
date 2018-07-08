@@ -20,6 +20,9 @@ bindkey '^h' backward-delete-char
 bindkey '^?' backward-delete-char
 bindkey '^w' backward-kill-word
 
+# Use Ctrl-k to move forward a word in suggestions
+bindkey '^k' vi-forward-word
+
 # Terminfo handler
 function bindkey-terminfo {
     [[ -n "$terminfo[$2]" ]] && bindkey -M "$1" "$terminfo[$2]" "$3"
