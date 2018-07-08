@@ -10,8 +10,10 @@ bindkey -v
 bindkey 'jk' vi-cmd-mode
 
 # Jump to start/end of line
-bindkey '^a' vi-beginning-of-line
-bindkey '^e' vi-end-of-line
+bindkey          '^a' vi-beginning-of-line
+bindkey -M vicmd '^a' vi-beginning-of-line
+bindkey          '^e' vi-end-of-line
+bindkey -M vicmd '^e' vi-end-of-line
 
 # Let backspace delete everywhere
 bindkey '^h' backward-delete-char
