@@ -6,6 +6,6 @@ Plug 'honza/vim-snippets'
 " Snippet completion tweaks
 augroup vimrc
     autocmd VimEnter *
-                \ call deoplete#custom#source('ultisnips', 'rank', 110) |
-                \ call deoplete#custom#source('ultisnips', 'min_pattern_length', 0)
+        \ call deoplete#custom#source('ultisnips', 'rank', 110) |
+        \ call deoplete#custom#source('ultisnips', 'min_pattern_length', 0)
 augroup end

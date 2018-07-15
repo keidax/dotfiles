@@ -111,7 +111,7 @@ function! MyFoldText()
 
     " Test if any signs exist
     redir => l:signs
-      execute 'silent sign place buffer='.bufnr('%')
+    execute 'silent sign place buffer='.bufnr('%')
     redir End
     let l:padding += l:signs =~# 'id=' ? 2 : 0
 
@@ -151,9 +151,9 @@ endfunction
 augroup vimrc
     " Set fallback omnicompletion
     autocmd FileType *
-                \ if &omnifunc == '' |
-                \     setlocal omnifunc=syntaxcomplete#Complete |
-                \ endif
+        \ if &omnifunc == '' |
+        \     setlocal omnifunc=syntaxcomplete#Complete |
+        \ endif
 augroup END
 
 
@@ -369,12 +369,12 @@ endfunction
 " Cycle or start completion on Tab. If following whitespace, normal Tab
 " behavior.
 inoremap <silent> <expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \   <SID>check_back_space() ? "\<TAB>" :
-            \   deoplete#mappings#manual_complete()
+    \ pumvisible() ? "\<C-n>" :
+    \   <SID>check_back_space() ? "\<TAB>" :
+    \   deoplete#mappings#manual_complete()
 " Reverse cycle on Shift-Tab, or jump to previous snippet placeholder.
 inoremap <silent> <expr> <S-Tab>
-            \ pumvisible() ? "\<C-p>" : SnippetJumpOnKey(0, "\<S-Tab>")
+    \ pumvisible() ? "\<C-p>" : SnippetJumpOnKey(0, "\<S-Tab>")
 
 " When inside a snippet, <Tab> and <Shift-Tab> will jump between placeholders.
 smap <expr> <Tab> SnippetJumpOnKey(1, "\<Tab>")
