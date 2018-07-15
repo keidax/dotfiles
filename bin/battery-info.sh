@@ -34,6 +34,15 @@ elif [ "$OS" = "Linux" ]; then
         # Raspberry Pi doesn't support the usual BAT0 interface
         batt_symbol=$PLUG
         current_charge='100'
+    elif [[ -d '/sys/class/power_supply/BAT0' ]]; then
+        # Try to get from the BAT0 interface
+        current_charge="$(cat '/sys/class/power_supply/BAT0/capacity')"
+        battery_state="$(cat '/sys/class/power_supply/BAT0/status')"
+        if [[ "$battery_state" =~ "Discharging" ]]; then
+            batt_symbol=$BATT
+        else
+            batt_symbol=$PLUG
+        fi
     fi
 fi
 
