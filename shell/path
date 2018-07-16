@@ -47,6 +47,12 @@ if command_exists gem ; then
     append_to_path "$(ruby -e 'print Gem.user_dir')/bin"
 fi
 
+# Include LuaRocks install
+if command_exists luarocks; then
+    # Output might include /usr/local/bin, so trim it to the first path item
+    append_to_path "$(luarocks path --lr-bin | cut -d: -f1)"
+fi
+
 # Ensure RVM is at the end of PATH
 append_to_path "$HOME/.rvm/bin"
 
