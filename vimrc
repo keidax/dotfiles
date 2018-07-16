@@ -284,8 +284,10 @@ vnoremap <Leader>m :MaximizerToggle!<CR>gv
 nnoremap <C-z> :doautocmd FocusLost \| suspend \| doautocmd FocusGained <CR>
 
 nnoremap <silent> <A-v> :call vimterm#toggle() <CR>
-tnoremap <silent> <A-v> <C-\><C-n>:call vimterm#toggle()<CR>
-tnoremap <Esc> <C-\><C-n>
+if has('nvim')
+    tnoremap <silent> <A-v> <C-\><C-n>:call vimterm#toggle()<CR>
+    tnoremap <Esc> <C-\><C-n>
+endif
 
 " Change gitgutter map prefix
 nmap <Leader>gs <Plug>GitGutterStageHunk
