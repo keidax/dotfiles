@@ -45,12 +45,11 @@
         # TODO: not supported by diff-so-fancy
         func = magenta bold
 [color "diff-highlight"]
-        # Values calculated with https://meyerweb.com/eric/tools/color-blend
-        # Currently specific for base16-eighties theme
-        oldHighlight = red bold "#654243"
+        # Background highlight values for base16-shell
+        oldHighlight = red bold 19
         oldReset = normal no-bold black
         oldNormal = red
-        newHighlight = green bold "#4C5A4C"
+        newHighlight = green bold 19
         newReset = normal no-bold black
         newNormal = green
 [stash]
