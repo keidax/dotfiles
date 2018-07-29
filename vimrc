@@ -17,7 +17,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
-Plug 'mileszs/ack.vim'
 " Better performance on e.g. large Ruby files
 Plug 'Konfekt/FastFold'
 Plug 'kana/vim-textobj-user'
@@ -300,6 +299,9 @@ endfunction
 
 nnoremap <silent> <Leader>x :call AltCommand(expand('%'), ':silent e')<CR>
 
+" Alt-k starts a fzf search for current word
+nnoremap <A-k> :Rg <C-r>=expand("<cword>")<CR><CR>
+
 " Cross-plugin compatibilty mappings
 
 " Disable plugin mappings that are covered below
@@ -400,6 +402,15 @@ let g:maximizer_set_default_mapping = 0
 
 " Splitjoin settings
 let g:splitjoin_ruby_hanging_args = 0
+
+" Set up :Rg[!] command for fzf search with ripgrep.
+" Use the bang for a full search into hidden, ignored, and symlinked files.
+let s:rg_normal_opts = 'rg --vimgrep --smart-case --color=always '
+let s:rg_bang_opts = s:rg_normal_opts . '--follow --hidden --no-ignore '
+command! -bang -nargs=* Rg
+    \ call fzf#vim#grep(
+    \   (<bang>0 ? s:rg_bang_opts : s:rg_normal_opts) . shellescape(<q-args>),
+    \   1)
 
 runtime! vimrc.d/**/*.vim
 
