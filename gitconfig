@@ -95,3 +95,5 @@
         s = status
 
         su = submodule update --init --recursive
+[rerere]
+        enabled = true
