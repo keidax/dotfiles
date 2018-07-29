@@ -167,21 +167,6 @@ vnoremap <Leader>X !xmllint --format --recover -<CR>
 """"""""""""""
 "  Mappings  "
 """"""""""""""
-" For learning new habits, Konami-style
-" (Thanks to tylercipriani.com/vim.html)
-noremap <Up> <nop>
-noremap! <Up> <nop>
-noremap <Down> <nop>
-noremap! <Down> <nop>
-noremap <Left> <nop>
-noremap <Right> <nop>
-noremap! <Left> <nop>
-noremap! <Right> <nop>
-" B-A-<start>
-
-cnoremap <ESC> <nop>
-vnoremap <ESC> <nop>
-
 " Leader
 let mapleader = " "
 
@@ -194,6 +179,15 @@ inoremap jk <ESC>
 vnoremap jk <ESC>
 " Commandline mode (<ESC> from a mapping actually executes the command!)
 cnoremap jk <C-c>
+
+" Let Ctrl+hjkl act as arrow keys in insert & command-line modes
+noremap! <C-j> <Down>
+noremap! <C-k> <Up>
+noremap! <C-h> <Left>
+noremap! <C-l> <Right>
+
+" Don't let autopairs clobber C-h
+let g:AutoPairsMapCh = 0
 
 function! g:CheckCmdWin()
     return getcmdwintype() !=# ''
