@@ -18,7 +18,9 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " This doesn't actually turn off current line highlighting, but it does give a
 " necessary performance boost.
-let g:current_line_whitespace_disabled_soft = 1
+" let g:current_line_whitespace_disabled_soft = 1
+" let g:better_whitespace_verbosity = 1
+" let g:better_whitespace_enabled = 1
 
 " Visible indent levels
 Plug 'nathanaelkane/vim-indent-guides'

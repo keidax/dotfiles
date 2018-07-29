@@ -36,7 +36,7 @@ augroup vimrc
 
     " Red highlight for extra whitespace
     " TODO better-whitespace should set this automatically
-    autocmd ColorScheme * :highlight ExtraWhitespace ctermbg=red
+    " autocmd ColorScheme * :highlight ExtraWhitespace ctermbg=red
 
     " Different highlight for current quickfix item
     autocmd ColorScheme * :highlight QuickFixLine cterm=bold ctermbg=18
