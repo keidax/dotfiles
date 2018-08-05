@@ -91,5 +91,23 @@ _start_rprompt_job() {
 }
 add-zsh-hook precmd _start_rprompt_job
 
+# Inspired by https://www.topbug.net/blog/2016/10/03/restore-the-previously-canceled-command-in-zsh/
+_restore_aborted_command() {
+    # Store the last non-empty aborted line
+    if [[ -n $ZLE_LINE_ABORTED ]]; then
+        ABORTED_LINE="$ZLE_LINE_ABORTED"
+    fi
+
+    if [[ -n $ABORTED_LINE ]]; then
+        local saved_buf="$BUFFER" saved_pos="$CURSOR"
+        BUFFER="$ABORTED_LINE"
+        CURSOR="$#BUFFER"
+        zle split-undo
+        BUFFER="$saved_buf" CURSOR="$saved_pos"
+    fi
+}
+
+add-zle-hook-widget line-init _restore_aborted_command
+
 # Remove pesky right-hand space
 # ZLE_RPROMPT_INDENT=0
