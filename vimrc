@@ -298,6 +298,7 @@ function! AltCommand(path, command)
 endfunction
 
 nnoremap <silent> <Leader>x :call AltCommand(expand('%'), ':silent e')<CR>
+nnoremap <silent> <Leader>X :call AltCommand(expand('%'), ':silent sp')<CR>
 
 " Alt-k starts a fzf search for current word
 nnoremap <A-k> :Rg <C-r>=expand("<cword>")<CR><CR>
