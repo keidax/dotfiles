@@ -35,11 +35,15 @@ $if mode=vi
     set keymap vi-command
     "gg": beginning-of-history
     "G": end-of-history
+    "\C-a": beginning-of-line
+    "\C-e": end-of-line
     set keymap vi-insert
     "jk": vi-movement-mode
     "\C-l": clear-screen
     "\C-w": backward-kill-word
     # "\C-p": history-search-backward
+    "\C-a": beginning-of-line
+    "\C-e": end-of-line
 $endif
 
 # Vi mode strings
