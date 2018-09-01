@@ -300,6 +300,9 @@ endfunction
 nnoremap <silent> <Leader>x :call AltCommand(expand('%'), ':silent e')<CR>
 nnoremap <silent> <Leader>X :call AltCommand(expand('%'), ':silent sp')<CR>
 
+" Show full diffconflict context
+nnoremap <Leader>D :DiffConflictsShowHistory<CR>
+
 " Alt-k starts a fzf search for current word
 nnoremap <A-k> :Rg <C-r>=expand("<cword>")<CR><CR>
 

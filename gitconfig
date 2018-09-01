@@ -1,4 +1,4 @@
-# vim: ft=gitconfig
+# vim: ft=gitconfig sw=8
 [include]
         path = ~/.gitconfig.local
 [core]
@@ -97,3 +97,11 @@
         su = submodule update --init --recursive
 [rerere]
         enabled = true
+[merge]
+        tool = diffconflicts
+[mergetool]
+        keepBackup = false
+        prompt = false
+[mergetool "diffconflicts"]
+        cmd = nvim +DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
+        trustExitCode = true
