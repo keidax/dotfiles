@@ -7,7 +7,13 @@ rules:
   brackets:
     max-spaces-inside: 1
 
+  comments:
+    min-spaces-from-content: 1
+
   document-start: disable
+
+  indentation:
+    indent-sequences: consistent
 
   # 100 chars should be enough, but don't fail if a line is longer
   line-length:
