@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+run-on-branch --path '*_spec.rb' spring rspec "$@"

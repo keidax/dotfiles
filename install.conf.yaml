@@ -42,6 +42,9 @@
     ~/bin/git-clean-merged: bin/git-clean-merged.sh
     ~/bin/nvman: bin/nvman
     ~/bin/keycode-debug: bin/keycode-debug.sh
+    ~/bin/rspec-branch: bin/rspec-branch
+    ~/bin/rubocop-branch: bin/rubocop-branch
+    ~/bin/run-on-branch: bin/run-on-branch.sh
     ~/bin/tmux_is_at_least: bin/tmux_is_at_least.sh
     # Add local fonts
     ~/.local/share/fonts/Knack: fonts/Knack
