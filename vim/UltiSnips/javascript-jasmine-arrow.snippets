@@ -1,0 +1,14 @@
+priority 5
+
+# Snippets for JS test files
+
+# Alias it to test
+snippet it "test (js)" b
+test('${1:description}', () => {
+	$0
+});
+endsnippet
+
+snippet ei "expect to be instance of (js)" b
+expect(${1:target}).toBeInstanceOf(${2:klass});
+endsnippet
