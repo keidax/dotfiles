@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-run-on-branch --path '*.rb' rubocop "$@"
+exec run-on-branch --path '*.rb' rubocop "$@"

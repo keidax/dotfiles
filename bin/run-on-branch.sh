@@ -54,6 +54,16 @@ if [[ $# -gt 0 ]]; then
     COMMAND_ARGS+=("$@")
 fi
 
-git diff --name-status "$BASE" "${PATHS[@]}" |\
-    awk '/^(A|M)/ { print $2 }' |\
-    xargs "$COMMAND" "${COMMAND_ARGS[@]}"
+# Read file names in $files array. We need the subshell redirection to read from
+# stdin but $files in the current scope. Previously this used xargs, but it had
+# issues with foregrounding and stdin for interactive commands.
+mapfile -t files < <(
+    git diff --name-status "$BASE" "${PATHS[@]}" | awk '/^(A|M)/ { print $2 }'
+)
+
+if [[ ${#files} == 0 ]]; then
+    echo "Warning: no files on the branch."
+fi
+
+# Put it all together
+exec "$COMMAND" "${COMMAND_ARGS[@]}" "${files[@]}"
