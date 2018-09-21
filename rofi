@@ -7,4 +7,6 @@ rofi.modi:                      drun,combi
 rofi.combi-modi:                run,drun,ssh,window
 rofi.matching:                  fuzzy
 rofi.fixed-num-lines:           false
+rofi.show-icons:                true
+rofi.theme:                     gruvbox-dark
 rofi.font:                      Unitera 12
