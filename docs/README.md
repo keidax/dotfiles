@@ -1,5 +1,5 @@
 ##Requirements
-- nerd-fonts (patched terminal font). I prefer Knack (Hack).
+
 
 ##macOS
 

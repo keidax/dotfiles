@@ -46,8 +46,6 @@
     ~/bin/rubocop-branch: bin/rubocop-branch
     ~/bin/run-on-branch: bin/run-on-branch.sh
     ~/bin/tmux_is_at_least: bin/tmux_is_at_least.sh
-    # Add local fonts
-    ~/.local/share/fonts/Knack: fonts/Knack
     # Zsh files
     ~/.zshenv: zsh/zshenv
     ~/.zprofile: zsh/zprofile
