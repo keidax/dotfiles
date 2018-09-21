@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Outputs a variety of text and symbols in different styles for the current
 # font. In typography, this is known as a specimen.
