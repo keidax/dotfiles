@@ -45,6 +45,7 @@
     ~/bin/rspec-branch: bin/rspec-branch
     ~/bin/rubocop-branch: bin/rubocop-branch
     ~/bin/run-on-branch: bin/run-on-branch.sh
+    ~/bin/specimen.sh: bin/specimen.sh
     ~/bin/tmux_is_at_least: bin/tmux_is_at_least.sh
     # Zsh files
     ~/.zshenv: zsh/zshenv
