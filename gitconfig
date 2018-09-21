@@ -21,6 +21,7 @@
         indentHeuristic = true
         # Show full submodule diffs
         submodule = diff
+        algorithm = histogram
 [pager]
         # Don't wrap long log lines
         log = less -S
@@ -80,6 +81,8 @@
         h = help
 
         l = log --graph --date=relative --pretty=format:'%Cred%>|(16)%h %C(auto)%s%d %Cgreen%ad %C(dim white)%cN%C(nodim)'
+
+        mt = mergetool
 
         pfwl = push --force-with-lease
         push-first = ! git push --set-upstream origin $(git symbolic-ref --short HEAD)
