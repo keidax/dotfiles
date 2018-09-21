@@ -7,3 +7,4 @@ rofi.modi:                      drun,combi
 rofi.combi-modi:                run,drun,ssh,window
 rofi.matching:                  fuzzy
 rofi.fixed-num-lines:           false
+rofi.font:                      Unitera 12

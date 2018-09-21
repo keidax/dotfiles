@@ -1,8 +1,11 @@
 ! Reasonable xterm settings
 
 ! Use a nice default font
-xterm*faceName: "Knack Nerd Font"
-xterm*faceSize: 13
+xterm*faceName: Unitera
+xterm*faceSize: 8
+
+! Use the minimum width for bitmap fonts
+xterm*forcePackedFont: false
 
 ! Large scrollback
 xterm*savelines: 10000
