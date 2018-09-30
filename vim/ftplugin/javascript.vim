@@ -7,3 +7,5 @@ set shiftwidth=2
 if bufname('%') =~? '\.test\.jsx\?$'
     UltiSnipsAddFiletypes javascript-jasmine-arrow
 endif
+
+let b:ale_linters = ['eslint']
