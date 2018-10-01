@@ -34,4 +34,19 @@ git () {
     fi
 }
 
+# Simple forward-counting timer
+stopwatch () {
+    trap "echo; trap - INT; return 0" INT
+    start=$(date +%s)
+
+    while true; do
+        diff=$(($(date +%s) - start))
+        # NOTE: we have to trim the trailing decimal point in zsh
+        seconds=${diff%.*}
+        # NOTE: this relies on the GNU coreutils version of date
+        printf "\\r%s" "$(date -u --date @$seconds +%H:%M:%S)"
+        sleep 0.2
+    done
+}
+
 # vim: ts=4
