@@ -32,4 +32,3 @@ brew bundle --file="$DOTDIR/Brewfile"
 
 # Remove old brew versions and cached downloads
 brew cleanup
-brew cask cleanup --outdated
