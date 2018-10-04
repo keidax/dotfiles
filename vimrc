@@ -333,6 +333,8 @@ function! SnippetJumpOnKey(forwards, fallback)
 
     if l:res
         return ''
+    elseif type(a:fallback) == v:t_func
+        return a:fallback()
     else
         return a:fallback
     endif
@@ -349,52 +351,62 @@ endfunction
 
 " Gracefully combine endwise and autopairs <Enter> functionality
 function! EnterCombined()
-    let l:autopairs = AutoPairsReturn()
-    " Endwise expects to be called from a blank line, so give it one
-    if getline('.') !~# '^\s*$'
-        normal! O
-        let l:endwise = EndwiseDiscretionary()
-        normal! dd
-    else
-        let l:endwise = EndwiseDiscretionary()
-    endif
+    let l:ret = "\<CR>"
+    let l:post_return = ["EndwiseDiscretionary()", "AutoPairsReturn()"]
 
-    if len(l:endwise) == 0
-        return l:autopairs
-    elseif len(l:autopairs) == 0
-        return l:endwise
-    else
-        return "\<C-o>o" . l:endwise . "\<C-o>k" . l:autopairs
-    endif
+    " FIXME For some reason, returning
+    " <C-r>=EndwiseDiscretionary<CR><C-r>=anything<CR> seems to cause a sort
+    " of nested insert mode when endwise is triggered -- I have to press <Esc>
+    " twice to get back to normal mode. Combining the calls into one register
+    " call avoids the issue.
+    return l:ret . "\<C-r>=" . join(l:post_return, ".") . l:ret
 endfunction
 
-" Cycle or start completion on Tab. If following whitespace, normal Tab
-" behavior.
-inoremap <silent> <expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \   <SID>check_back_space() ? "\<TAB>" :
-    \   deoplete#mappings#manual_complete()
-" Reverse cycle on Shift-Tab, or jump to previous snippet placeholder.
-inoremap <silent> <expr> <S-Tab>
-    \ pumvisible() ? "\<C-p>" : SnippetJumpOnKey(0, "\<S-Tab>")
+" When working inside a snippet, <Enter> will jump to the next placeholder.
+" Otherwise it behaves as expected, with functionality combined from several
+" plugins.
+function! s:wrap_jump()
+    return SnippetJumpOnKey(1, function("EnterCombined"))
+endfunction
 
-" When inside a snippet, <Tab> and <Shift-Tab> will jump between placeholders.
-smap <expr> <Tab> SnippetJumpOnKey(1, "\<Tab>")
-smap <expr> <S-Tab> SnippetJumpOnKey(0, "\<S-Tab>")
+inoremap <silent> <CR> <C-r>=<SID>wrap_jump()<CR>
+snoremap <silent> <CR> <Esc>:call <SID>wrap_jump()<CR>
+
+" Cycle completion on Tab. If following whitespace, normal Tab behavior. If
+" inside a snippet, jump to the next placeholder
+function! TabCombined()
+    if pumvisible()
+        return "\<C-n>"
+    elseif s:check_back_space()
+        return "\<Tab>"
+    else
+        return SnippetJumpOnKey(1, "\<Tab>")
+    endif
+endfunction
+inoremap <silent> <TAB> <C-r>=TabCombined()<CR>
+
+" Reverse cycle completion on Shift-Tab, or jump to the previous snippet
+" placeholder.
+function! ShiftTabCombined()
+    if pumvisible()
+        return "\<C-p>"
+    else
+        return SnippetJumpOnKey(0, "\<S-Tab>")
+    endif
+endfunction
+inoremap <silent> <S-Tab> <C-r>=ShiftTabCombined()<CR>
+
+" When in Select mode inside a snippet, <Tab> and <Shift-Tab> will jump between
+" placeholders.
+snoremap <silent> <Tab> <Esc>:call SnippetJumpOnKey(1, "\<Tab>")<CR>
+snoremap <silent> <S-Tab> <Esc>:call SnippetJumpOnKey(0, "\<S-Tab>")<CR>
 
 " Ctrl-E will revert to original text and restart completion
 inoremap <expr> <C-e> pumvisible() ? deoplete#smart_close_popup() : "\<C-e>"
 
 " NOTE: In this case it's necessary to use the <C-r>=expr<CR> hack instead of
 " map <expr> because the latter prevents changing the buffer text.
-imap <C-s> <C-r>=SnippetExpandOrList()<CR>
-
-" When working inside a snippet, <Enter> will jump to the next placeholder.
-" Otherwise it behaves as expected, with functionality combined from several
-" plugins.
-let g:enter_fallback_string = "\<CR>\<C-r>=EnterCombined()\<CR>"
-inoremap <silent> <CR> <C-r>=SnippetJumpOnKey(1, g:enter_fallback_string)<CR>
-
+imap <silent> <C-s> <C-r>=SnippetExpandOrList()<CR>
 
 """""""""""""""""""""
 "  Plugin Settings  "
