@@ -7,5 +7,5 @@ Plug 'honza/vim-snippets'
 augroup vimrc
     autocmd VimEnter *
         \ call deoplete#custom#source('ultisnips', 'rank', 110) |
-        \ call deoplete#custom#source('ultisnips', 'min_pattern_length', 0)
+        \ call deoplete#custom#source('ultisnips', 'min_pattern_length', 2)
 augroup end
