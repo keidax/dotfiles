@@ -273,8 +273,18 @@ nnoremap <Leader>m :MaximizerToggle!<CR>
 vnoremap <Leader>m :MaximizerToggle!<CR>gv
 
 " Vim doesn't normally fire events on suspend/resume, so hack around this and
-" fire FocusLost/Gained events.
-nnoremap <C-z> :doautocmd FocusLost \| suspend \| doautocmd FocusGained <CR>
+" fire FocusLost/Gained events. Check with `exists` first to avoid a "No
+" matching autocommands" message
+function! SuspendWithEvents()
+    if exists('#FocusLost')
+        doautocmd FocusLost
+    endif
+    suspend
+    if exists('#FocusGained')
+        doautocmd FocusGained
+    endif
+endfunction
+nnoremap <silent> <C-z> :call SuspendWithEvents() <CR>
 
 nnoremap <silent> <A-v> :call vimterm#toggle() <CR>
 if has('nvim')
