@@ -87,11 +87,13 @@
         pfwl = push --force-with-lease
         push-first = ! git push --set-upstream origin $(git symbolic-ref --short HEAD)
 
+        rc = rebase --continue
         riom = rebase -i origin/master
         rom = rebase origin/master
 
         sl = stash list
         sp = stash pop
+        srs = ! git stash save && git riom && git stash pop
         ss = stash save
         sw = stash show
 
