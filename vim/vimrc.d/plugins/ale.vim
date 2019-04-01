@@ -9,6 +9,9 @@ let g:ale_sign_warning = '⚠'
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 0
 
+" Show virtualtext
+let g:ale_virtualtext_cursor = 1
+
 " Linter settings
 " Display cop names & extra details, and run extra Rails cops
 let g:ale_ruby_rubocop_options = '-D -E -R'

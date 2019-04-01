@@ -45,6 +45,10 @@ augroup vimrc
     autocmd ColorScheme * :highlight GitGutterChange cterm=bold
     autocmd ColorScheme * :highlight ALEWarningSign ctermfg=3 ctermbg=18
 
+    " More readable inline error messages
+    autocmd ColorScheme * :highlight link ALEVirtualTextWarning ALEWarningSign
+    autocmd ColorScheme * :highlight link ALEVirtualTextError Error
+
     " No annoying blue highlighting
     autocmd ColorScheme * :highlight SpellCap ctermbg=none
 augroup END
