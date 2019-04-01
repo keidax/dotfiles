@@ -179,11 +179,11 @@ vnoremap jk <ESC>
 " Commandline mode (<ESC> from a mapping actually executes the command!)
 cnoremap jk <C-c>
 
-" Let Ctrl+hjkl act as arrow keys in insert & command-line modes
-noremap! <C-j> <Down>
-noremap! <C-k> <Up>
-noremap! <C-h> <Left>
-noremap! <C-l> <Right>
+" Let Alt+hjkl act as arrow keys in insert & command-line modes
+noremap! <A-j> <Down>
+noremap! <A-k> <Up>
+noremap! <A-h> <Left>
+noremap! <A-l> <Right>
 
 " Don't let autopairs clobber C-h
 let g:AutoPairsMapCh = 0
