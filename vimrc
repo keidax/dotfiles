@@ -39,6 +39,7 @@ Plug 'szw/vim-maximizer'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'wvffle/vimterm'
 Plug 'tpope/vim-unimpaired'
+Plug 'junegunn/vim-easy-align'
 
 
 """""""""""""
@@ -417,6 +418,10 @@ inoremap <expr> <C-e> pumvisible() ? deoplete#smart_close_popup() : "\<C-e>"
 " NOTE: In this case it's necessary to use the <C-r>=expr<CR> hack instead of
 " map <expr> because the latter prevents changing the buffer text.
 imap <silent> <C-s> <C-r>=SnippetExpandOrList()<CR>
+
+
+xmap <Leader>a <Plug>(EasyAlign)
+nmap <Leader>a <Plug>(EasyAlign)
 
 """""""""""""""""""""
 "  Plugin Settings  "
