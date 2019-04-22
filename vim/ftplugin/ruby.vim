@@ -8,3 +8,6 @@ setlocal foldenable
 setlocal regexpengine=1
 " !, ?, and = can end method names
 setlocal iskeyword+=?,!,=
+
+" Check spelling (see after/syntax/ruby.vim for more details)
+setlocal spell

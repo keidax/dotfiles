@@ -1,0 +1,4 @@
+*.spl
+*.sug
+# A symlink to the local version we don't want to track
+local.utf-8.add

@@ -49,8 +49,9 @@ augroup vimrc
     autocmd ColorScheme * :highlight link ALEVirtualTextWarning ALEWarningSign
     autocmd ColorScheme * :highlight link ALEVirtualTextError Error
 
-    " No annoying blue highlighting
+    " More readable spelling errors
     autocmd ColorScheme * :highlight SpellCap ctermbg=none
+    autocmd ColorScheme * :highlight SpellBad ctermfg=9 ctermbg=none cterm=bold
 augroup END
 
 " Use matching colorscheme from terminal theme
