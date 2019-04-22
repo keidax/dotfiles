@@ -66,6 +66,7 @@
         ap = add --patch
 
         b = branch
+        bs = branch --sort=-committerdate
 
         c = commit --verbose
         ca = commit --verbose --amend
