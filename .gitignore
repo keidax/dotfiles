@@ -8,3 +8,6 @@ vim/plugged/*
 
 # Tmux plugins (handled by tpm)
 tmux/plugins
+
+# Misc
+.DS_Store
