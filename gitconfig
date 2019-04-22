@@ -22,6 +22,9 @@
         # Show full submodule diffs
         submodule = diff
         algorithm = histogram
+[rebase]
+        # For use with commit --fixup
+        autosquash = true
 [pager]
         # Don't wrap long log lines
         log = less -S
