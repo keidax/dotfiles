@@ -22,4 +22,7 @@ let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
 " Fixer settings
 let g:ale_fix_on_save = 0
 
-let g:ale_fixers = { '*': ['trim_whitespace', 'remove_trailing_lines'] }
+let g:ale_fixers = {
+    \ '*': ['trim_whitespace', 'remove_trailing_lines'],
+    \ 'json': ['fixjson'],
+    \ }
