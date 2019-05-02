@@ -10,3 +10,7 @@ setopt no_list_ambiguous
 
 # Case- and hypen-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-}'
+
+# Assign completions for custom commands
+compdef _rspec rspec-branch
+compdef _rubocop rubocop-branch
