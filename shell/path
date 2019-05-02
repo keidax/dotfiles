@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Silence messages at startup like [2] + Done <command>
+set +m
+
 # Some helper functions
 prepend_to_path () {
     if [ -d "$1" ] ; then
@@ -23,17 +26,74 @@ prepend_to_manpath () {
     fi
 }
 
+# We use the output from programs like brew, python, or ruby in our PATH
+# variables, but each of these can have a noticeable sub-second delay on
+# startup. We can run every significant external program in parallel to get a
+# quicker startup experience. Capturing their asynchronous output in parallel
+# is not possible, so we use a helper script to set up FIFO queues and read
+# from these when the async processes are done.
+. "$DOTDIR/shell/async_helper"
+
+async_queue_init prepend
+async_queue_init append
+async_queue_init manpath
+
 # Add brew coreutils without 'g' prefix
+{
 if [ "$OS" = "Darwin" ] ; then
-    prepend_to_path "$(brew --prefix)/opt/coreutils/libexec/gnubin"
+    async_queue_write prepend "$(brew --prefix)/opt/coreutils/libexec/gnubin"
 fi
+} &
 
 # Include user pip packages
+{
 if command_exists python3 ; then
-    prepend_to_path "$(python3 -c "import os, site; print(os.path.join(site.USER_BASE, 'bin'))")"
+    async_queue_write prepend "$(python3 -c "import os, site;\
+        print(os.path.join(site.USER_BASE, 'bin'))")"
 elif command_exists python2 ; then
-    prepend_to_path "$(python2 -c "import os, site; print(os.path.join(site.USER_BASE, 'bin'))")"
+    async_queue_write prepend "$(python2 -c "import os, site;\
+        print(os.path.join(site.USER_BASE, 'bin'))")"
 fi
+} &
+
+# Include RubyGems bin folder
+{
+if command_exists gem ; then
+    async_queue_write append "$(ruby -e 'print Gem.user_dir')/bin"
+fi
+} &
+
+# Include LuaRocks install
+{
+if command_exists luarocks; then
+    # Output might include /usr/local/bin, so trim it to the first path item
+    async_queue_write append "$(luarocks path --lr-bin | cut -d: -f1)"
+fi
+} &
+
+# Add man pages from brew coreutils
+{
+if [ "$OS" = "Darwin" ] ; then
+    async_queue_write manpath "$(brew --prefix)/opt/coreutils/libexec/gnuman"
+fi
+} &
+
+# Wait for all async jobs
+wait
+
+while async_queue_read_line prepend line; do
+    # shellcheck disable=2154
+    prepend_to_path "$line"
+done
+async_queue_close prepend
+
+while async_queue_read_line append line; do
+    append_to_path "$line"
+done
+async_queue_close append
+
+# Ensure RVM is at the end of PATH
+append_to_path "$HOME/.rvm/bin"
 
 # Include user's local bin folder(s)
 prepend_to_path "$HOME/.local/bin"
@@ -42,26 +102,12 @@ prepend_to_path "$HOME/bin"
 # Include current dir on PATH
 PATH=".:$PATH"
 
-# Include RubyGems bin folder
-if command_exists gem ; then
-    append_to_path "$(ruby -e 'print Gem.user_dir')/bin"
-fi
-
-# Include LuaRocks install
-if command_exists luarocks; then
-    # Output might include /usr/local/bin, so trim it to the first path item
-    append_to_path "$(luarocks path --lr-bin | cut -d: -f1)"
-fi
-
-# Ensure RVM is at the end of PATH
-append_to_path "$HOME/.rvm/bin"
-
 export PATH
 
-# Add man pages from brew coreutils
-if [ "$OS" = "Darwin" ] ; then
-    prepend_to_manpath "$(brew --prefix)/opt/coreutils/libexec/gnuman"
-fi
+while async_queue_read_line manpath line; do
+    prepend_to_manpath "$line"
+done
+async_queue_close manpath
 
 # Include local utility documentation
 prepend_to_manpath "$HOME/.zplug/doc/man"
@@ -73,3 +119,10 @@ prepend_to_manpath "$HOME/.fzf/man"
     [ "$MANPATH" = "${MANPATH#:}" ] && MANPATH=":$MANPATH"
     export MANPATH
 }
+
+case $- in
+    # This seems to raise an error in non-interactive zsh, so only turn on for
+    # interactive shells. Unfortunately in the Dash shell this generates
+    # messages like "[2] + Done" that cannot be suppressed.
+    *i*) set -m;;
+esac

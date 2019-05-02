@@ -1,0 +1,68 @@
+#!/bin/sh
+#
+# Functions for some rudimentary async shell work. (Mostly) POSIX-compatible.
+#
+# Implementation notes:
+#
+# For most operations we need two rounds of eval:
+# - The first is because dynamic variables aren't possible in plain sh. We need
+#   to use eval for the variable name.
+# - The second is because using exec for redirections requires numeric literals
+#   rather than variables. See https://unix.stackexchange.com/a/372664
+#
+# Handling the file descriptors is tricky for a few reasons:
+# - When reading from a pipe, we want to receive an EOF once the "queue" is
+#   empty. Reading from a pipe will hang if the other end is still open for
+#   writing. But just reading from a pipe file also hangs at the end instead of
+#   getting an EOF. It turns out we can work around this by keeping a persistent
+#   file descriptor for the pipe opened just for reading.
+#
+# - Opening a pipe for just reading or just writing will block until another
+#   process opens the other end. We can work around this by opening for read and
+#   write at the same time, then reopening for just reading.
+
+# Track the next file descriptor we can use. This is pretty unsafe, since it
+# assumes nothing else will use file descriptors. And if we go over 9, we're
+# screwed.
+_async_next_free_fd=3
+
+# Prepare an async queue for writing
+# $1 is the queue name
+async_queue_init () {
+    eval "_async_$1_pipe=$(mktemp -u)"
+    eval 'mkfifo "${_async_'"$1"'_pipe}"'
+    # Assign next fds
+    eval "_async_$1_read_fd=$_async_next_free_fd"
+    # Bump tracking variable
+    _async_next_free_fd=$((_async_next_free_fd + 1))
+
+    # Open persistent file descriptor. For non-blocking access, we can open in
+    # read-write mode, then reopen just for reading.
+    eval 'exec_string="${_async_'"$1"'_read_fd}<>${_async_'"$1"'_pipe}'\
+                     ' ${_async_'"$1"'_read_fd}<${_async_'"$1"'_pipe}"'
+    # shellcheck disable=2154
+    eval 'exec '"$exec_string"
+}
+
+# Write a string to the async queue
+# $1 is the queue name
+# $2 is the string to write
+async_queue_write () {
+    eval 'printf "%s\n" "$2" >${_async_'"$1"'_pipe}'
+}
+
+# Read one line from the async queue
+# $1 is the queue name
+# $2 is the variable name holding the line
+async_queue_read_line () {
+    eval 'read -r '"$2"' <&${_async_'"$1"'_read_fd}'
+}
+
+# Clean up and close the queue
+# $1 is the queue name
+async_queue_close () {
+    eval 'exec_string="${_async_'"$1"'_read_fd}<&-"'
+    eval 'exec '"$exec_string"
+    # Run async for speed, and silence by running in a subshell
+    ( eval 'rm "${_async_'"$1"'_pipe}"' >/dev/null 2>&1 & )
+}
