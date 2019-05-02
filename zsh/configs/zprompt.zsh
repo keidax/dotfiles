@@ -1,7 +1,19 @@
 setopt prompt_subst prompt_percent
 
+# Exit codes > 128 indicate an uncaught signal. Return the name for that signal,
+# because e.g. "KILL" is more semantic than "137".
+full_exit_code() {
+    local exit_code=$?
+    if [[ $exit_code -gt 128 ]]; then
+        # Indexing here is wonky, see zshparam(1)
+        echo "${signals[exit_code - 127]}"
+    else
+        echo "$exit_code"
+    fi
+}
+
 # Red error code if previous command failed
-error_status="%(?..$FG[001]%?$FX[reset] )"
+error_status="%(?..$FG[001]"'$(full_exit_code)'"$FX[reset] )"
 
 # Blue working directory
 working_directory="$FG[004]$FX[bold]"'$(shrink_path -l -t)'"$FX[reset]"
@@ -12,9 +24,8 @@ job_count="%(1j.$FG[003]%j$FX[reset] .)"
 # Lambda symbol, or pound if root
 cmd_symbol="$FX[bold]%(!.#.λ)$FX[reset]"
 
-# Build up the whole prompt; note ${(e)...} is used for the working directory
-# to force re-evaluation of the `shrink_path` command substitution.
-PROMPT='$error_status${(e)working_directory} $job_count$cmd_symbol '
+# Build up the whole prompt.
+PROMPT="${error_status}${working_directory} ${job_count}${cmd_symbol} "
 
 _ruby_info() {
     # Nerd font ruby icons:     
@@ -77,8 +88,17 @@ _rprompt_job() {
 }
 
 _rprompt_callback() {
-    RPROMPT="$3"
-    [[ -o zle ]] && zle reset-prompt
+    if [[ "$2" != 0 ]]; then
+        RPROMPT="failed with $2"
+        [[ -o zle ]] && zle reset-prompt
+        return
+    fi
+
+    # Only re-eval the prompt if it changes
+    if [[ "$3" != "$RPROMPT" ]]; then
+        RPROMPT="$3"
+        [[ -o zle ]] && zle reset-prompt
+    fi
 }
 
 # This forks to start the worker, so any job commands must already be defined
