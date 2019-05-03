@@ -38,10 +38,14 @@ async_queue_init prepend
 async_queue_init append
 async_queue_init manpath
 
-# Add brew coreutils without 'g' prefix
 {
 if [ "$OS" = "Darwin" ] ; then
-    async_queue_write prepend "$(brew --prefix)/opt/coreutils/libexec/gnubin"
+    brew_prefix="$(brew --prefix)"
+
+    # Add brew coreutils without 'g' prefix
+    async_queue_write prepend "$brew_prefix/opt/coreutils/libexec/gnubin"
+    # Add man pages from brew coreutils
+    async_queue_write manpath "$brew_prefix/opt/coreutils/libexec/gnuman"
 fi
 } &
 
@@ -78,13 +82,6 @@ if command_exists npm; then
 
     async_queue_write prepend "$npm_prefix/bin"
     async_queue_write manpath "$npm_prefix/share/man"
-fi
-} &
-
-# Add man pages from brew coreutils
-{
-if [ "$OS" = "Darwin" ] ; then
-    async_queue_write manpath "$(brew --prefix)/opt/coreutils/libexec/gnuman"
 fi
 } &
 
