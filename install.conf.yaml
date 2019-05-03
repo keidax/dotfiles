@@ -60,6 +60,8 @@
       command: ./setup/zsh-setup
     - description: Installing vim plugins via vim-plug
       command: nvim +PlugInstall +qall
+    - description: Installing Node packages via npm
+      command: ./setup/npm-install
     - description: Installing Python packages via Pip
       command: ./setup/pip-install
     - description: Installing Ruby gems via RubyGems

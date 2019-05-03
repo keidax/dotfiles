@@ -111,6 +111,9 @@ if [ "$OS" = "Linux" ]; then
     -Dswing.aatext=true \
     -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel \
     -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+
+    # Use a writable path for global NPM packages
+    NPM_CONFIG_PREFIX="$HOME/.node-global"
 fi
 
 # Get non-interactive bash shells to use our functions

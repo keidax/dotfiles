@@ -71,6 +71,16 @@ if command_exists luarocks; then
 fi
 } &
 
+# Include global NPM installation
+{
+if command_exists npm; then
+    npm_prefix="$(npm config get prefix --global)"
+
+    async_queue_write prepend "$npm_prefix/bin"
+    async_queue_write manpath "$npm_prefix/share/man"
+fi
+} &
+
 # Add man pages from brew coreutils
 {
 if [ "$OS" = "Darwin" ] ; then

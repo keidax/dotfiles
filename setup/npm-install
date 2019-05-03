@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# A setup script to install npm packages.
+
+# Load common functions
+. "$DOTDIR/shell/functions"
+
+command_exists npm || { echo "npm is not installed!"; exit 1; }
+
+# Instead of using package.json to create a new package with dependencies, just
+# pull packages from a list.
+# shellcheck disable=2046
+npm install -g $(tr '\n' ' ' < npm_packages.txt)
