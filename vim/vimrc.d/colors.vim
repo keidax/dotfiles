@@ -49,6 +49,11 @@ augroup vimrc
     autocmd ColorScheme * :highlight link ALEVirtualTextWarning ALEWarningSign
     autocmd ColorScheme * :highlight link ALEVirtualTextError Error
 
+    " Some syntax files will highlight errors with a red background. Setting
+    " the foreground to red as well makes errors unreadable. Underlining plus
+    " gutter signs should be visible enough.
+    autocmd ColorScheme * :highlight ALEError cterm=underline
+
     " More readable spelling errors
     autocmd ColorScheme * :highlight SpellCap ctermbg=none
     autocmd ColorScheme * :highlight SpellBad ctermfg=9 ctermbg=none cterm=bold
