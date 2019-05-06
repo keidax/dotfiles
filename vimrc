@@ -323,7 +323,34 @@ nnoremap <Leader>D :DiffConflictsShowHistory<CR>
 " Alt-k starts a fzf search for current word
 nnoremap <A-k> :Rg <C-r>=expand("<cword>")<CR><CR>
 
-" Cross-plugin compatibilty mappings
+" Cross-plugin compatibility mappings
+" Overview
+" Enter:
+"   - if completing and an item is selected, insert/expand
+"   - if in a snippet, jump to next placeholder
+"   - else, trigger other plugin behavior (endwise, autopairs)
+" Tab:
+"   - if completing, go to next item
+"   - if in a snippet, jump to next placeholder
+"   - if preceding whitespace, use normal tab behavior
+"   - else, start completion
+" Shift-Tab:
+"   - if completing, go to previous item
+"   - if in a snippet, jump to previous placeholder
+"   - else, use normal Shift-Tab behavior
+" Ctrl-J:
+"   - if in a snippet, jump to next placeholder
+"   - else, use normal Ctrl-J behavior
+" Ctrl-K:
+"   - if in a snippet, jump to previous placeholder
+"   - else, use normal Ctrl-K behavior
+" Ctrl-N: next completion item
+" Ctrl-P: previous completion item
+" Ctrl-S: expand or list snippets
+
+" Explicit defaults for above behavior
+let g:coc_snippet_next = '<C-j>'
+let g:coc_snippet_prev = '<C-k>'
 
 " Disable plugin mappings that are covered below
 let g:endwise_no_mappings = 1
@@ -340,15 +367,9 @@ endfunction
 
 " Handle jumping backwards and forwards between snippet placeholders
 function! SnippetJumpOnKey(forwards, fallback)
-    if a:forwards
-        call UltiSnips#JumpForwards()
-        let l:res = g:ulti_jump_forwards_res
-    else
-        call UltiSnips#JumpBackwards()
-        let l:res = g:ulti_jump_backwards_res
-    endif
-
-    if l:res
+    " Note that this is false if we're on the final placeholder
+    if coc#jumpable()
+        call coc#rpc#request(a:forwards ? 'snippetNext' : 'snippetPrev', [])
         return ''
     elseif type(a:fallback) == v:t_func
         return a:fallback()
@@ -357,17 +378,8 @@ function! SnippetJumpOnKey(forwards, fallback)
     endif
 endfunction
 
-" Expand snippet, or list snippets if none can be expanded
-function! SnippetExpandOrList()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        call UltiSnips#ListSnippets()
-    endif
-    return ''
-endfunction
-
 " Gracefully combine endwise and autopairs <Enter> functionality
-function! EnterCombined()
+function! EnterFallback()
     let l:ret = "\<CR>"
     let l:post_return = ["EndwiseDiscretionary()", "AutoPairsReturn()"]
 
@@ -382,22 +394,23 @@ endfunction
 " When working inside a snippet, <Enter> will jump to the next placeholder.
 " Otherwise it behaves as expected, with functionality combined from several
 " plugins.
-function! s:wrap_jump()
-    return SnippetJumpOnKey(1, function("EnterCombined"))
+function! EnterCombined()
+    if pumvisible() && coc#rpc#request('hasSelected', [])
+        return "\<C-y>"
+    endif
+    return SnippetJumpOnKey(1, function('EnterFallback'))
 endfunction
 
-inoremap <silent> <CR> <C-r>=<SID>wrap_jump()<CR>
-snoremap <silent> <CR> <Esc>:call <SID>wrap_jump()<CR>
+inoremap <silent> <CR> <C-r>=EnterCombined()<CR>
+snoremap <silent> <CR> <Esc>:call EnterCombined()<CR>
 
 " Cycle completion on Tab. If following whitespace, normal Tab behavior. If
 " inside a snippet, jump to the next placeholder
 function! TabCombined()
     if pumvisible()
         return "\<C-n>"
-    elseif s:check_back_space()
-        return "\<Tab>"
     else
-        return SnippetJumpOnKey(1, "\<Tab>")
+        return SnippetJumpOnKey(1, { -> s:check_back_space() ? "\<Tab>" : coc#refresh() })
     endif
 endfunction
 inoremap <silent> <TAB> <C-r>=TabCombined()<CR>
@@ -418,13 +431,11 @@ inoremap <silent> <S-Tab> <C-r>=ShiftTabCombined()<CR>
 snoremap <silent> <Tab> <Esc>:call SnippetJumpOnKey(1, "\<Tab>")<CR>
 snoremap <silent> <S-Tab> <Esc>:call SnippetJumpOnKey(0, "\<S-Tab>")<CR>
 
-" Ctrl-E will revert to original text and restart completion
-inoremap <expr> <C-e> pumvisible() ? deoplete#smart_close_popup() : "\<C-e>"
-
 " NOTE: In this case it's necessary to use the <C-r>=expr<CR> hack instead of
 " map <expr> because the latter prevents changing the buffer text.
-imap <silent> <C-s> <C-r>=SnippetExpandOrList()<CR>
+imap <silent> <C-s> <C-r>=coc#rpc#request('doKeymap', ['snippets-expand'])<CR>
 
+nnoremap <silent> <Leader>d :call CocActionAsync('doHover')<CR>
 
 xmap <Leader>a <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
