@@ -62,6 +62,9 @@ set softtabstop=-1  " <Tab> inserts {shiftwidth} spaces
 " Case-insensitive search
 set ignorecase
 
+" ...unless we want uppercase
+set smartcase
+
 " Highlight search results (can be cleared with Ctrl+L)
 set hlsearch
 
@@ -73,6 +76,9 @@ set updatetime=250
 
 " Commandline completion fills in longest common substring, then cycles options
 set wildmode=longest:full,full
+
+" Completion won't fill the whole screen
+set pumheight=20
 
 " Go to the previous tab instead of the next when closing a tab
 augroup vimrc
@@ -423,6 +429,13 @@ imap <silent> <C-s> <C-r>=SnippetExpandOrList()<CR>
 xmap <Leader>a <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
 
+" Quick writing
+nnoremap <Leader>w :update<CR>
+
+" Add a warning to learn the new mapping
+cnoreabbrev w W
+command! -bang -nargs=* W echoerr 'Use <lt>Leader>w instead!'
+
 """""""""""""""""""""
 "  Plugin Settings  "
 """""""""""""""""""""
@@ -433,6 +446,7 @@ let g:maximizer_set_default_mapping = 0
 
 " Splitjoin settings
 let g:splitjoin_ruby_hanging_args = 0
+let g:splitjoin_ruby_options_as_arguments = 1
 
 " Set up :Rg[!] command for fzf search with ripgrep.
 " Use the bang for a full search into hidden, ignored, and symlinked files.
