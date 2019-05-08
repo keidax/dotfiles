@@ -101,6 +101,10 @@ _rprompt_callback() {
     fi
 }
 
+# zle reset-prompt doesn't seem to work on the first call unless we initialize
+# RPROMPT with something.
+RPROMPT=""
+
 # This forks to start the worker, so any job commands must already be defined
 async_start_worker rprompt_worker
 async_register_callback rprompt_worker _rprompt_callback
