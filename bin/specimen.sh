@@ -4,12 +4,13 @@
 # font. In typography, this is known as a specimen.
 
 TEXT=$(cat <<'EOF'
-0123456789 !@#$%%^&*()_+-=
-ABCDEFGHIJKLMNOPQRSTUVWXYZ
-abcdefghijklmnopqrstuvwxyz
+0123456789 !@#$%%^&*()_+-=    <!-- <-- <- <=> => -> -->
+ABCDEFGHIJKLMNOPQRSTUVWXYZ    == != === !== ::Klass::CONST
+abcdefghijklmnopqrstuvwxyz    && &. ¯\_(ツ)_/¯
 ¶`~"' ¡! .,:;¿? \|/ {}[]<>
 1!Illegal O(0) bdpqijlunmw
-ΔΠΣλ‐–— ‘µ’ “Æ” „©‟ ⟦⟧ «ç»
+ΔΠΣλ‐–— ‘µ’ “Æ” „©‟ ⟦⟧ «ç»    ⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏
+Here’s the “thing”.           ⸨•⸩ ➜  ✓ ✔ ✕ ✖ ✗ ✘  ⮁ ⭡ ⭣
 EOF
 )
 
