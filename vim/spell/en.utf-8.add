@@ -9,6 +9,8 @@ async
 autocmd
 autocmds
 autocommands
+autoload
+autoloading
 autosquash
 AWS
 base16
@@ -63,11 +65,14 @@ neovim's
 NoSpell
 NPM
 p
+param
+params
 PID
 plugin
 plugins
 POSIX
 PostgreSQL
+preloading
 quickfix
 r
 README
@@ -80,7 +85,7 @@ rubocop
 RVM
 rvm
 s
-Salesforce
+salesforce
 shellcheck
 shoryuken
 SNS
@@ -112,4 +117,6 @@ workflows
 Xcode
 XSD
 y
+yieldparam
+yieldreturn
 zsh
