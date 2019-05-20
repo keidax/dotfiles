@@ -63,6 +63,7 @@ mapfile -t files < <(
 
 if [[ ${#files} == 0 ]]; then
     echo "Warning: no files on the branch."
+    exit 0
 fi
 
 # Put it all together
