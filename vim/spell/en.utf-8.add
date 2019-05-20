@@ -25,6 +25,7 @@ ctrl
 dev
 DevOps
 devs
+env
 EOF
 errored
 esc
@@ -78,10 +79,12 @@ r
 README
 Readme
 readme
+rebase
 refactored
 repo
 ripgrep
 rubocop
+runtimes
 RVM
 rvm
 s
