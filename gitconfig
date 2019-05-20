@@ -73,10 +73,12 @@
 
         c = commit --verbose
         ca = commit --verbose --amend
+        cf = commit --verbose --fixup
 
         co = checkout
         cob = checkout -b
         com = checkout master
+        coa = "! git checkout -- $1; git submodule foreach --recursive '[ -f $1 ] && git checkout -- $1 || true'"
 
         d = diff
         ds = diff --staged
