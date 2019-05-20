@@ -459,6 +459,9 @@ let g:maximizer_set_default_mapping = 0
 let g:splitjoin_ruby_hanging_args = 0
 let g:splitjoin_ruby_options_as_arguments = 1
 
+" Jump to existing window with :Buffers
+let g:fzf_buffers_jump = 1
+
 " Set up :Rg[!] command for fzf search with ripgrep.
 " Use the bang for a full search into hidden, ignored, and symlinked files.
 let s:rg_normal_opts = 'rg --vimgrep --smart-case --color=always '
