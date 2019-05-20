@@ -10,9 +10,6 @@
 [fetch]
         # Remove stale remote references on every fetch or pull
         prune = true
-[branch]
-        # New branches are set up to rebase on pull instead of merge
-        autosetuprebase = always
 [interactive]
         # Highlight line differences during interactive staging
         diffFilter = diff-highlight
