@@ -24,7 +24,7 @@ tap 'caskroom/cask'
 cask 'hammerspoon'
 cask 'karabiner-elements'
 
-tap 'caskroom/versions'
+tap 'homebrew/cask-versions'
 cask 'iterm2-beta'
 
 tap 'buo/cask-upgrade'
