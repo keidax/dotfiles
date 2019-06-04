@@ -2,7 +2,7 @@
 .gitconfig
 ABA
 admin
-API
+api
 app
 appserver
 async
@@ -15,13 +15,16 @@ autosquash
 AWS
 base16
 bigint
+calc
 colorscheme
 colorschemes
 commandline
 config
 CRM
 CRuby
+csv
 ctrl
+db
 dev
 DevOps
 devs
@@ -55,6 +58,7 @@ linting
 localhost
 lodash
 macOS
+memoize
 metadata
 metadata's
 Mongo
@@ -110,6 +114,8 @@ uninstall
 upsert
 URLs
 username
+utf-8
+UTF-8
 vim
 vimrc
 whitelist
