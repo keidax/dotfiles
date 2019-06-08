@@ -14,3 +14,7 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:
 # Assign completions for custom commands
 compdef _rspec rspec-branch
 compdef _rubocop rubocop-branch
+
+# Manually include rbenv completions
+# TODO: get rid of absolute path
+source "/usr/local/opt/rbenv/completions/rbenv.zsh"

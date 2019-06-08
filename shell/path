@@ -99,8 +99,8 @@ while async_queue_read_line append line; do
 done
 async_queue_close append
 
-# Ensure RVM is at the end of PATH
-append_to_path "$HOME/.rvm/bin"
+# rbenv shims directory
+prepend_to_path "$HOME/.rbenv/shims"
 
 # Include user's local bin folder(s)
 prepend_to_path "$HOME/.local/bin"

@@ -25,9 +25,6 @@ eval "$(dircolors ~/.dircolors)"
 # Add fzf bindings
 source_if_exists ~/.fzf.bash
 
-# Load RVM into a shell session *as a function*
-source_if_exists "$HOME/.rvm/scripts/rvm"
-
 # Add quick foreground binding
 bind -x '"\C-f":"fg"'
 bind -m "vi-command" -x '"\C-f":"fg"'
