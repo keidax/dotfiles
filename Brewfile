@@ -1,24 +1,16 @@
 # vim: ft=ruby
 brew 'ack'
-brew 'bash'
 brew 'coreutils'
 brew 'diff-so-fancy'
 brew 'git'
 brew 'htop', args: ['with-ncurses']
 brew 'less'
 brew 'neovim'
+brew 'ripgrep'
 brew 'shellcheck'
+brew 'tmux'
 brew 'watch'
-
-tap 'homebrew/completions'
-brew 'bash-completion@2'
-brew 'bundler-completion'
-brew 'gem-completion'
-brew 'pip-completion'
-brew 'rails-completion'
-brew 'rake-completion'
-brew 'ruby-completion'
-brew 'spring-completion'
+brew 'zsh'
 
 tap 'caskroom/cask'
 cask 'hammerspoon'
