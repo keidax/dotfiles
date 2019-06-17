@@ -474,3 +474,10 @@ command! -bang -nargs=* Rg
 runtime! vimrc.d/**/*.vim
 
 call plug#end()
+
+" Use matching colorscheme from terminal theme
+if filereadable(expand('~/.vimrc_background'))
+    let g:base16colorspace=256
+    let g:base16_shell_path=$DOTDIR . '/base16/base16-shell/scripts'
+    source ~/.vimrc_background
+endif

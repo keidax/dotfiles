@@ -1,7 +1,5 @@
 " Base16 colorschemes
 Plug 'chriskempson/base16-vim'
-" (We want it now!)
-call plug#load('base16-vim')
 
 " Set up highlight colors and attributes
 " (The autocmds preserve our colors even if the colorscheme changes)
@@ -58,10 +56,3 @@ augroup vimrc
     autocmd ColorScheme * :highlight SpellCap ctermbg=none
     autocmd ColorScheme * :highlight SpellBad ctermfg=9 ctermbg=none cterm=bold
 augroup END
-
-" Use matching colorscheme from terminal theme
-if filereadable(expand('~/.vimrc_background'))
-    let g:base16colorspace=256
-    let g:base16_shell_path=$DOTDIR . '/base16/base16-shell/scripts'
-    source ~/.vimrc_background
-endif
