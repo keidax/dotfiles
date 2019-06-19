@@ -16,5 +16,6 @@ compdef _rspec rspec-branch
 compdef _rubocop rubocop-branch
 
 # Manually include rbenv completions
-# TODO: get rid of absolute path
-source "/usr/local/opt/rbenv/completions/rbenv.zsh"
+rbenv_root="${$(which rbenv):P:h:h}"
+source "${rbenv_root}/completions/rbenv.zsh"
+unset rbenv_root
