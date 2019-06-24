@@ -1,6 +1,6 @@
-0 # required
+120 # required
 # vim: set ft=conf
-# Manage with :%sort ir /^[^#]/
+# Manage with :4,$sort i
 .gitconfig
 ABA
 admin/N
@@ -37,12 +37,14 @@ fallback/N
 feedkeys
 filesystem/N
 filetype/N
+ftplugin
 fzf
 Gemfile/N
 github/N
 gruvbox/N
 h
 Homebrew/N
+Hunspell
 inline/V
 iTerm2/N
 java/N
@@ -62,6 +64,7 @@ metadata/N
 Mongo/N
 MongoDB/N
 multithread/V
+Myspell
 mysql/N
 neovim/N
 NoSpell
@@ -89,6 +92,7 @@ salesforce/N
 shellcheck/N
 shoryuken/N
 SNS/N
+spellsync
 SQS/N
 stage/V
 statusline/N
@@ -110,9 +114,11 @@ vim/N
 vimrc/N
 whitelist/NV
 WIP
+wordlist/N
 workflow/N
 Xcode/N
 XSD
+XSLT
 y
 yieldparam
 yieldreturn
