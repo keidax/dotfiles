@@ -1,0 +1,41 @@
+SET UTF-8
+
+# Suffixes extracted from en_US.aff in
+# https://extensions.openoffice.org/en/project/english-dictionaries-apache-openoffice
+# and simplified.
+
+# For a verb:
+SFX V Y 10
+# -ed regular past tense
+SFX V   0     d          e
+SFX V   y     ied        [^aeiou]y
+SFX V   0     ed         [^ey]
+SFX V   0     ed         [aeiou]y
+# -ing form
+SFX V   e     ing        e
+SFX V   0     ing        [^e]
+# -s conjugation
+SFX V   y     ies        [^aeiou]y
+SFX V   0     s          [aeiou]y
+SFX V   0     es         [sxzh]
+SFX V   0     s          [^sxzhy]
+
+# -ion for a verb
+SFX T Y 6
+SFX T   e     ion        e
+SFX T   y     ication    y
+SFX T   0     en         [^ey]
+
+SFX T   e     ions       e
+SFX T   y     ications   y
+SFX T   0     ens        [^ey]
+
+# For a noun:
+SFX N Y 5
+# -s plurals
+SFX N   y     ies        [^aeiou]y
+SFX N   0     s          [aeiou]y
+SFX N   0     es         [sxzh]
+SFX N   0     s          [^sxzhy]
+# -'s possessive
+SFX N   0     's         .
