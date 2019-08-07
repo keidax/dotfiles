@@ -22,6 +22,8 @@
 [rebase]
         # For use with commit --fixup
         autosquash = true
+        # Can rebase with dirty changes
+        autostash = true
 [pager]
         # Don't wrap long log lines
         log = less -S
