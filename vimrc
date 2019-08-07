@@ -223,9 +223,9 @@ nnoremap <Leader>> :exe "vertical resize " . (winwidth(0) * 4/3)<CR>
 nnoremap <Leader>< :exe "vertical resize " . (winwidth(0) * 3/4)<CR>
 
 " vim-test mappings
-map <Leader>t :TestFile<CR>
-map <Leader>s :TestNearest<CR>
-map <Leader>r :TestLast<CR>
+map <silent> <Leader>t :update \| TestFile<CR>
+map <silent> <Leader>s :update \| TestNearest<CR>
+map <silent> <Leader>r :update \| TestLast<CR>
 
 " Search for visually-selected text
 vnoremap / y/\V<C-R>=escape(@",'/\')<CR><CR>
@@ -276,6 +276,13 @@ endfunction
 nnoremap <silent> <Leader>w :call g:CloseExtra()<CR>
 nnoremap <Leader>W :tabc<CR>
 
+" Clear buffer on ZZ/ZQ
+" (double exec avoids using a global variable)
+nnoremap <silent> ZZ
+    \ :exec 'exec "normal! ZZ" \| bd ' . bufnr('%')<CR>
+nnoremap <silent> ZQ
+    \ :exec 'exec "normal! ZQ" \| bd ' . bufnr('%')<CR>
+
 nnoremap <Leader>m :MaximizerToggle!<CR>
 vnoremap <Leader>m :MaximizerToggle!<CR>gv
 
@@ -322,6 +329,23 @@ nnoremap <Leader>D :DiffConflictsShowHistory<CR>
 
 " Alt-k starts a fzf search for current word
 nnoremap <A-k> :Rg <C-r>=expand("<cword>")<CR><CR>
+
+" A nicer version of z=
+func! FzfSpellReplace() abort
+    if !&spell
+        echohl ErrorMsg
+        echomsg 'Spell checking is not enabled'
+        echohl None
+        return
+    endif
+
+    call fzf#run(fzf#wrap({
+        \ 'source': spellsuggest(expand('<cword>'), 30),
+        \ 'sink': { word -> execute('normal! ciw'.word) },
+        \ 'options': ['--prompt', 'Change '''.expand('<cword>').''' to: ', '--no-bold']
+        \ }))
+endfunc
+nnoremap <silent> <Leader>z :call FzfSpellReplace()<CR>
 
 " Cross-plugin compatibility mappings
 " Overview
@@ -441,11 +465,11 @@ xmap <Leader>a <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
 
 " Quick writing
-nnoremap <Leader>w :update<CR>
+nnoremap <silent> <Leader>w :update<CR>
 
-" Add a warning to learn the new mapping
-cnoreabbrev w W
-command! -bang -nargs=* W echoerr 'Use <lt>Leader>w instead!'
+" Use Ctrl-J/K as alternatives to arrow keys for matching history searches
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
 
 """""""""""""""""""""
 "  Plugin Settings  "
