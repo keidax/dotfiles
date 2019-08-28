@@ -2,6 +2,7 @@
 # vim: set ft=conf
 # Manage with :4,$sort i
 .gitconfig
+__FILE__
 ABA
 admin/N
 api/N
@@ -17,6 +18,7 @@ AWS/N
 base16/N
 bigint/N
 calc
+changelog/N
 colorscheme/N
 commandline/N
 config/N
@@ -27,6 +29,8 @@ ctrl
 db/N
 dev/N
 DevOps
+distro/N
+dotfile/N
 env/N
 EOF
 error/V
@@ -55,6 +59,7 @@ JRuby/N
 JSON/N
 k
 Karabiner/N
+l
 lint/V
 localhost/N
 lodash/N
@@ -79,6 +84,7 @@ PostgreSQL/N
 preload/V
 quickfix/N
 r
+rbenv
 readme/N
 rebase/V
 refactor/V
