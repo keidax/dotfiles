@@ -9,5 +9,29 @@
   "solargraph.useBundler": false,
   "suggest.detailField": "preview",
   "suggest.enablePreview": true,
-  "suggest.snippetIndicator": "⭾"
+  "suggest.snippetIndicator": "⭾",
+
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "arduino"],
+      "rootPatterns": [
+        ".ccls",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
+  }
 }
