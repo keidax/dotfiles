@@ -347,6 +347,16 @@ func! FzfSpellReplace() abort
 endfunc
 nnoremap <silent> <Leader>z :call FzfSpellReplace()<CR>
 
+" Jump to line on zv
+" Don't have to repeat v:count, it will already apply to G
+nnoremap <expr> zv (v:count ? 'G' : '') . 'zv'
+
+" Let Backspace remove the last digit in a partial count
+nnoremap <expr> <BS> (v:count ? '<Del>' : '<BS>')
+
+" Use <count><Enter> as a shortcut for :<count><Enter>
+nnoremap <expr> <CR> (v:count ? 'G' : '<CR>')
+
 " Cross-plugin compatibility mappings
 " Overview
 " Enter:
