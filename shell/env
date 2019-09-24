@@ -119,6 +119,13 @@ fi
 # Get non-interactive bash shells to use our functions
 BASH_ENV="$HOME/.bashrc"
 
+# Directory for most source code & dev work
+if [ "$OS" = "Linux" ]; then
+    CODEHOME="$HOME/src"
+elif [ "$OS" = "Darwin" ]; then
+    CODEHOME="$HOME/code"
+fi
+
 # Include local enviroment modifications
 [ -e "$HOME/.env.local" ] && . "$HOME/.env.local"
 
