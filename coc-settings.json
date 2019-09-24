@@ -1,0 +1,13 @@
+{
+  "coc.preferences.hoverTarget": "float",
+  "coc.preferences.previewAutoClose": false,
+  "codeLens.enable": true,
+  "diagnostic.displayByAle": true,
+  "solargraph.diagnostics": false,
+  "solargraph.hover": true,
+  "solargraph.logLevel": "debug",
+  "solargraph.useBundler": false,
+  "suggest.detailField": "preview",
+  "suggest.enablePreview": true,
+  "suggest.snippetIndicator": "⭾"
+}

@@ -19,6 +19,7 @@
     ~/.vim: vim
     ~/.vimrc: vimrc
     ~/.config/nvim/init.vim: nvim
+    ~/.config/nvim/coc-settings.json: coc-settings.json
     ~/.vim/spell/local.utf-8.add: local/local.utf-8.add
     ~/.bashrc: bashrc
     ~/.profile: profile
