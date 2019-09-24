@@ -51,7 +51,7 @@ _extra_env_info() {
 _git_format() {
     eval $("$DOTDIR/bin/git-parse-status.sh")
 
-    [[ $git_present -eq 0 ]] && return
+    [[ -z $git_present || $git_present -eq 0 ]] && return
 
     # Nerd Font arrows:
     #   
@@ -110,10 +110,16 @@ async_start_worker rprompt_worker
 async_register_callback rprompt_worker _rprompt_callback
 
 _start_rprompt_job() {
-    async_flush_jobs rprompt_worker
-    async_job rprompt_worker _rprompt_job "$PWD"
+    async_job rprompt_worker _rprompt_job "$PWD" || _try_restart_job
 }
 add-zsh-hook precmd _start_rprompt_job
+
+_try_restart_job() {
+    echo "🐛 Restarting rprompt_worker"
+    async_stop_worker rprompt_worker
+    async_start_worker rprompt_worker
+    async_register_callback rprompt_worker _rprompt_callback
+}
 
 # Inspired by https://www.topbug.net/blog/2016/10/03/restore-the-previously-canceled-command-in-zsh/
 _restore_aborted_command() {
