@@ -13,7 +13,7 @@ rules:
   document-start: disable
 
   indentation:
-    indent-sequences: consistent
+    indent-sequences: whatever
 
   # 100 chars should be enough, but don't fail if a line is longer
   line-length:
