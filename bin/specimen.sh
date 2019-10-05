@@ -6,7 +6,7 @@
 TEXT=$(cat <<'EOF'
 0123456789 !@#$%%^&*()_+-=    <!-- <-- <- <=> => -> -->
 ABCDEFGHIJKLMNOPQRSTUVWXYZ    == != === !== ::Klass::CONST
-abcdefghijklmnopqrstuvwxyz    && &. ¯\_(ツ)_/¯
+abcdefghijklmnopqrstuvwxyz    <= =~ >= && &. := ¯\_(ツ)_/¯
 ¶`~"' ¡! .,:;¿? \|/ {}[]<>
 1!Illegal O(0) bdpqijlunmw
 ΔΠΣλ‐–— ‘µ’ “Æ” „©‟ ⟦⟧ «ç»    ⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏
