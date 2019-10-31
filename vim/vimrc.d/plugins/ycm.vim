@@ -3,6 +3,9 @@ let b:ycm_cmd .= ' --clang-completer'
 if executable('rustc')
     let b:ycm_cmd .= ' --racer-completer'
 endif
+if executable('npm')
+    let b:ycm_cmd .= ' --js-completer'
+endif
 " In neovim, we can run the YCM install script in a :term window, so it doesn't
 " block the whole editor.
 if has('nvim')

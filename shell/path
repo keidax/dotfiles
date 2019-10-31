@@ -60,6 +60,9 @@ elif command_exists python2 ; then
 fi
 } &
 
+# Include Rust install
+prepend_to_path "$HOME/.cargo/bin"
+
 # Include RubyGems bin folder
 {
 if command_exists gem ; then
@@ -115,6 +118,11 @@ prepend_to_path "$HOME/bin"
 PATH=".:$PATH"
 
 export PATH
+
+if command -v rustc >/dev/null 2>&1; then
+    RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+    export RUST_SRC_PATH
+fi
 
 while async_queue_read_line manpath line; do
     prepend_to_manpath "$line"
