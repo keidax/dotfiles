@@ -1,0 +1,9 @@
+snippet is "is.New" b
+is := is.New(t)
+endsnippet
+
+snippet trun "t.Run" b
+t.Run("${1:name}", func(t *testing.T) {
+	$0
+})
+endsnippet
