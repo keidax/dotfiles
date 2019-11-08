@@ -116,15 +116,17 @@ function! MyFoldText()
     let l:padding = &foldcolumn + &number * &numberwidth
 
     " Test if any signs exist
-    redir => l:signs
-    execute 'silent sign place buffer='.bufnr('%')
-    redir End
-    let l:padding += l:signs =~# 'id=' ? 2 : 0
+    let l:signs = sign_getplaced('%', { 'group': '*' })[0]['signs']
+
+    let l:padding += len(l:signs) > 0 ? 2 : 0
 
     let l:windowwidth = winwidth(0) - l:padding
     let l:windowwidth = min([l:windowwidth, 100])
 
     let l:starttext = substitute(getline(v:foldstart), '\s*$', '', '')
+    " Expand tabs (otherwise foldtext will collapse them to one space)
+    let l:starttext = substitute(l:starttext, '\t', repeat(' ', &tabstop), 'g')
+
     let l:endtext = substitute(getline(v:foldend), '^\s*', '', '')
     if v:foldend - v:foldstart > 1
         let l:midtext = ' … '
