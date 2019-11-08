@@ -7,6 +7,16 @@ set fillchars=vert:│
 " EOL alternatives: ↲↵↩⤶
 set listchars=eol:↩,tab:▸-,trail:~,extends:>,precedes:<,space:·
 
+" Wrap long lines at more sensible word boundaries
+set linebreak
+" Keep wrapped lines at the same indentation
+set breakindent
+" Show a little arrow for wrapped lines
+" Alternatives: ' ↦ ↣ ↳ → ↝ ↠ ⇒ ⇥ ⇨ ↪ ⤷  ⤥ ⤿'
+let &showbreak = '⤷  '
+" Tweak where line wrapping can happen
+set breakat-=:
+
 if !has('nvim')
     " Force escape sequences for italics, instead of messing with terminfo defs
     let &t_ZH="\e[3m"
