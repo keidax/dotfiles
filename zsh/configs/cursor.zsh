@@ -25,20 +25,3 @@ zle -N _set_cursor_type
 add-zle-hook-widget line-init     _set_cursor_type
 add-zle-hook-widget keymap-select _set_cursor_type
 add-zle-hook-widget line-finish   _cursor_shape_block
-
-
-_focus_report_on() {
-    print -n -- "\E[?1004h"
-}
-
-_focus_report_off() {
-    print -n -- "\E[?1004l"
-}
-
-add-zle-hook-widget line-init   _focus_report_on
-add-zle-hook-widget line-finish _focus_report_off
-
-bindkey -v '\e[O' _cursor_shape_block
-bindkey -a '\e[O' _cursor_shape_block
-bindkey -v '\e[I' _set_cursor_type
-bindkey -a '\e[I' _set_cursor_type
