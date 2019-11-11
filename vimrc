@@ -103,11 +103,15 @@ set hidden
 
 " Turn off all folds by default
 set nofoldenable
+" Intended folding flow:
+" - open a new file, all folds are expanded
+" - `zi` to turn on folding at the default level (1)
+" - `zM` to close all folds
 augroup vimrc
-    " For filetypes with folding enabled, start unfolded. We have to use an
-    " autocmd because 'foldlevelstart' is also applied when switching to a
-    " loaded buffer.
-    autocmd BufReadPost * normal zR
+    " Folds start off, but leave the first level of folds open if folding is
+    " switched on. We have to use an autocmd because 'foldlevelstart' is
+    " also applied when switching to a loaded buffer.
+    autocmd BufReadPost * setl foldlevel=1
 augroup END
 
 set foldtext=MyFoldText()
