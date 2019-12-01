@@ -313,9 +313,10 @@ if has('nvim')
 endif
 
 " Change gitgutter map prefix
-nmap <Leader>gs <Plug>GitGutterStageHunk
-nmap <Leader>gu <Plug>GitGutterUndoHunk
-nmap <Leader>gp <Plug>GitGutterPreviewHunk
+xmap <Leader>gs <Plug>(GitGutterStageHunk)
+nmap <Leader>gs <Plug>(GitGutterStageHunk)
+nmap <Leader>gu <Plug>(GitGutterUndoHunk)
+nmap <Leader>gp <Plug>(GitGutterPreviewHunk)
 
 " See https://github.com/uptech/alt
 function! AltCommand(path, command)
