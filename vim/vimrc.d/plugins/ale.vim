@@ -29,3 +29,5 @@ let g:ale_fixers = {
 
 " We're using coc.nvim for this
 let g:ale_disable_lsp = 1
+
+let g:ale_c_parse_compile_commands = 1

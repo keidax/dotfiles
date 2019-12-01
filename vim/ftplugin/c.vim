@@ -4,3 +4,7 @@ setlocal colorcolumn=80
 setlocal foldmethod=syntax
 " Use single-line comments
 setlocal commentstring=//\ %s
+
+setlocal noexpandtab tabstop=8
+
+let b:ale_linters = ['ccls']
