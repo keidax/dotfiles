@@ -85,11 +85,6 @@ if command_exists npm; then
 fi
 } &
 
-# Set GOPATH as ~/src/go or ~/code/go
-export GOPATH="$CODEHOME/go"
-# Add to regular PATH
-append_to_path "$GOPATH/bin"
-
 # Wait for all async jobs
 wait
 
@@ -106,6 +101,11 @@ async_queue_close append
 
 # rbenv shims directory
 prepend_to_path "$HOME/.rbenv/shims"
+
+# Set GOPATH as ~/src/go or ~/code/go
+export GOPATH="$CODEHOME/go"
+# Add to regular PATH
+prepend_to_path "$GOPATH/bin"
 
 # Include user's local bin folder(s)
 prepend_to_path "$HOME/.local/bin"
