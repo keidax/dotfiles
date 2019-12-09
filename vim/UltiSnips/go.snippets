@@ -7,3 +7,15 @@ t.Run("${1:name}", func(t *testing.T) {
 	$0
 })
 endsnippet
+
+# Redefined to allow mid-line expansion
+snippet in "interface{}" w
+interface{}
+endsnippet
+
+snippet ern "if err != nil {" b
+if err != nil {
+	${1:return err}
+}
+${0}
+endsnippet
