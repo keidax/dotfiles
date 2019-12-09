@@ -14,7 +14,7 @@ brew 'tmux'
 brew 'watch'
 brew 'zsh'
 
-tap 'caskroom/cask'
+tap 'homebrew/cask'
 cask 'hammerspoon'
 cask 'karabiner-elements'
 
