@@ -49,4 +49,9 @@ stopwatch () {
     done
 }
 
+len () {
+    inputs="$*"
+    echo "Characters: ${#inputs}"
+}
+
 # vim: ts=4
