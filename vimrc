@@ -477,6 +477,8 @@ snoremap <silent> <S-Tab> <Esc>:call SnippetJumpOnKey(0, "\<S-Tab>")<CR>
 imap <silent> <C-s> <C-r>=coc#rpc#request('doKeymap', ['snippets-expand'])<CR>
 
 nnoremap <silent> <Leader>d :call CocActionAsync('doHover')<CR>
+nmap <Leader>R <Plug>(coc-references)
+nmap <Leader>D <Plug>(coc-definition)
 
 xmap <Leader>a <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
@@ -487,6 +489,12 @@ nnoremap <silent> <Leader>w :update<CR>
 " Use Ctrl-J/K as alternatives to arrow keys for matching history searches
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
+
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+
+" Avoid Ex mode
+nnoremap Q <nop>
 
 """""""""""""""""""""
 "  Plugin Settings  "
