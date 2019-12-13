@@ -80,23 +80,17 @@ _git_format() {
     echo -n " $FG[002]$git_branch_name$FX[reset]"
 }
 
-# Top-level async job
-# Expect to receive the current directory as $1
-_rprompt_job() {
-    builtin cd "$1"
-    _git_format
-}
-
 _rprompt_callback() {
-    if [[ "$2" != 0 ]]; then
-        RPROMPT="failed with $2"
-        [[ -o zle ]] && zle reset-prompt
-        return
-    fi
+    local new_rprompt
+    read -r -u $1 new_rprompt
 
-    # Only re-eval the prompt if it changes
-    if [[ "$3" != "$RPROMPT" ]]; then
-        RPROMPT="$3"
+    # Remove the handler and close the fd
+    zle -F $1
+    exec {1}<&-
+
+    if [[ "$new_rprompt" != "$RPROMPT" ]]; then
+        # Only re-eval the prompt if it changes
+        RPROMPT="$new_rprompt"
         [[ -o zle ]] && zle reset-prompt
     fi
 }
@@ -105,21 +99,18 @@ _rprompt_callback() {
 # RPROMPT with something.
 RPROMPT=""
 
-# This forks to start the worker, so any job commands must already be defined
-async_start_worker rprompt_worker
-async_register_callback rprompt_worker _rprompt_callback
+_rprompt_precmd() {
+    # Fade out the outdated prompt
+    RPROMPT="%{[02m%}$RPROMPT%{[22m%}"
 
-_start_rprompt_job() {
-    async_job rprompt_worker _rprompt_job "$PWD" || _try_restart_job
-}
-add-zsh-hook precmd _start_rprompt_job
+    local fd
+    exec {fd}< <(
+        _git_format
+    )
 
-_try_restart_job() {
-    echo "🐛 Restarting rprompt_worker"
-    async_stop_worker rprompt_worker
-    async_start_worker rprompt_worker
-    async_register_callback rprompt_worker _rprompt_callback
+    zle -F $fd _rprompt_callback
 }
+add-zsh-hook precmd _rprompt_precmd
 
 # Inspired by https://www.topbug.net/blog/2016/10/03/restore-the-previously-canceled-command-in-zsh/
 _restore_aborted_command() {

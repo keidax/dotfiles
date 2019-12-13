@@ -28,7 +28,4 @@ zplug "zsh-users/zsh-autosuggestions"
 # Expand `...` into `../..`, etc
 zplug "knu/zsh-manydots-magic", use:manydots-magic, defer:2
 
-# Async worker for prompt
-zplug "mafredri/zsh-async", use:async.zsh
-
 zplug load
