@@ -28,3 +28,9 @@ alias dd='dd status=progress'
 
 # Git aliases
 alias g='git'
+
+# Bundler alias
+alias be='bundle exec'
+
+# Since I never use the _real_ dc
+alias dc='docker-compose'
