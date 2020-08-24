@@ -353,7 +353,8 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
-                                            "com.google.Chrome"
+                                            "com.google.Chrome",
+                                            "org.mozilla.firefox"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -381,7 +382,8 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
-                                            "com.google.Chrome"
+                                            "com.google.Chrome",
+                                            "org.mozilla.firefox"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -413,7 +415,8 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
-                                            "com.google.Chrome"
+                                            "com.google.Chrome",
+                                            "org.mozilla.firefox"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -493,6 +496,20 @@
                                         ]
                                     }
                                 ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Focus iTerm2 with Insert",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "insert"
+                                },
+                                "to": {
+                                    "shell_command": "open -a 'iTerm'"
+                                },
                                 "type": "basic"
                             }
                         ]
