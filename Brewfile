@@ -16,9 +16,6 @@ brew 'zsh'
 
 tap 'homebrew/cask'
 cask 'hammerspoon'
-cask 'karabiner-elements'
-
-tap 'homebrew/cask-versions'
-cask 'iterm2-beta'
+cask 'iterm2'
 
 tap 'buo/cask-upgrade'

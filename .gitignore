@@ -12,5 +12,8 @@ tmux/plugins
 # Karabiner backups
 karabiner/automatic_backups
 
+# Homebrew lock file
+Brewfile.lock.json
+
 # Misc
 .DS_Store

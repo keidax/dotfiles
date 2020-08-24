@@ -1,4 +1,5 @@
 vim-vint
-yamllint
+yamllint >= 1.23
 pynvim
+pyyaml >= 5.1
 solargraph-utils.py
