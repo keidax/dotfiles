@@ -15,7 +15,6 @@ brew 'watch'
 brew 'zsh'
 
 tap 'homebrew/cask'
-cask 'hammerspoon'
 cask 'iterm2'
 
 tap 'buo/cask-upgrade'
