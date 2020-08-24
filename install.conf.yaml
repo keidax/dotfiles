@@ -42,6 +42,7 @@
     ~/bin/outside-ip: bin/outside-ip.sh
     ~/bin/internet-info: bin/internet-info.sh
     ~/bin/git-clean-merged: bin/git-clean-merged.sh
+    ~/bin/git-default-branch: bin/git-default-branch.sh
     ~/bin/nvman: bin/nvman
     ~/bin/keycode-debug: bin/keycode-debug.sh
     ~/bin/rspec-branch: bin/rspec-branch
