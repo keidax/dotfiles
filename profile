@@ -29,11 +29,3 @@ fi
 
 # Source .bashrc if we're running bash
 ([ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]) && . "$HOME/.bashrc"
-
-if [ "${DISTRO}" = "Arch" ]; then
-    # Start an X server if we're logging in on TTY1
-    ([ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]) && exec startx
-
-    # Make sure our exit code is 0
-    true
-fi
