@@ -32,5 +32,9 @@ alias g='git'
 # Bundler alias
 alias be='bundle exec'
 
+# Neovim aliases
+alias n='nvim -p'
+alias nd='nvim -d'
+
 # Since I never use the _real_ dc
 alias dc='docker-compose'
