@@ -186,12 +186,6 @@ let mapleader = " "
 nnoremap <Leader>vs :source $MYVIMRC<CR>
 nnoremap <Leader>ve :$tabedit ~/.vimrc<CR>
 
-" Faster ESC
-inoremap jk <ESC>
-vnoremap jk <ESC>
-" Commandline mode (<ESC> from a mapping actually executes the command!)
-cnoremap jk <C-c>
-
 " Let Alt+hjkl act as arrow keys in insert & command-line modes
 noremap! <A-j> <Down>
 noremap! <A-k> <Up>
