@@ -1,6 +1,10 @@
 # Apply base16 colorscheme first
 source_if_exists "$DOTDIR/base16/base16-shell/base16-shell.plugin.zsh"
 
+printf '\e[?1049h'
+source_if_exists "$DOTDIR/base16/base16-shell/base16-shell.plugin.zsh"
+printf '\e[?1049l'
+
 typeset -U preconfig_files config_files postconfig_files
 
 preconfig_files=($DOTDIR/zsh/configs/before/*.zsh)

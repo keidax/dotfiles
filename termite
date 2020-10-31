@@ -20,9 +20,9 @@ cursor_shape = block
 #modify_other_keys = false
 
 # Font for 144 DPI
-font = Unitera 8
+# font = Unitera 8
 # Font for 96 DPI
-#font = Knack Nerd Font 12
+font = Hack 13
 
 [colors]
 # Add transparency

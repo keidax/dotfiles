@@ -4,6 +4,8 @@
 # This script is usually included in git installations, but not on the path by
 # default.
 
+. "$DOTDIR/shell/functions"
+
 command_exists diff-highlight && exit 0
 
 # Observed locations:

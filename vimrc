@@ -37,9 +37,11 @@ if !has('nvim')
 endif
 Plug 'szw/vim-maximizer'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'wvffle/vimterm'
 Plug 'tpope/vim-unimpaired'
 Plug 'junegunn/vim-easy-align'
+Plug 'pangloss/vim-javascript'
 
 
 """""""""""""
@@ -169,9 +171,10 @@ augroup vimrc
 augroup END
 
 
-""""""""""""
-"  Syntax  "
-""""""""""""
+" Expand and format XML by selecting it and pressing <Leader><Shift-X>
+function! XMLLint() range
+    execute a:firstline . ',' . a:lastline . '!xmllint --format --recover -'
+endfunction
 
 vnoremap <Leader>X !xmllint --format --recover -<CR>
 
@@ -281,6 +284,13 @@ endfunction
 
 nnoremap <silent> <Leader>w :call g:CloseExtra()<CR>
 nnoremap <Leader>W :tabc<CR>
+" Get current highlight group
+map <Leader>q :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+              \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+              \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+" Expand and format XML by selecting it and pressing <Leader><Shift-X>
+vnoremap <Leader>X !xmllint --format --recover -<CR>
 
 " Clear buffer on ZZ/ZQ
 " (double exec avoids using a global variable)
