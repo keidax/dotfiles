@@ -18,6 +18,21 @@ set spellfile=$DOTDIR/vim/spell/en.utf-8.add,$DOTDIR/vim/spell/local.utf-8.add
 " spellsync, since the dictionary setup is not standard.
 let s:dict = $DOTDIR . '/vim/spell/en'
 let s:dict_spl = s:dict . '.utf-8.add.spl'
+
+func! AddToSpellingDictionary(count)
+    if a:count == 1
+        silent exec 'normal! ' . a:count . 'zg'
+        silent exec 'mkspell! ' . fnameescape(s:dict_spl) . ' ' .fnameescape(s:dict)
+    else
+        " Add the word like normal
+        exec 'normal! ' . a:count . 'zg'
+    endif
+endfunc
+
+" NOTE: <C-u> erases the range added with a count, which would look something
+" like `:.,.+1`
+nnoremap <silent> zg :<C-u>call AddToSpellingDictionary(v:count1)<CR>
+
 if getftime(s:dict . '.dic') > getftime(s:dict_spl) ||
     \ getftime(s:dict . '.aff') > getftime(s:dict_spl)
     silent exec 'mkspell! ' . fnameescape(s:dict_spl) . ' ' .fnameescape(s:dict)

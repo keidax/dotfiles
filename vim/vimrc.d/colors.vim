@@ -21,7 +21,7 @@ augroup vimrc
     autocmd ColorScheme * :highlight VertSplit ctermfg=8
 
     " Muted colors and underline for inactive statuslines
-    autocmd ColorScheme * :highlight StatusLineNC cterm=italic,underline ctermfg=8
+    autocmd ColorScheme * :highlight StatusLineNC cterm=underline ctermfg=8
     " Bold emphasis for active statusline
     autocmd ColorScheme * :highlight StatusLine cterm=bold
 
