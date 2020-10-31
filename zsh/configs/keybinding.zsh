@@ -6,9 +6,6 @@ KEYTIMEOUT=10
 
 bindkey -v
 
-# Accustomed binding to leave insert mode
-bindkey 'jk' vi-cmd-mode
-
 # Jump to start/end of line
 bindkey          '^a' vi-beginning-of-line
 bindkey -M vicmd '^a' vi-beginning-of-line

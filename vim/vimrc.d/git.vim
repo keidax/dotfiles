@@ -1,7 +1,7 @@
 " Git-related plugins and settings
 
 " Syntax for .gitignore files
-Plug 'gisphm/vim-gitignore'
+Plug 'alok/vim-gitignore'
 
 " Vim interface for Git operations
 Plug 'tpope/vim-fugitive'

@@ -51,6 +51,17 @@ augroup vimrc
     au!
     " Reload vimrc on write
     autocmd BufWritePost $MYVIMRC,*/{.,}vimrc :source $MYVIMRC | doauto VimEnter
+
+    " Jump to previous cursor location when opening or switching to buffers
+    autocmd BufReadPost,BufEnter *
+                \ if &bt !=# 'terminal' && line("'\"") > 0  && line("'\"") < line('$')|
+                \   exe 'normal g`"' |
+                \ endif
+    " Save cursor location when switching away from a buffer
+    autocmd BufLeave *
+                \ if &bt !=# 'terminal' |
+                \   exe 'normal m"' |
+                \ endif
 augroup END
 
 " Set indentation settings
@@ -112,6 +123,10 @@ augroup vimrc
     " switched on. We have to use an autocmd because 'foldlevelstart' is
     " also applied when switching to a loaded buffer.
     autocmd BufReadPost * setl foldlevel=1
+
+    " Recalculate folds if an ALE fixer changed the buffer
+    autocmd User ALEFixPre let b:ale_pre_tick = b:changedtick
+    autocmd User ALEFixPost if get(b:, 'ale_pre_tick', b:changedtick)  != b:changedtick | FastFoldUpdate | endif
 augroup END
 
 set foldtext=MyFoldText()
@@ -185,12 +200,6 @@ let mapleader = " "
 " Quickly edit and source vimrc
 nnoremap <Leader>vs :source $MYVIMRC<CR>
 nnoremap <Leader>ve :$tabedit ~/.vimrc<CR>
-
-" Faster ESC
-inoremap jk <ESC>
-vnoremap jk <ESC>
-" Commandline mode (<ESC> from a mapping actually executes the command!)
-cnoremap jk <C-c>
 
 " Let Alt+hjkl act as arrow keys in insert & command-line modes
 noremap! <A-j> <Down>
@@ -287,7 +296,7 @@ nnoremap <Leader>W :tabc<CR>
 nnoremap <silent> ZZ
     \ :exec 'exec "normal! ZZ" \| bd ' . bufnr('%')<CR>
 nnoremap <silent> ZQ
-    \ :exec 'exec "normal! ZQ" \| bd ' . bufnr('%')<CR>
+    \ :bd!<CR>
 
 nnoremap <Leader>m :MaximizerToggle!<CR>
 vnoremap <Leader>m :MaximizerToggle!<CR>gv
@@ -499,6 +508,15 @@ nnoremap Q <nop>
 """""""""""""""""""""
 "  Plugin Settings  "
 """""""""""""""""""""
+
+" Options to control vim-plug
+" Open diffs in a new tab
+let g:plug_pwindow = 'tabe'
+
+" Don't recompute folds if just opening or closing them.
+let g:fastfold_fold_command_suffixes = ['i', 'n', 'N']
+" Ditto for moving between folds
+let g:fastfold_fold_movement_commands = []
 
 " Maximizer settings
 " Turn off mappings since we don't want them in insert mode

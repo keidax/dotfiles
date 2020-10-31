@@ -38,7 +38,6 @@ $if mode=vi
     "\C-a": beginning-of-line
     "\C-e": end-of-line
     set keymap vi-insert
-    "jk": vi-movement-mode
     "\C-l": clear-screen
     "\C-w": backward-kill-word
     # "\C-p": history-search-backward

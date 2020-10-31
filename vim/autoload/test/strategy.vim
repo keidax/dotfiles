@@ -34,11 +34,12 @@ endfunction
 
 " Callback for job command
 function! s:term_exit(job_id, exit_code, event) dict abort
+    call s:add_to_test_list(self.orig_buf_id, self.buf_id)
+
     if a:exit_code == 0
         call s:delete_buffer(self.buf_id)
         echom 'Success! ✅'
     else
-        call s:add_to_test_list(self.orig_buf_id, self.buf_id)
         echom 'Failure! ❌'
     endif
 endfunction

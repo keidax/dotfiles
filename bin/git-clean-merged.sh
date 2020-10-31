@@ -2,7 +2,9 @@
 
 # Adapted from http://haacked.com/archive/2014/07/28/github-flow-aliases/
 
-local_merged_branches=$(git branch --merged "${1-master}" | grep -v " ${1-master}")
+target_branch=${1-$(git default-branch)}
+
+local_merged_branches=$(git branch --merged "$target_branch" | grep -v " $target_branch")
 echo "$(tput setaf 1)These local branches will be deleted:"
 echo "$(tput bold)$local_merged_branches"
 while true; do
