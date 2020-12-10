@@ -80,6 +80,14 @@ _git_format() {
     echo -n " $FG[002]$git_branch_name$FX[reset]"
 }
 
+_aws_vault_env() {
+    if [[ -n $AWS_VAULT ]]; then
+        printf " %s" "$FG[016]${AWS_VAULT}$FX[reset]"
+    else
+        printf ""
+    fi
+}
+
 _rprompt_callback() {
     local new_rprompt
     read -r -u $1 new_rprompt
@@ -106,6 +114,7 @@ _rprompt_precmd() {
     local fd
     exec {fd}< <(
         _git_format
+        _aws_vault_env
     )
 
     zle -F $fd _rprompt_callback
@@ -131,4 +140,4 @@ _restore_aborted_command() {
 add-zle-hook-widget line-init _restore_aborted_command
 
 # Remove pesky right-hand space
-# ZLE_RPROMPT_INDENT=0
+ZLE_RPROMPT_INDENT=0
