@@ -32,4 +32,6 @@ zplug "knu/zsh-manydots-magic", use:manydots-magic, defer:2
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/docker-compose", from:oh-my-zsh
 
+zplug "plugins/terraform", from:oh-my-zsh
+
 zplug load

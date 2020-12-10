@@ -2,6 +2,8 @@
 # autoload -Uz compinit
 # compinit
 
+autoload -U +X bashcompinit && bashcompinit
+
 # Allow completions in the middle of a word
 setopt complete_in_word
 
@@ -10,6 +12,11 @@ setopt no_list_ambiguous
 
 # Case- and hypen-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-}'
+zstyle ':completion:*' verbose 'true'
+
+# Group completions by type and show headings
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' format '%F{5}%B%d%b%f'
 
 # Assign completions for custom commands
 compdef _rspec rspec-branch
