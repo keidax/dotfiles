@@ -26,6 +26,9 @@ func! UpdateStatusLineMode(mode) abort
     return g:mode_settings[a:mode][0]
 endfunc
 
+" The mode is visible in statusline
+set noshowmode
+
 " set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set statusline=
 set statusline+=%#SLMode#\ %{UpdateStatusLineMode(mode())}\ %*\ %y%r
