@@ -22,8 +22,17 @@ augroup vimrc
 
     " Muted colors and underline for inactive statuslines
     autocmd ColorScheme * :highlight StatusLineNC cterm=underline ctermfg=8
-    " Bold emphasis for active statusline
-    autocmd ColorScheme * :highlight StatusLine cterm=bold
+    autocmd ColorScheme * :highlight StatusLine ctermfg=15
+
+    " Red and bold
+    autocmd ColorScheme * :highlight User1 ctermbg=19 ctermfg=9 cterm=bold
+    " Blue
+    autocmd ColorScheme * :highlight User2 ctermbg=19 ctermfg=4 cterm=NONE
+    " Bold
+    autocmd ColorScheme * :highlight User3 ctermbg=19 ctermfg=20 cterm=bold
+    " Italic
+    autocmd ColorScheme * :highlight User4 ctermbg=19 ctermfg=20 cterm=italic
+
 
     " Italicised comments
     autocmd ColorScheme * :highlight Comment cterm=italic
