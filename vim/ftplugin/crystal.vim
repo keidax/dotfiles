@@ -1,4 +1,5 @@
 setlocal shiftwidth=2 softtabstop=2
+setlocal foldmethod=syntax
 
 " Run crystal formatter on save
 let b:ale_fix_on_save = 1
