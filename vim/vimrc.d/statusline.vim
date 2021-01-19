@@ -31,13 +31,13 @@ set noshowmode
 
 " set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set statusline=
-set statusline+=%#SLMode#\ %{UpdateStatusLineMode(mode())}\ %*\ %y%r
+set statusline+=%#SLMode#\ %{UpdateStatusLineMode(mode())}\ %*\ %<%y%r
 set statusline+=\ %=
-set statusline+=%3*%<%f%*%1*%{&mod?'\ [+]':''}%*
+set statusline+=%3*%f%*%1*%{&mod?'\ [+]':''}%*
 set statusline+=\ %=
 set statusline+=%2*%-7.(U+%B%)%*\ %-12.(%l,%c%V%)\ %P
 
-let g:inactive_statusline="          %y%r %=%<%f%{&mod?'\ [+]':''} %=%-7.(U+%B%) %-12.(%l,%c%V%) %P"
+let g:inactive_statusline="          %<%y%r %=%f%{&mod?'\ [+]':''} %=%-7.(U+%B%) %-12.(%l,%c%V%) %P"
 
 augroup vimrc
     autocmd WinLeave * let &l:stl = g:inactive_statusline
