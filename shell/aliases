@@ -38,3 +38,5 @@ alias nd='nvim -d'
 
 # Since I never use the _real_ dc
 alias dc='docker-compose'
+
+alias tf='terraform'
