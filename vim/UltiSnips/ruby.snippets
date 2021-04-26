@@ -1,14 +1,88 @@
 priority 5
 
+global !p
+from ruby_snippets import *
+
+def rq(string=None):
+    # Allow passing tabstop index
+    if isinstance(string, int):
+        string = t[string]
+    snip.rv = ruby_quote(string)
+    return snip.rv
+
+def rqs(string):
+    snip.rv = ruby_quote_string(string)
+endglobal
+
 # General ruby snippets
 
 snippet pry "binding.pry"
 binding.pry
-$0
 endsnippet
 
 snippet rpry "binding.pry with require"
-require "pry"; binding.pry
-$0
+require `!p rqs('pry')`; binding.pry
 endsnippet
 
+snippet rdep "require_dependency"
+require_dependency `!p rq()`$1`!p rq()`
+endsnippet
+
+
+# RSpec snippets
+
+snippet des "describe"
+describe `!p rq()`${1:something}`!p rq()` do
+	$0
+end
+endsnippet
+
+snippet desm "describe method"
+describe `!p rq(1)`${1:#${2:method}}`!p rq(1)` do
+	${0:pending `!p rqs('Not implemented')`}
+end
+endsnippet
+
+snippet desc "describe current class"
+describe ${1:`!v substitute(substitute(vim_snippets#Filename(), '_spec$', '', ''), '\(_\|^\)\(.\)', '\u\2', 'g')`} do
+	${0}
+end
+endsnippet
+
+snippet con "context"
+context `!p rq(1)`${1:when ${2:something}}`!p rq(1)` do
+	${0}
+end
+endsnippet
+
+snippet it "example"
+it `!p rq(1)`${1:is a test}`!p rq(1)` do
+	${0}
+end
+endsnippet
+
+snippet bef "before :each"
+before do
+	${0}
+end
+endsnippet
+
+snippet aft "after :each"
+after do
+	${0}
+end
+endsnippet
+
+snippet let "let"
+let(:${1:object}) { ${0} }
+endsnippet
+
+snippet let! "let!"
+let!(:${1:object}) { ${0} }
+endsnippet
+
+snippet lib "let_it_be"
+let_it_be(:${1:object}${2:, re${3:load}: true}) { ${0} }
+endsnippet
+
+# vim: set ts=2 sw=2 noexpandtab:

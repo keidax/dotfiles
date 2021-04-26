@@ -15,5 +15,8 @@ karabiner/automatic_backups
 # Homebrew lock file
 Brewfile.lock.json
 
+# Python cache
+*.pyc
+
 # Misc
 .DS_Store
