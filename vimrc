@@ -39,6 +39,16 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'wvffle/vimterm'
 Plug 'tpope/vim-unimpaired'
 Plug 'junegunn/vim-easy-align'
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-projectionist'
+
+" Needed to fix broken blockwise copy/paste in Neovim.
+" See https://github.com/neovim/neovim/issues/1822
+Plug 'bfredl/nvim-miniyank'
+nmap p <Plug>(miniyank-autoput)
+xmap p <Plug>(miniyank-autoput)
+nmap P <Plug>(miniyank-autoPut)
+xmap p <Plug>(miniyank-autoput)
 
 
 """""""""""""
