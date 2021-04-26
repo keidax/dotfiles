@@ -120,3 +120,7 @@
         trustExitCode = true
 [pull]
 	ff = only
+
+# Rewrite remote URLS, including submodules, to use SSH protocol
+[url "git@github.com:"]
+	insteadOf = https://github.com/
