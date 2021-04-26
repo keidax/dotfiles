@@ -567,3 +567,42 @@ if filereadable(expand('~/.vimrc_background'))
 
     source ~/.vimrc_background
 endif
+
+" Read in the pipe file as a hidden buffer.
+" Register autocmds so a change to the pipe file will be picked up.
+func! SetupLightDarkBuffer()
+    let l:bnum = bufadd(expand('~/vim_pipe.txt'))
+    call bufload(l:bnum)
+    call setbufvar(l:bnum, '&autoread', 0)
+    call setbufvar(l:bnum, '&modifiable', 0)
+    call setbufvar(l:bnum, '&readonly', 1)
+
+    augroup LightDark
+        au!
+        " We have to check the buffer directly. Apparently buffers not
+        " displayed in a window are ignored by :checktime.
+        " `++nested` is also required for the FileChangedShell autocmd to
+        " actually be fired.
+        " `silent` will remove the message like `"~/vim_pipe.txt" 148L, 1961C`
+        exe 'autocmd FocusGained * ++nested silent checktime '.l:bnum
+        " Set the `reload` choice so we actually get the updated buffer
+        " details. Delay checking the file until the Post event, so the reload
+        " actually 
+        exe 'autocmd FileChangedShell <buffer='.l:bnum.'> let v:fcs_choice = "reload"'
+        " Use ++nested again so ColorScheme autocmds are fired.
+        exe 'autocmd FileChangedShellPost <buffer='.l:bnum.'> ++nested unsilent call HandleLightDarkChange('.l:bnum.')'
+    augroup end
+
+    return l:bnum
+endfunc
+
+func! HandleLightDarkChange(bnum)
+    " Use the nvim-only API here, because `getbufline` doesn't do relative
+    " numbers.
+    let l:lines = nvim_buf_get_lines(a:bnum, -3, -1, 0)
+    " We _don't_ want any autocmds here, otherwise it triggers setting the
+    " colorscheme twice.
+    noautocmd let &background = l:lines[0]
+    execute 'colorscheme' l:lines[1]
+    echom 'set' l:lines[0] 'colorscheme' l:lines[1]
+endfunc
