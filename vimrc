@@ -107,6 +107,9 @@ augroup END
 " Allow buffers to stay loaded in the background
 set hidden
 
+" Preview substitutions in a split window
+set inccommand=split
+
 """"""""""""
 "  Visual  "
 """"""""""""
@@ -530,7 +533,7 @@ let g:fzf_buffers_jump = 1
 
 " Set up :Rg[!] command for fzf search with ripgrep.
 " Use the bang for a full search into hidden, ignored, and symlinked files.
-let s:rg_normal_opts = 'rg --vimgrep --smart-case --color=always '
+let s:rg_normal_opts = 'rg --line-number --smart-case --color=always '
 let s:rg_bang_opts = s:rg_normal_opts . '--follow --hidden --no-ignore '
 command! -bang -nargs=* Rg
     \ call fzf#vim#grep(
@@ -545,5 +548,12 @@ call plug#end()
 if filereadable(expand('~/.vimrc_background'))
     let g:base16colorspace=256
     let g:base16_shell_path=$DOTDIR . '/base16/base16-shell/scripts'
+
+    if $BASE16_THEME =~? 'dark'
+        set background=dark
+    else
+        set background=light
+    endif
+
     source ~/.vimrc_background
 endif
