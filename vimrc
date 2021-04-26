@@ -20,7 +20,6 @@ Plug 'tpope/vim-surround'
 " Better performance on e.g. large Ruby files
 Plug 'Konfekt/FastFold'
 Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock'
 
 " Bring some of neovim's goodies like focus reporting and cursor shaping to
 " terminal vim. Also activates bracketed paste and full mouse support, and
