@@ -556,8 +556,13 @@ call plug#end()
 
 " Use matching colorscheme from terminal theme
 if filereadable(expand('~/.vimrc_background'))
-    let g:base16colorspace=256
-    let g:base16_shell_path=$DOTDIR . '/base16/base16-shell/scripts'
+    if $TERM =~ 'konsole.*'
+        " No 256 colorspace
+        set termguicolors
+    else
+        let g:base16colorspace=256
+        let g:base16_shell_path=$DOTDIR . '/base16/base16-shell/scripts'
+    endif
 
     if $BASE16_THEME =~? 'dark'
         set background=dark

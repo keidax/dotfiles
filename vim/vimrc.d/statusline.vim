@@ -1,15 +1,15 @@
 
 let g:most_recent_mode = ''
 let g:mode_settings = {
-    \ 'n':  ['Normal ', 'ctermbg=20 ctermfg=19'],
-    \ 'i':  ['Insert ', 'ctermbg=02 ctermfg=19'],
-    \ 'v':  ['Visual ', 'ctermbg=04 ctermfg=19'],
-    \ 'V':  ['V Line ', 'ctermbg=04 ctermfg=19'],
-    \ '': ['V Block', 'ctermbg=04 ctermfg=19'],
+    \ 'n':  ['Normal ', ['02', '04']],
+    \ 'i':  ['Insert ', ['02', '0B']],
+    \ 'v':  ['Visual ', ['02', '0D']],
+    \ 'V':  ['V Line ', ['02', '0D']],
+    \ '': ['V Block', ['02', '0D']],
     \ 's':  ['Select ', ''],
     \ 'R':  ['Replace', ''],
-    \ 'c':  ['Command', 'ctermbg=03 ctermfg=19'],
-    \ 't':  [' Term  ', 'ctermbg=06 ctermfg=19'],
+    \ 'c':  ['Command', ['02', '0A']],
+    \ 't':  [' Term  ', ['02', '0C']],
     \ '!':  [' Shell ', ''],
     \ 'r':  ['Prompt ', ''],
     \ }
@@ -21,7 +21,10 @@ func! UpdateStatusLineMode(mode) abort
 
     let g:most_recent_mode = a:mode
 
-    exec 'highlight SLMode cterm=bold ' . g:mode_settings[a:mode][1]
+    let l:fg = g:mode_settings[a:mode][1][0]
+    let l:bg = g:mode_settings[a:mode][1][1]
+
+    exec "call g:Base16hi('SLMode', g:base16_gui".l:fg.", g:base16_gui".l:bg.", g:base16_cterm".l:fg.", g:base16_cterm".l:bg.", 'bold')"
 
     return g:mode_settings[a:mode][0]
 endfunc

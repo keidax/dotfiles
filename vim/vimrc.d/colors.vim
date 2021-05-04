@@ -5,63 +5,60 @@ Plug 'chriskempson/base16-vim'
 " (The autocmds preserve our colors even if the colorscheme changes)
 augroup vimrc
     " Transparent background colors
-    autocmd ColorScheme * :highlight Normal ctermbg=none
-    autocmd ColorScheme * :highlight VertSplit ctermbg=none
-    autocmd ColorScheme * :highlight StatusLineNC ctermbg=none
+    au ColorScheme * :highlight Normal ctermbg=none
 
     " Better indent guide colors for base16 dark colorscheme
-    autocmd ColorScheme * :highlight IndentGuidesOdd  ctermbg=19 ctermfg=18
-    autocmd ColorScheme * :highlight IndentGuidesEven ctermbg=18 ctermfg=19
+    au ColorScheme * :highlight IndentGuidesOdd  ctermbg=19 ctermfg=18
+    au ColorScheme * :highlight IndentGuidesEven ctermbg=18 ctermfg=19
 
     " Muted colors for invisible characters
-    autocmd ColorScheme * :highlight SpecialKey ctermfg=19
-    autocmd ColorScheme * :highlight NonText ctermfg=19
+    au ColorScheme * call Base16hi('SpecialKey', g:base16_gui02, '', g:base16_cterm02, '')
+    au ColorScheme * call Base16hi('NonText', g:base16_gui02, '', g:base16_cterm02, '')
 
     " Muted colors for vertical borders
-    autocmd ColorScheme * :highlight VertSplit ctermfg=8
+    au ColorScheme * call Base16hi('VertSplit', g:base16_gui03, 'NONE', g:base16_cterm03, 'NONE')
 
     " Muted colors and underline for inactive statuslines
-    autocmd ColorScheme * :highlight StatusLineNC cterm=underline ctermfg=8
-    autocmd ColorScheme * :highlight StatusLine ctermfg=15
+    au ColorScheme * call Base16hi('StatusLineNC', g:base16_gui03, 'NONE', g:base16_cterm03, 'NONE', 'underline')
+    au ColorScheme * call Base16hi('StatusLine', g:base16_gui07, g:base16_gui02, g:base16_cterm07, g:base16_cterm02)
 
     " Red and bold
-    autocmd ColorScheme * :highlight User1 ctermbg=19 ctermfg=9 cterm=bold
+    au ColorScheme * call Base16hi('User1', g:base16_gui08, g:base16_gui02, g:base16_cterm08, g:base16_cterm02, 'bold')
     " Blue
-    autocmd ColorScheme * :highlight User2 ctermbg=19 ctermfg=4 cterm=NONE
+    au ColorScheme * call Base16hi('User2', g:base16_gui0D, g:base16_gui02, g:base16_cterm0D, g:base16_cterm02, 'NONE')
     " Bold
-    autocmd ColorScheme * :highlight User3 ctermbg=19 ctermfg=20 cterm=bold
-    " Italic
-    autocmd ColorScheme * :highlight User4 ctermbg=19 ctermfg=20 cterm=italic
-
+    au ColorScheme * call Base16hi('User3', g:base16_gui04, g:base16_gui02, g:base16_cterm04, g:base16_cterm02, 'bold')
 
     " Italicised comments
-    autocmd ColorScheme * :highlight Comment cterm=italic
-    autocmd ColorScheme * :highlight Todo cterm=italic
+    au ColorScheme * :highlight Comment cterm=italic " gui=italic
+    au ColorScheme * :highlight Todo cterm=italic " gui=italic
 
     " More visible operators
-    autocmd ColorScheme * :highlight Operator ctermfg=1
+    au ColorScheme * call Base16hi('Operator', g:base16_gui08, '', g:base16_cterm08, '')
 
     " Red highlight for extra whitespace
-    " TODO better-whitespace should set this automatically
-    " autocmd ColorScheme * :highlight ExtraWhitespace ctermbg=red
+    au ColorScheme * call Base16hi( 'ExtraWhitespace', '', g:base16_gui08, '', g:base16_cterm08)
 
-    " Different highlight for current quickfix item
-    autocmd ColorScheme * :highlight QuickFixLine cterm=bold ctermbg=18
+    " Bold for current quickfix item
+    au ColorScheme * call Base16hi('QuickFixLine', '', '', '', '', 'bold')
 
     " Special highlighting for signs
-    autocmd ColorScheme * :highlight GitGutterChange cterm=bold
-    autocmd ColorScheme * :highlight ALEWarningSign ctermfg=3 ctermbg=18
+    au ColorScheme * :highlight GitGutterChange cterm=bold
+    au ColorScheme * :highlight ALEWarningSign ctermfg=3 ctermbg=18
 
     " More readable inline error messages
-    autocmd ColorScheme * :highlight link ALEVirtualTextWarning ALEWarningSign
-    autocmd ColorScheme * :highlight link ALEVirtualTextError Error
+    au ColorScheme * :highlight link ALEVirtualTextWarning ALEWarningSign
+    au ColorScheme * :highlight link ALEVirtualTextError Error
 
     " Some syntax files will highlight errors with a red background. Setting
     " the foreground to red as well makes errors unreadable. Underlining plus
     " gutter signs should be visible enough.
-    autocmd ColorScheme * :highlight ALEError cterm=underline
+    au ColorScheme * :highlight ALEError cterm=underline
 
     " More readable spelling errors
-    autocmd ColorScheme * :highlight SpellCap ctermbg=none
-    autocmd ColorScheme * :highlight SpellBad ctermfg=9 ctermbg=none cterm=bold
+    au ColorScheme * :highlight SpellCap ctermbg=none
+    au ColorScheme * :highlight SpellBad ctermfg=9 ctermbg=none cterm=bold
+
+    " Turn off default bold style for some groups when using GUI attributes
+    au ColorScheme * :highlight Statement gui=none
 augroup END
