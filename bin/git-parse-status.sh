@@ -89,7 +89,7 @@ END {
 # Git's porcelain status doesn't include stashes
 git_stash_file="$(git rev-parse --git-dir)/logs/refs/stash"
 if [ -s "$git_stash_file" ]; then
-    echo "git_stashed=$(wc -l < "$git_stash_file")"
+    echo "git_stashed=$(awk 'END{print NR}' < "$git_stash_file")"
 else
     echo "git_stashed=0"
 fi

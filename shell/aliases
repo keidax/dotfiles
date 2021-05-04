@@ -7,7 +7,7 @@
 alias sudo='sudo -E '
 
 # ls personalizations
-alias ls='ls --quoting-style=literal --color=auto -F'
+alias ls='ls -F'
 alias ll='ls -l'
 alias la='ls -al'
 alias lh='ll -h'
