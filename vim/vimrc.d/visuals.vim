@@ -33,12 +33,30 @@ Plug 'ntpeters/vim-better-whitespace'
 " let g:better_whitespace_enabled = 1
 
 " Visible indent levels
-Plug 'nathanaelkane/vim-indent-guides'
+if has('nvim-0.5.0')
+    Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
 
-" indent-guides options
-let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
-" Allow our own indent guide colors to take effect
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_exclude_filetypes = ['diff', 'git', 'gitcommit', 'help', 'man']
+    let g:indent_blankline_space_char = ' '
+    let g:indent_blankline_space_char_blankline = ' '
+    let g:indent_blankline_char = '┊'
+    " ︰ ⡇ ⠅ ⁚ ⍿ 𐄁 ¦ ┆ ┊
+
+    let g:indent_blankline_show_trailing_blankline_indent = v:false
+    " let g:indent_blankline_show_first_indent_level = v:false
+
+    let g:indent_blankline_filetype_exclude = ['diff', 'git', 'gitcommit', 'help', 'man']
+    let g:indent_blankline_buftype_exclude = ['terminal']
+
+    let g:indent_blankline_use_treesitter = v:true
+    let g:indent_blankline_show_current_context = v:true
+else
+    Plug 'nathanaelkane/vim-indent-guides'
+
+    " indent-guides options
+    let g:indent_guides_guide_size = 1
+    let g:indent_guides_enable_on_vim_startup = 1
+    let g:indent_guides_start_level = 2
+    " Allow our own indent guide colors to take effect
+    let g:indent_guides_auto_colors = 0
+    let g:indent_guides_exclude_filetypes = ['diff', 'git', 'gitcommit', 'help', 'man']
+endif
