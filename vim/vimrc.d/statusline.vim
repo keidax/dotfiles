@@ -5,8 +5,8 @@ let g:mode_settings = {
     \ 'i':  ['Insert ', ['02', '0B']],
     \ 'v':  ['Visual ', ['02', '0D']],
     \ 'V':  ['V Line ', ['02', '0D']],
-    \ '': ['V Block', ['02', '0D']],
-    \ 's':  ['Select ', ''],
+    \ "\<C-V>": ['V Block', ['02', '0D']],
+    \ 's':  ['Select ', ['02', '09']],
     \ 'R':  ['Replace', ''],
     \ 'c':  ['Command', ['02', '0A']],
     \ 't':  [' Term  ', ['02', '0C']],
@@ -38,9 +38,9 @@ set statusline+=%#SLMode#\ %{UpdateStatusLineMode(mode())}\ %*\ %<%y%r
 set statusline+=\ %=
 set statusline+=%3*%f%*%1*%{&mod?'\ [+]':''}%*
 set statusline+=\ %=
-set statusline+=%2*%-7.(U+%B%)%*\ %-12.(%l,%c%V%)\ %P
+set statusline+=%(%l,%c%V%)\ \ %P
 
-let g:inactive_statusline="          %<%y%r %=%f%{&mod?'\ [+]':''} %=%-7.(U+%B%) %-12.(%l,%c%V%) %P"
+let g:inactive_statusline="          %<%y%r %=%f%{&mod?'\ [+]':''} %=%(%l,%c%V%)  %P"
 
 augroup vimrc
     autocmd WinLeave * let &l:stl = g:inactive_statusline
