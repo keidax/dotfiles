@@ -339,19 +339,6 @@ nmap <Leader>gs <Plug>(GitGutterStageHunk)
 nmap <Leader>gu <Plug>(GitGutterUndoHunk)
 nmap <Leader>gp <Plug>(GitGutterPreviewHunk)
 
-" See https://github.com/uptech/alt
-function! AltCommand(path, command)
-    let l:alternate_path = system("alt " . a:path)
-    if empty(l:alternate_path)
-        echoerr "No alternate file for " . a:path . " exists!"
-    else
-        exec a:command . " " . l:alternate_path
-    endif
-endfunction
-
-nnoremap <silent> <Leader>x :call AltCommand(expand('%'), ':silent e')<CR>
-nnoremap <silent> <Leader>X :call AltCommand(expand('%'), ':silent sp')<CR>
-
 " Show full diffconflict context
 nnoremap <Leader>D :DiffConflictsShowHistory<CR>
 
