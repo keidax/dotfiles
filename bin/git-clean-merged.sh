@@ -4,9 +4,13 @@
 
 target_branch=${1-$(git default-branch)}
 
-local_merged_branches=$(git branch --merged "$target_branch" | grep -v " $target_branch")
+local_merged_branches=($(git branch --merged "$target_branch" | grep -v " $target_branch"))
+
 echo "$(tput setaf 1)These local branches will be deleted:"
-echo "$(tput bold)$local_merged_branches"
+for branch in "${local_merged_branches[@]}"; do
+    echo "  $(tput bold)$branch"
+done
+
 while true; do
     read -e -r -p "$(tput setaf 1)Do you want to continue? [y/N]$(tput sgr0) " yn
     case $yn in
@@ -16,4 +20,6 @@ while true; do
     esac
 done
 
-echo "$local_merged_branches" | xargs git branch -d
+for branch in "${local_merged_branches[@]}"; do
+   git branch -d "$branch"
+done
