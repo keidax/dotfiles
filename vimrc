@@ -79,6 +79,9 @@ set tabstop=8       " This should be 8 for compatibility purposes
 set shiftwidth=4    " Shifts (>>, etc.) move by 4 spaces
 set softtabstop=-1  " <Tab> inserts {shiftwidth} spaces
 
+" Don't act like sentences end with two spaces.
+set nojoinspaces
+
 " Case-insensitive search
 set ignorecase
 

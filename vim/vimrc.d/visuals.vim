@@ -34,7 +34,7 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " Visible indent levels
 if has('nvim-0.5.0')
-    Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
+    Plug 'lukas-reineke/indent-blankline.nvim'
 
     let g:indent_blankline_space_char = ' '
     let g:indent_blankline_space_char_blankline = ' '
@@ -47,8 +47,8 @@ if has('nvim-0.5.0')
     let g:indent_blankline_filetype_exclude = ['diff', 'git', 'gitcommit', 'help', 'man']
     let g:indent_blankline_buftype_exclude = ['terminal']
 
-    let g:indent_blankline_use_treesitter = v:true
-    let g:indent_blankline_show_current_context = v:true
+    " let g:indent_blankline_use_treesitter = v:true
+    " let g:indent_blankline_show_current_context = v:true
 else
     Plug 'nathanaelkane/vim-indent-guides'
 

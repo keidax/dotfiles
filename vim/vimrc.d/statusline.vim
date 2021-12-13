@@ -7,7 +7,7 @@ let g:mode_settings = {
     \ 'V':  ['V Line ', ['02', '0D']],
     \ "\<C-V>": ['V Block', ['02', '0D']],
     \ 's':  ['Select ', ['02', '09']],
-    \ 'R':  ['Replace', ''],
+    \ 'R':  ['Replace', ['02', '08']],
     \ 'c':  ['Command', ['02', '0A']],
     \ 't':  [' Term  ', ['02', '0C']],
     \ '!':  [' Shell ', ''],
