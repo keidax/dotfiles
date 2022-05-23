@@ -1,0 +1,14 @@
+1. git clone
+2. submodules
+3. install dependencies:
+    - python
+    - zsh
+    - neovim
+    - ripgrep
+    - rbenv (AUR)
+4. run ./install
+5. logout; login
+6. run ./install
+7. mess around with zplug
+8. run ./install
+9. make sure base16 is set at least once

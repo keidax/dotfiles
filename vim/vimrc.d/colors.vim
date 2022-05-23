@@ -1,6 +1,8 @@
 " Base16 colorschemes
 Plug 'chriskempson/base16-vim'
 
+set termguicolors
+
 " Set up highlight colors and attributes
 " (The autocmds preserve our colors even if the colorscheme changes)
 augroup vimrc

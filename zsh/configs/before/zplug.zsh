@@ -26,7 +26,7 @@ zplug "plugins/shrink-path", from:oh-my-zsh
 zplug "zsh-users/zsh-autosuggestions"
 
 # Expand `...` into `../..`, etc
-zplug "knu/zsh-manydots-magic", use:manydots-magic, defer:2
+# zplug "knu/zsh-manydots-magic", use:manydots-magic, defer:2
 
 # Docker completions
 zplug "plugins/docker", from:oh-my-zsh
