@@ -6,6 +6,8 @@ __FILE__
 ABA
 abc
 accessor/N
+ACL/N
+acl/N
 ActiveRecord/N
 ActiveSupport/N
 admin/N
@@ -23,6 +25,7 @@ autocmd/N
 autocommand/N
 autoload/V
 autosquash/V
+await/V
 aws/N
 b
 backend/N
@@ -36,6 +39,7 @@ calc
 camelize/V
 cd
 changelog/N
+cloudwatch/N
 codebuild/N
 codegen/N
 CodePipeline/N
@@ -53,6 +57,7 @@ csv/N
 ctrl
 d
 db/N
+dbt/N
 def/N
 derp
 dev/N
@@ -64,6 +69,7 @@ dockerize/V
 Docusign/N
 dotfile/N
 DRb
+DynamoDB/N
 e
 e2e/N
 enqueue/V
@@ -74,6 +80,7 @@ error/V
 esc
 ETag
 eval/V
+eventbridge/N
 f
 fallback/N
 falsy
@@ -82,6 +89,7 @@ filesystem/N
 filetype/N
 Firefox/N
 firehose/N
+Fivetran/N
 fmt
 Fontconfig/N
 foo
@@ -96,6 +104,7 @@ GLFW/N
 gruvbox/N
 h
 hacky
+hashicorp/N
 holodakg/N
 Homebrew/N
 https
@@ -107,13 +116,19 @@ init
 inline/V
 Int32/N
 introspectable
+io
 iTerm2/N
 java/N
 Javascript/N
 JDK/N
+Jinja/N
 Jira/N
 JRuby/N
+js
+JS/N
 json/N
+JWKS/N
+JWT/N
 k
 Karabiner/N
 Kinesis/N
@@ -140,8 +155,10 @@ mysql/N
 n
 namespace/NV
 neovim/N
+NewRelic/N
 nodoc
 NoMethodError
+nonprod/N
 NoSpell
 npm
 nvim/N
@@ -160,6 +177,7 @@ POSIX
 PostgreSQL/N
 PR/N
 preload/V
+prerelease/N
 pryrc/N
 quickfix/N
 r
@@ -186,6 +204,8 @@ sdk
 SGR
 shellcheck/N
 shoryuken/N
+sigv4/N
+SigV4/N
 SNS/N
 solargraph/N
 spellsync
@@ -198,6 +218,7 @@ stdin/N
 stdout/N
 struct/N
 stylesheet/N
+submodule/N
 subsecond
 subshell/N
 sudo/N
@@ -224,8 +245,10 @@ upsert/VT
 URL/N
 user_id
 username/N
-UTF
+UTC/N
 utf-8
+UTF/N
+utils/N
 v
 v0
 V2
@@ -233,7 +256,10 @@ v2
 vendor/V
 vim/N
 vimrc/N
+VPC/N
 Vulkan/N
+WAF/N
+wafv2
 webhook/N
 webserver/N
 whitelist/NV
@@ -246,6 +272,7 @@ XCB/N
 Xcode/N
 XSD
 XSLT
+XSS/N
 y
 YAML/N
 yamllint
