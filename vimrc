@@ -50,6 +50,11 @@ xmap p <Plug>(miniyank-autoput)
 nmap P <Plug>(miniyank-autoPut)
 xmap p <Plug>(miniyank-autoput)
 
+if has('nvim-0.5.0')
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
+endif
+
 
 """""""""""""
 "  General  "
@@ -196,6 +201,13 @@ augroup vimrc
         \ if &omnifunc == '' |
         \     setlocal omnifunc=syntaxcomplete#Complete |
         \ endif
+augroup END
+
+augroup vimrc_local
+    au!
+
+    autocmd BufEnter ~/src/tree-sitter-crystal/*.js let b:ale_fix_on_save=1 | let b:ale_fixers = ['eslint']
+    autocmd BufEnter ~/src/tree-sitter-crystal/src/scanner.c let b:ale_fix_on_save=1 | let b:ale_fixers = ['clang-format']
 augroup END
 
 
@@ -562,3 +574,14 @@ if filereadable(expand('~/.vimrc_background'))
 
     source ~/.vimrc_background
 endif
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true
+  },
+  indent = {
+    enable = true
+  },
+}
+EOF

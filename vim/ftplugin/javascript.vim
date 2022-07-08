@@ -1,5 +1,10 @@
-" Use JS folding
-setlocal foldmethod=syntax
+" JS folding
+if has('nvim-0.5.0')
+    setlocal foldmethod=expr
+    setlocal foldexpr=nvim_treesitter#foldexpr()
+else
+    setlocal foldmethod=syntax
+end
 
 setlocal shiftwidth=2
 
