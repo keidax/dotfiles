@@ -28,7 +28,18 @@ source_if_exists () {
 # Print git status quicker than ever
 git () {
     if [ $# -gt 0 ]; then
-        command git "$@"
+        if [ $1 = "ccd" ]; then
+            # Alias for "clone and cd".
+
+            # We need to get the last argument, in case there are other options.
+            # (This assumes that the last argument is the repository)
+            eval local repo=\$$#
+            shift
+            local dir="$(basename "$repo" .git)"
+            command git clone "$@" && cd "$dir"
+        else
+            command git "$@"
+        fi
     else
         command git status --short --branch
     fi
