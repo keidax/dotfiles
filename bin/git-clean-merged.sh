@@ -4,7 +4,7 @@
 
 target_branch=${1-$(git default-branch)}
 
-local_merged_branches=($(git branch --merged "$target_branch" | grep -v " $target_branch"))
+local_merged_branches=($(git branch --merged "$target_branch" | grep -v " ${target_branch}$"))
 
 echo "$(tput setaf 1)These local branches will be deleted:"
 for branch in "${local_merged_branches[@]}"; do
