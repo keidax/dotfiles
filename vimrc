@@ -577,6 +577,7 @@ endif
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "hcl" },
   highlight = {
     enable = true
   },
