@@ -17,8 +17,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
-" Better performance on e.g. large Ruby files
-Plug 'Konfekt/FastFold'
 Plug 'kana/vim-textobj-user'
 
 " Bring some of neovim's goodies like focus reporting and cursor shaping to
@@ -52,7 +50,6 @@ xmap p <Plug>(miniyank-autoput)
 
 if has('nvim-0.5.0')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
 endif
 
 
@@ -143,10 +140,6 @@ augroup vimrc
     " switched on. We have to use an autocmd because 'foldlevelstart' is
     " also applied when switching to a loaded buffer.
     autocmd BufReadPost * setl foldlevel=1
-
-    " Recalculate folds if an ALE fixer changed the buffer
-    autocmd User ALEFixPre let b:ale_pre_tick = b:changedtick
-    autocmd User ALEFixPost if get(b:, 'ale_pre_tick', b:changedtick)  != b:changedtick | FastFoldUpdate | endif
 augroup END
 
 set foldtext=MyFoldText()
@@ -377,15 +370,39 @@ func! FzfSpellReplace() abort
 endfunc
 nnoremap <silent> <Leader>z :call FzfSpellReplace()<CR>
 
-" Jump to line on zv
-" Don't have to repeat v:count, it will already apply to G
-nnoremap <expr> zv (v:count ? 'G' : '') . 'zv'
-
 " Let Backspace remove the last digit in a partial count
 nnoremap <expr> <BS> (v:count ? '<Del>' : '<BS>')
 
 " Use <count><Enter> as a shortcut for :<count><Enter>
 nnoremap <expr> <CR> (v:count ? 'G' : '<CR>')
+
+" The indent-blankline plugin doesn't know when folds are revealed, so we need
+" to supplement the builtin fold mappings.
+" https://github.com/lukas-reineke/indent-blankline.nvim/issues/449
+for foldmap in [
+    \ 'zo',
+    \ 'zO',
+    \ 'zc',
+    \ 'zC',
+    \ 'za',
+    \ 'zA',
+    \ 'zv',
+    \ 'zx',
+    \ 'zX',
+    \ 'zm',
+    \ 'zM',
+    \ 'zr',
+    \ 'zR',
+    \ 'zn',
+    \ 'zN',
+    \ 'zi'
+    \]
+
+    call nvim_set_keymap('n', foldmap, foldmap . '<CMD>IndentBlanklineRefresh<CR>', {
+        \ 'noremap': v:true,
+        \ 'silent': v:true,
+        \ 'desc': 'Fold while refreshing indent guides'})
+endfor
 
 " Cross-plugin compatibility mappings
 " Overview
@@ -527,10 +544,6 @@ nnoremap Q <nop>
 " Open diffs in a new tab
 let g:plug_pwindow = 'tabe'
 
-" Don't recompute folds if just opening or closing them.
-let g:fastfold_fold_command_suffixes = ['i', 'n', 'N']
-" Ditto for moving between folds
-let g:fastfold_fold_movement_commands = []
 
 " Maximizer settings
 " Turn off mappings since we don't want them in insert mode

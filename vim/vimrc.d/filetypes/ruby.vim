@@ -9,8 +9,6 @@ Plug 'noprompt/vim-yardoc'
 Plug 'rhysd/vim-textobj-ruby'
 let g:textobj_ruby_more_mappings = 1
 
-let g:fastfold_skip_filetypes = [ 'ruby' ]
-
 " Ruby syntax settings
 let g:ruby_indent_assignment_style = 'variable'
 let g:ruby_indent_block_style = 'do'
