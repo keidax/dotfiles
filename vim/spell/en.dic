@@ -16,7 +16,7 @@ app/N
 appserver/N
 args
 arity/N
-ARN
+ARN/N
 asdf
 async
 attr/N
@@ -24,6 +24,7 @@ auth
 autocmd/N
 autocommand/N
 autoload/V
+autoscale/V
 autosquash/V
 await/V
 aws/N
@@ -44,6 +45,7 @@ codebuild/N
 codegen/N
 CodePipeline/N
 colorscheme/N
+colorspace/N
 commandline/N
 committer/N
 config/N
@@ -105,6 +107,8 @@ gruvbox/N
 h
 hacky
 hashicorp/N
+hcl/N
+HCL/N
 holodakg/N
 Homebrew/N
 https
@@ -233,6 +237,7 @@ TODO
 toolbar/N
 torquebox/N
 TOS/N
+treesitter/N
 truthy
 u
 UI/N

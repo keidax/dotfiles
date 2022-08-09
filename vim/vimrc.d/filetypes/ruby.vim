@@ -1,7 +1,5 @@
 " Updated Ruby support files
 Plug 'vim-ruby/vim-ruby'
-" Extra tools for Ruby on Rails
-Plug 'tpope/vim-rails'
 
 " Highlighting for YARD params
 Plug 'noprompt/vim-yardoc'

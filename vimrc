@@ -40,13 +40,17 @@ Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-projectionist'
 
-" Needed to fix broken blockwise copy/paste in Neovim.
+" Improve blockwise copy/paste in Neovim.
 " See https://github.com/neovim/neovim/issues/1822
+" The issue is fixed for a single running instance, but this plugin still
+" helps when pasting between Neovim instances.
 Plug 'bfredl/nvim-miniyank'
-nmap p <Plug>(miniyank-autoput)
-xmap p <Plug>(miniyank-autoput)
-nmap P <Plug>(miniyank-autoPut)
-xmap p <Plug>(miniyank-autoput)
+nmap p <Plug>(miniyank-startput)
+xmap p <Plug>(miniyank-startput)
+nmap P <Plug>(miniyank-startPut)
+xmap P <Plug>(miniyank-startPut)
+nmap - <Plug>(miniyank-cycle)
+nmap + <Plug>(miniyank-cycleback)
 
 if has('nvim-0.5.0')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -197,10 +201,19 @@ augroup vimrc
 augroup END
 
 augroup vimrc_local
+    " Clear previously-set local autocommands
     au!
 
     autocmd BufEnter ~/src/tree-sitter-crystal/*.js let b:ale_fix_on_save=1 | let b:ale_fixers = ['eslint']
     autocmd BufEnter ~/src/tree-sitter-crystal/src/scanner.c let b:ale_fix_on_save=1 | let b:ale_fixers = ['clang-format']
+
+    " For rendering-api-testing-framework, make sure jest runs with correct
+    " project options
+    autocmd BufEnter ~/code/rendering-api-testing-framework/*.js
+        \ let g:test#javascript#jest#executable = 'npm run test:unit --'
+
+    autocmd BufEnter ~/code/browser-testing-framework/*.js
+        \ let g:test#javascript#mocha#executable = 'npm run test:unit --'
 augroup END
 
 
@@ -292,7 +305,6 @@ endfunction
 inoremap <silent> <A-CR> <C-c>:call EnterWithoutComments()<CR>I
 
 " fzf mapping
-nnoremap <C-p> :FZF<CR>
 nnoremap <Leader>p :FZF<CR>
 nnoremap <Leader>f :Buffers<CR>
 
@@ -340,6 +352,27 @@ if has('nvim')
     tnoremap <silent> <A-v> <C-\><C-n>:call vimterm#toggle()<CR>
     tnoremap <Esc> <C-\><C-n>
 endif
+
+" After using Fugitive to go back through the git history and inspect
+" different commits, this mapping offers a quick way to return to the file
+" most recently being worked on. (The alternative is pressing <C-O> an
+" arbitrary number of times.)
+func! JumpToPrevNonGitBuffer()
+    let [jumplist, jumpnum] = getjumplist()
+    let relevant_jumplist = jumplist[:(jumpnum - 1)]
+
+    let count=1
+
+    for jumpitem in reverse(relevant_jumplist)
+        if buflisted(jumpitem.bufnr) && bufname(jumpitem.bufnr) !~# "^fugitive://"
+            execute "normal " . count . "\<c-o>"
+            return
+        endif
+
+        let count+=1
+    endfor
+endfunc
+nnoremap <silent> <Leader>gb :call JumpToPrevNonGitBuffer()<CR>
 
 " Change gitgutter map prefix
 xmap <Leader>gs <Plug>(GitGutterStageHunk)
