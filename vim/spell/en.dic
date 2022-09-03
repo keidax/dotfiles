@@ -24,6 +24,7 @@ auth
 autocmd/N
 autocommand/N
 autoload/V
+autopair/N
 autoscale/V
 autosquash/V
 await/V
@@ -33,7 +34,9 @@ backend/N
 backport/V
 backtrace/N
 base16/N
+bdf2ttf/N
 bigint/N
+bool/N
 bootsnap
 c
 calc
@@ -41,6 +44,7 @@ camelize/V
 cd
 changelog/N
 cloudwatch/N
+cmd/N
 codebuild/N
 codegen/N
 CodePipeline/N
@@ -49,6 +53,7 @@ colorspace/N
 commandline/N
 committer/N
 config/N
+const/N
 constantize
 coords
 CORS
@@ -74,7 +79,9 @@ DRb
 DynamoDB/N
 e
 e2e/N
+endwise
 enqueue/V
+Enum/N
 enum/N
 env/N
 EOF
@@ -83,6 +90,7 @@ esc
 ETag
 eval/V
 eventbridge/N
+expr/N
 f
 fallback/N
 falsy
@@ -94,12 +102,15 @@ firehose/N
 Fivetran/N
 fmt
 Fontconfig/N
+FontForge/N
+fontforge/N
 foo
 foobar
 ftplugin
 fzf
 g
 Gemfile/N
+gitgutter/N
 GitHub/N
 github/N
 GLFW/N
@@ -138,6 +149,7 @@ Karabiner/N
 Kinesis/N
 l
 lefthook/N
+lex/V
 lifecycle/N
 lint/V
 linter/N
@@ -153,6 +165,7 @@ Mongo/N
 MongoDB/N
 Mongoid
 monkeypatch/V
+monospace
 multithread/V
 Myspell
 mysql/N
@@ -164,11 +177,13 @@ nodoc
 NoMethodError
 nonprod/N
 NoSpell
+notdef
 npm
 nvim/N
 omnicomplete/VT
 OpenAPI
 OpenGL/N
+OpenType/N
 p
 PaperTrail/N
 papertrail/N
@@ -182,6 +197,7 @@ PostgreSQL/N
 PR/N
 preload/V
 prerelease/N
+proc/N
 pryrc/N
 quickfix/N
 r
@@ -213,6 +229,8 @@ SigV4/N
 SNS/N
 solargraph/N
 spellsync
+Splitjoin/N
+splitjoin/N
 SQS/N
 SSO
 stage/V
@@ -239,6 +257,7 @@ torquebox/N
 TOS/N
 treesitter/N
 truthy
+TTF/N
 u
 UI/N
 unentitle/V
@@ -268,6 +287,7 @@ wafv2
 webhook/N
 webserver/N
 whitelist/NV
+whitespace/N
 WIP
 wordlist/N
 workflow/N
@@ -284,5 +304,6 @@ yamllint
 yieldparam
 yieldreturn
 yml
+yml2fea
 z
 zsh/N

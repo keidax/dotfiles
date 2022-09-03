@@ -45,10 +45,10 @@ Plug 'tpope/vim-projectionist'
 " The issue is fixed for a single running instance, but this plugin still
 " helps when pasting between Neovim instances.
 Plug 'bfredl/nvim-miniyank'
-nmap p <Plug>(miniyank-startput)
-xmap p <Plug>(miniyank-startput)
-nmap P <Plug>(miniyank-startPut)
-xmap P <Plug>(miniyank-startPut)
+nmap p <Plug>(miniyank-autoput)
+xmap p <Plug>(miniyank-autoput)
+nmap P <Plug>(miniyank-autoPut)
+xmap P <Plug>(miniyank-autoPut)
 nmap - <Plug>(miniyank-cycle)
 nmap + <Plug>(miniyank-cycleback)
 
@@ -204,6 +204,7 @@ augroup vimrc_local
     " Clear previously-set local autocommands
     au!
 
+    autocmd BufEnter ~/src/tree-sitter-crystal/*.cr let b:ale_fix_on_save=0
     autocmd BufEnter ~/src/tree-sitter-crystal/*.js let b:ale_fix_on_save=1 | let b:ale_fixers = ['eslint']
     autocmd BufEnter ~/src/tree-sitter-crystal/src/scanner.c let b:ale_fix_on_save=1 | let b:ale_fixers = ['clang-format']
 
