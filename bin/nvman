@@ -4,7 +4,7 @@
 # an argument or on stdin.
 
 page_cmd() {
-    exec nvim -c "set ft=man" "$@"
+    exec nvim -c "Man!" "$@"
 }
 
 if [ -t 0 ]; then
