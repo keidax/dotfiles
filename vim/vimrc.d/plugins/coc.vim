@@ -1,5 +1,5 @@
 " NOTE: Apparently this can also cause the welcome message to disappear
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " For vim completion
 Plug 'Shougo/neco-vim'

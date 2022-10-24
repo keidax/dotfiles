@@ -1,4 +1,4 @@
-call plug#begin()
+call plug#begin($DOTDIR . '/vim/plugged')
 " Make sure to use single quotes
 Plug 'tpope/vim-sensible'
 Plug 'vim-pandoc/vim-pandoc'
