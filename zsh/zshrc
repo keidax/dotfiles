@@ -1,4 +1,7 @@
 # Apply base16 colorscheme first
+tput smcup
+source_if_exists "$DOTDIR/base16/base16-shell/base16-shell.plugin.zsh"
+tput rmcup
 source_if_exists "$DOTDIR/base16/base16-shell/base16-shell.plugin.zsh"
 
 typeset -U preconfig_files config_files postconfig_files
