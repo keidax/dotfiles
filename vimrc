@@ -56,6 +56,19 @@ xmap P <Plug>(miniyank-autoPut)
 nmap - <Plug>(miniyank-cycle)
 nmap + <Plug>(miniyank-cycleback)
 
+Plug 'ojroques/vim-oscyank', {'branch': 'main'}
+let g:clipboard = {
+        \   'name': 'osc52',
+        \   'copy': {
+        \     '+': {lines, regtype -> OSCYankString(join(lines, "\n"))},
+        \     '*': {lines, regtype -> OSCYankString(join(lines, "\n"))},
+        \   },
+        \   'paste': {
+        \     '+': {-> [split(getreg(''), '\n'), getregtype('')]},
+        \     '*': {-> [split(getreg(''), '\n'), getregtype('')]},
+        \   },
+        \ }
+
 if has('nvim-0.5.0')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 endif
