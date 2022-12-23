@@ -40,6 +40,9 @@ Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-projectionist'
 
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+
 " Improve blockwise copy/paste in Neovim.
 " See https://github.com/neovim/neovim/issues/1822
 " The issue is fixed for a single running instance, but this plugin still
@@ -569,5 +572,47 @@ lua <<EOF
     })
   })
 
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+  -- Enable the following language servers
+  --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+  --
+  --  Add any additional override configuration in the following tables. They will be passed to
+  --  the `settings` field of the server config. You must look up that documentation yourself.
+  local servers = {
+    -- clangd = {},
+    -- gopls = {},
+    -- pyright = {},
+    -- rust_analyzer = {},
+    -- tsserver = {},
+
+    solargraph = {},
+
+    sumneko_lua = {
+      Lua = {
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
+      },
+    },
+  }
+
+  -- Set up mason
+  require("mason").setup()
+  local mason_lspconfig = require("mason-lspconfig")
+  mason_lspconfig.setup {
+    ensure_installed = vim.tbl_keys(servers)
+  }
+
+  -- LSP setup
+  local lspconfig = require('lspconfig')
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+  mason_lspconfig.setup_handlers {
+    function(server_name)
+      lspconfig[server_name].setup {
+        capabilities = capabilities,
+        settings = servers[server_name],
+      }
+    end,
+  }
 EOF
