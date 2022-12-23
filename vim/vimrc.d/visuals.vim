@@ -17,6 +17,8 @@ let &showbreak = '⤷  '
 " Tweak where line wrapping can happen
 set breakat-=:
 
+set termguicolors
+
 if !has('nvim')
     " Force escape sequences for italics, instead of messing with terminfo defs
     let &t_ZH="\e[3m"
