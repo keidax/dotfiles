@@ -18,6 +18,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
 Plug 'kana/vim-textobj-user'
+Plug 'voldikss/vim-floaterm'
 
 " Bring some of neovim's goodies like focus reporting and cursor shaping to
 " terminal vim. Also activates bracketed paste and full mouse support, and
@@ -34,7 +35,6 @@ if !has('nvim')
 endif
 Plug 'szw/vim-maximizer'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'wvffle/vimterm'
 Plug 'tpope/vim-unimpaired'
 Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
@@ -307,7 +307,6 @@ inoremap <silent> <A-CR> <C-c>:call EnterWithoutComments()<CR>I
 
 " fzf mapping
 nnoremap <Leader>p :FZF<CR>
-nnoremap <Leader>f :Buffers<CR>
 
 " ALE mappings
 nmap <silent> [w <Plug>(ale_previous_wrap)
@@ -348,10 +347,9 @@ function! SuspendWithEvents()
 endfunction
 nnoremap <silent> <C-z> :call SuspendWithEvents() <CR>
 
-nnoremap <silent> <A-v> :call vimterm#toggle() <CR>
+nnoremap <A-f> :FloatermToggle<CR>
 if has('nvim')
-    tnoremap <silent> <A-v> <C-\><C-n>:call vimterm#toggle()<CR>
-    tnoremap <Esc> <C-\><C-n>
+    tnoremap <silent> <A-f> <C-\><C-n>:FloatermToggle<CR>
 endif
 
 " After using Fugitive to go back through the git history and inspect
