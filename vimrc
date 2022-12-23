@@ -438,121 +438,12 @@ for foldmap in [
         \ 'desc': 'Fold while refreshing indent guides'})
 endfor
 
-" Cross-plugin compatibility mappings
-" Overview
-" Enter:
-"   - if completing and an item is selected, insert/expand
-"   - if in a snippet, jump to next placeholder
-"   - else, trigger other plugin behavior (endwise, autopairs)
-" Tab:
-"   - if completing, go to next item
-"   - if in a snippet, jump to next placeholder
-"   - if preceding whitespace, use normal tab behavior
-"   - else, start completion
-" Shift-Tab:
-"   - if completing, go to previous item
-"   - if in a snippet, jump to previous placeholder
-"   - else, use normal Shift-Tab behavior
-" Ctrl-J:
-"   - if in a snippet, jump to next placeholder
-"   - else, use normal Ctrl-J behavior
-" Ctrl-K:
-"   - if in a snippet, jump to previous placeholder
-"   - else, use normal Ctrl-K behavior
-" Ctrl-N: next completion item
-" Ctrl-P: previous completion item
-" Ctrl-S: expand or list snippets
-
-" Explicit defaults for above behavior
-let g:coc_snippet_next = '<C-j>'
-let g:coc_snippet_prev = '<C-k>'
-
 " Disable plugin mappings that are covered below
 let g:endwise_no_mappings = 1
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:AutoPairsMapCR = 0
 let g:UltiSnipsExpandTrigger = '<NUL>'
 let g:UltiSnipsListSnippets = '<NUL>'
-
-" True if the cursor is preceded by whitespace
-function! s:check_back_space() abort
-    let l:col = col('.') - 1
-    return !l:col || getline('.')[l:col - 1] =~# '\s'
-endfunction
-
-" Handle jumping backwards and forwards between snippet placeholders
-function! SnippetJumpOnKey(forwards, fallback)
-    " Note that this is false if we're on the final placeholder
-    if coc#jumpable()
-        call coc#rpc#request(a:forwards ? 'snippetNext' : 'snippetPrev', [])
-        return ''
-    elseif type(a:fallback) == v:t_func
-        return a:fallback()
-    else
-        return a:fallback
-    endif
-endfunction
-
-" Gracefully combine endwise and autopairs <Enter> functionality
-function! EnterFallback()
-    let l:ret = "\<CR>"
-    let l:post_return = ["EndwiseDiscretionary()", "AutoPairsReturn()"]
-
-    " FIXME For some reason, returning
-    " <C-r>=EndwiseDiscretionary<CR><C-r>=anything<CR> seems to cause a sort
-    " of nested insert mode when endwise is triggered -- I have to press <Esc>
-    " twice to get back to normal mode. Combining the calls into one register
-    " call avoids the issue.
-    return l:ret . "\<C-r>=" . join(l:post_return, ".") . l:ret
-endfunction
-
-" When working inside a snippet, <Enter> will jump to the next placeholder.
-" Otherwise it behaves as expected, with functionality combined from several
-" plugins.
-function! EnterCombined()
-    if pumvisible() && coc#rpc#request('hasSelected', [])
-        return "\<C-y>"
-    endif
-    return SnippetJumpOnKey(1, function('EnterFallback'))
-endfunction
-
-inoremap <silent> <CR> <C-r>=EnterCombined()<CR>
-snoremap <silent> <CR> <Esc>:call EnterCombined()<CR>
-
-" Cycle completion on Tab. If following whitespace, normal Tab behavior. If
-" inside a snippet, jump to the next placeholder
-function! TabCombined()
-    if pumvisible()
-        return "\<C-n>"
-    else
-        return SnippetJumpOnKey(1, { -> s:check_back_space() ? "\<Tab>" : coc#refresh() })
-    endif
-endfunction
-inoremap <silent> <TAB> <C-r>=TabCombined()<CR>
-
-" Reverse cycle completion on Shift-Tab, or jump to the previous snippet
-" placeholder.
-function! ShiftTabCombined()
-    if pumvisible()
-        return "\<C-p>"
-    else
-        return SnippetJumpOnKey(0, "\<S-Tab>")
-    endif
-endfunction
-inoremap <silent> <S-Tab> <C-r>=ShiftTabCombined()<CR>
-
-" When in Select mode inside a snippet, <Tab> and <Shift-Tab> will jump between
-" placeholders.
-snoremap <silent> <Tab> <Esc>:call SnippetJumpOnKey(1, "\<Tab>")<CR>
-snoremap <silent> <S-Tab> <Esc>:call SnippetJumpOnKey(0, "\<S-Tab>")<CR>
-
-" NOTE: In this case it's necessary to use the <C-r>=expr<CR> hack instead of
-" map <expr> because the latter prevents changing the buffer text.
-imap <silent> <C-s> <C-r>=coc#rpc#request('doKeymap', ['snippets-expand'])<CR>
-
-nnoremap <silent> <Leader>d :call CocActionAsync('doHover')<CR>
-nmap <Leader>R <Plug>(coc-references)
-nmap <Leader>D <Plug>(coc-definition)
 
 xmap <Leader>a <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
@@ -632,4 +523,53 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   },
 }
+EOF
+
+lua <<EOF
+  -- Set up nvim-cmp.
+  local cmp = require'cmp'
+  local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+
+  cmp.setup({
+    snippet = {
+      expand = function(args)
+         vim.fn["UltiSnips#Anon"](args.body)
+      end,
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = false }),
+      ["<Tab>"] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+          end
+        end,
+        { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
+        ),
+        ["<S-Tab>"] = cmp.mapping(
+          function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            else
+              cmp_ultisnips_mappings.jump_backwards(fallback)
+            end
+          end,
+          { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
+        ),
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'ultisnips' },
+      { name = 'path' },
+      { name = 'buffer' },
+    })
+  })
+
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
 EOF
