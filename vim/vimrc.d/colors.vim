@@ -61,4 +61,16 @@ augroup vimrc
 
     " Turn off default bold style for some groups when using GUI attributes
     au ColorScheme * :highlight Statement gui=none
+
+    " Treesitter color adjustments
+    " Partial workaround for https://github.com/nvim-treesitter/nvim-treesitter/issues/3396
+    au ColorScheme * :highlight link @none Normal
+    au ColorScheme * :highlight Normal gui=nocombine
+
+    " Missing @symbol highlight group
+    au ColorScheme * :highlight link @symbol @constant
+
+    " Other tweaks
+    au ColorScheme * :highlight link @string.special Special
+    au ColorScheme * :highlight link @text.warning @text.todo
 augroup END
