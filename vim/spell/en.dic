@@ -17,6 +17,7 @@ appserver/N
 args
 arity/N
 ARN/N
+Artifactory/N
 asdf
 async
 attr/N
@@ -59,6 +60,7 @@ coords
 CORS
 CRM/N
 CRuby/N
+CSRF/N
 CSS/N
 csv/N
 ctrl
@@ -67,9 +69,11 @@ db/N
 dbt/N
 def/N
 derp
+destructure/V
 dev/N
 DevOps
 diff/N
+Dir
 distro/N
 Dockerfile/N
 dockerize/V
@@ -81,6 +85,7 @@ e
 e2e/N
 endwise
 enqueue/V
+enrollment/N
 Enum/N
 enum/N
 env/N
@@ -110,6 +115,7 @@ ftplugin
 fzf
 g
 Gemfile/N
+gemserver/N
 gitgutter/N
 GitHub/N
 github/N
@@ -148,6 +154,7 @@ k
 Karabiner/N
 Kinesis/N
 l
+LaunchDarkly/N
 lefthook/N
 lex/V
 lifecycle/N
@@ -164,7 +171,7 @@ middleware/N
 Mongo/N
 MongoDB/N
 Mongoid
-monkeypatch/V
+monkeypatch/NV
 monospace
 multithread/V
 Myspell
@@ -173,6 +180,7 @@ n
 namespace/NV
 neovim/N
 NewRelic/N
+ngrok/N
 nilable
 nodoc
 NoMethodError
@@ -211,6 +219,7 @@ refactor/V
 regex/N
 regexp/N
 repo/N
+retriable
 ripgrep/N
 rollout/N
 rspec/N
@@ -239,6 +248,7 @@ statusline/N
 stderr/N
 stdin/N
 stdout/N
+stringify/VT
 struct/N
 stylesheet/N
 submodule/N
@@ -247,6 +257,7 @@ subshell/N
 sudo/N
 sym/N
 symlink/NV
+sys
 systemctl
 t
 terraform/N
@@ -278,6 +289,7 @@ v
 v0
 V2
 v2
+v7
 vendor/V
 vim/N
 vimrc/N
@@ -289,6 +301,7 @@ webhook/N
 webserver/N
 whitelist/NV
 whitespace/N
+whodunnit/N
 WIP
 wordlist/N
 workflow/N
@@ -307,4 +320,5 @@ yieldreturn
 yml
 yml2fea
 z
+Zeitwerk/N
 zsh/N

@@ -42,6 +42,7 @@ Plug 'tpope/vim-projectionist'
 
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'simrat39/rust-tools.nvim'
 
 " Improve blockwise copy/paste in Neovim.
 " See https://github.com/neovim/neovim/issues/1822
@@ -333,6 +334,9 @@ nnoremap <silent> ZZ
 nnoremap <silent> ZQ
     \ :bd!<CR>
 
+" alias for ZQ that's easier to type for a bunch of buffers in a row
+nmap QQ ZQ
+
 nnoremap <Leader>m :MaximizerToggle!<CR>
 vnoremap <Leader>m :MaximizerToggle!<CR>gv
 
@@ -353,6 +357,7 @@ nnoremap <silent> <C-z> :call SuspendWithEvents() <CR>
 nnoremap <A-f> :FloatermToggle<CR>
 if has('nvim')
     tnoremap <silent> <A-f> <C-\><C-n>:FloatermToggle<CR>
+    tnoremap <Esc> <C-\><C-n>
 endif
 
 " After using Fugitive to go back through the git history and inspect
@@ -568,7 +573,15 @@ lua <<EOF
       { name = 'nvim_lsp' },
       { name = 'ultisnips' },
       { name = 'path' },
-      { name = 'buffer' },
+      {
+        name = 'buffer',
+        option = {
+                  -- Pull suggestions from all buffers
+          get_bufnrs = function()
+            return vim.api.nvim_list_bufs()
+          end
+        }
+      },
     })
   })
 
@@ -595,6 +608,23 @@ lua <<EOF
     },
   }
 
+  local on_attach = function(client, bufnr)
+
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', '<space>d', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  end
+
   -- Set up mason
   require("mason").setup()
   local mason_lspconfig = require("mason-lspconfig")
@@ -612,7 +642,17 @@ lua <<EOF
       lspconfig[server_name].setup {
         capabilities = capabilities,
         settings = servers[server_name],
+        on_attach = on_attach,
       }
     end,
+
+    ["rust_analyzer"] = function ()
+      require("rust-tools").setup {
+        server = {
+            capabilities = capabilities,
+            on_attach = on_attach,
+        }
+      }
+    end
   }
 EOF
