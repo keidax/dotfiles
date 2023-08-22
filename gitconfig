@@ -12,7 +12,7 @@
         prune = true
 [interactive]
         # Highlight line differences during interactive staging
-        diffFilter = diff-highlight
+        diffFilter = $DOTDIR/bin/git-diff-decorate.sh --patch
 [diff]
         # Even smarter about hunk boundaries (experimental, >=git 2.11)
         indentHeuristic = true
