@@ -311,6 +311,7 @@ inoremap <silent> <A-CR> <C-c>:call EnterWithoutComments()<CR>I
 
 " fzf mapping
 nnoremap <Leader>p :FZF<CR>
+nnoremap <Leader>f :Buffers<CR>
 
 " ALE mappings
 nmap <silent> [w <Plug>(ale_previous_wrap)
@@ -622,7 +623,6 @@ lua <<EOF
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
   end
 
   -- Set up mason
