@@ -488,15 +488,6 @@ let g:splitjoin_ruby_options_as_arguments = 1
 " Jump to existing window with :Buffers
 let g:fzf_buffers_jump = 1
 
-" Set up :Rg[!] command for fzf search with ripgrep.
-" Use the bang for a full search into hidden, ignored, and symlinked files.
-let s:rg_normal_opts = 'rg --line-number --smart-case --color=always '
-let s:rg_bang_opts = s:rg_normal_opts . '--follow --hidden --no-ignore '
-command! -bang -nargs=* Rg
-    \ call fzf#vim#grep(
-    \   (<bang>0 ? s:rg_bang_opts : s:rg_normal_opts) . shellescape(<q-args>),
-    \   1)
-
 runtime! vimrc.d/**/*.vim
 
 call plug#end()
