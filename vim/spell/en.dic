@@ -161,6 +161,7 @@ lifecycle/N
 lint/V
 linter/N
 localhost/N
+lockfile/N
 lodash/N
 macOS/N
 mapfile
@@ -231,6 +232,7 @@ s
 S3/N
 salesforce/N
 sdk
+semver/N
 SGR
 shellcheck/N
 shoryuken/N
@@ -242,6 +244,7 @@ spellsync
 Splitjoin/N
 splitjoin/N
 SQS/N
+SSN/N
 SSO
 stage/V
 statusline/N
@@ -255,6 +258,7 @@ submodule/N
 subsecond
 subshell/N
 sudo/N
+svc
 sym/N
 symlink/NV
 sys
@@ -270,6 +274,7 @@ TOS/N
 treesitter/N
 truthy
 TTF/N
+txt/N
 u
 UI/N
 unentitle/V
