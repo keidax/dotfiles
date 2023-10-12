@@ -403,11 +403,13 @@ func! FzfSpellReplace() abort
         return
     endif
 
-    call fzf#run(fzf#wrap({
+    " TODO: figure out why setting 'window' dict changes the cursor?
+    call fzf#run({
         \ 'source': spellsuggest(expand('<cword>'), 30),
         \ 'sink': { word -> execute('normal! ciw'.word) },
-        \ 'options': ['--prompt', 'Change '''.expand('<cword>').''' to: ', '--no-bold']
-        \ }))
+        \ 'options': ['--prompt', 'Change '''.expand('<cword>').''' to: ', '--no-bold'],
+        \ 'down': '~30%',
+        \ })
 endfunc
 nnoremap <silent> <Leader>z :call FzfSpellReplace()<CR>
 
@@ -549,17 +551,23 @@ lua <<EOF
           end
         end,
         { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
-        ),
-        ["<S-Tab>"] = cmp.mapping(
-          function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              cmp_ultisnips_mappings.jump_backwards(fallback)
-            end
-          end,
-          { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
-        ),
+      ),
+      ["<S-Tab>"] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            cmp_ultisnips_mappings.jump_backwards(fallback)
+          end
+        end,
+        { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
+      ),
+      ['<C-s>'] = cmp.mapping(
+        function(fallback)
+          cmp_ultisnips_mappings.compose { "expand" }(fallback)
+        end,
+        { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
+      )
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
