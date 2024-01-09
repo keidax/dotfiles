@@ -60,8 +60,8 @@ Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 let g:clipboard = {
         \   'name': 'osc52',
         \   'copy': {
-        \     '+': {lines, regtype -> OSCYankString(join(lines, "\n"))},
-        \     '*': {lines, regtype -> OSCYankString(join(lines, "\n"))},
+        \     '+': {lines, regtype -> OSCYank(join(lines, "\n"))},
+        \     '*': {lines, regtype -> OSCYank(join(lines, "\n"))},
         \   },
         \   'paste': {
         \     '+': {-> [split(getreg(''), '\n'), getregtype('')]},
