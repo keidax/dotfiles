@@ -56,18 +56,34 @@ xmap P <Plug>(miniyank-autoPut)
 nmap - <Plug>(miniyank-cycle)
 nmap + <Plug>(miniyank-cycleback)
 
-Plug 'ojroques/vim-oscyank', {'branch': 'main'}
-let g:clipboard = {
-        \   'name': 'osc52',
-        \   'copy': {
-        \     '+': {lines, regtype -> OSCYank(join(lines, "\n"))},
-        \     '*': {lines, regtype -> OSCYank(join(lines, "\n"))},
-        \   },
-        \   'paste': {
-        \     '+': {-> [split(getreg(''), '\n'), getregtype('')]},
-        \     '*': {-> [split(getreg(''), '\n'), getregtype('')]},
-        \   },
-        \ }
+" When running in the ChromeOS terminal, use OSC52 for copying, but not pasting
+if $DISTRO == 'ChromeOS'
+lua <<EOF
+    local function copy(reg)
+        return require('vim.ui.clipboard.osc52').copy(reg)
+    end
+
+    local function paste()
+        local lines = vim.fn.split(vim.fn.getreg(''), '\n')
+        -- Need to use only the first character, because the clipboard
+        -- integration is unhappy with a regtype like '^V5'
+        local regtype = vim.fn.getregtype(''):sub(1,1)
+        return {lines, regtype}
+    end
+
+    vim.g.clipboard = {
+        name = 'OSC 52',
+        copy = {
+            ['+'] = copy('+'),
+            ['*'] = copy('*'),
+        },
+        paste = {
+          ['+'] = paste,
+          ['*'] = paste,
+        },
+    }
+EOF
+endif
 
 if has('nvim-0.5.0')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
