@@ -517,10 +517,10 @@ if filereadable(expand('~/.vimrc_background'))
         let g:base16_shell_path=$DOTDIR . '/base16/base16-shell/scripts'
     endif
 
-    if $BASE16_THEME =~? 'dark'
-        set background=dark
-    else
+    if $BASE16_THEME =~? 'light'
         set background=light
+    else
+        set background=dark
     endif
 
     source ~/.vimrc_background
