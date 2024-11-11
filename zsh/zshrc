@@ -1,6 +1,14 @@
 # Apply base16 colorscheme first
 source_if_exists "$DOTDIR/base16/base16-shell/base16-shell.plugin.zsh"
 
+# The ChromeOS terminal, hterm, maintains a separate color palette for the
+# alternate screen, so make sure the colorscheme is applied there too
+if [[ "$DISTRO" == "ChromeOS" ]]; then
+    tput smcup
+    source_if_exists "$DOTDIR/base16/base16-shell/base16-shell.plugin.zsh"
+    tput rmcup
+fi
+
 typeset -U preconfig_files config_files postconfig_files
 
 preconfig_files=($DOTDIR/zsh/configs/before/*.zsh)
