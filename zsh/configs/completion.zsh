@@ -21,8 +21,3 @@ zstyle ':completion:*' format '%F{5}%B%d%b%f'
 # Assign completions for custom commands
 compdef _rspec rspec-branch
 compdef _rubocop rubocop-branch
-
-# Manually include rbenv completions
-rbenv_root="${$(which rbenv):P:h:h}"
-source "${rbenv_root}/completions/rbenv.zsh"
-unset rbenv_root
