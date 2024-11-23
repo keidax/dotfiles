@@ -43,6 +43,10 @@ if [ "$OS" = "Linux" ]; then
             *)
                 DISTRO="Unknown" ;;
         esac
+    # A hack to check if we're running in a ChromeOS container
+    # (since sommelier is unlikely to be used elsewhere)
+    elif command -v "sommelier" > /dev/null; then
+        DISTRO="ChromeOS"
     # Check for os-release (part of systemd)
     elif [ -r "/etc/os-release" ]; then
         # Match on the ID field of the os-release file
@@ -57,9 +61,6 @@ if [ "$OS" = "Linux" ]; then
     # Try other /etc/*-release files (might want to expand the list)
     elif [ -f /etc/arch-release ]; then
         DISTRO="Arch"
-    # Chrome OS has the /etc/lsb-release file, but not the lsb_release command
-    elif ([ -f /etc/lsb-release ] && grep -q -i "chromeos" /etc/lsb-release); then
-        DISTRO="ChromeOS"
     elif [ -f /system/build.prop ]; then
         OS="Android"
     else
