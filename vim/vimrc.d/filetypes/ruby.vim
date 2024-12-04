@@ -15,9 +15,3 @@ let g:ruby_operators = 1
 
 " For custom snippets
 let g:ruby_double_quote = 1
-
-" Use dockerized test script for appserver
-" TODO: find a better way to do this?
-if executable('script/test')
-    let g:test#ruby#rspec#executable = 'script/test'
-end
