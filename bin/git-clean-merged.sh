@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e -o pipefail
+
 # Adapted from http://haacked.com/archive/2014/07/28/github-flow-aliases/
 
 target_branch=${1-$(git default-branch)}

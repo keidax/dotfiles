@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e -o pipefail
+
 # Try to guess the "default" remote branch for the current Git project.
 
 current_branch="$(git branch --show-current)"
@@ -12,7 +14,10 @@ if [ -z "$current_remote" ]; then
     current_remote="origin"
 fi
 
-remote_branch="$(git rev-parse --abbrev-ref "${current_remote}/HEAD")"
+if ! remote_branch="$(git rev-parse --abbrev-ref "${current_remote}/HEAD")"; then
+    printf "\e[31mCould not parse the default remote branch.\nYou might want to run \e[33;1mgit remote set-head %s -a\e[0m\n" "$current_remote" 1>&2
+    exit 1
+fi
 
 if [ -n "$remote_branch" ]; then
     branch="$(echo "$remote_branch" | sed -e "s/${current_remote}\///")"
