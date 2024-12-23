@@ -87,6 +87,8 @@ endif
 
 if has('nvim-0.5.0')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    Plug 'nvim-treesitter/playground'
 endif
 
 
@@ -237,9 +239,9 @@ augroup vimrc_local
     " Clear previously-set local autocommands
     au!
 
-    autocmd BufEnter ~/src/tree-sitter-crystal/*.cr let b:ale_fix_on_save=0
+    "autocmd BufEnter ~/src/tree-sitter-crystal/*.cr let b:ale_fix_on_save=0
     autocmd BufEnter ~/src/tree-sitter-crystal/*.js let b:ale_fix_on_save=1 | let b:ale_fixers = ['eslint']
-    autocmd BufEnter ~/src/tree-sitter-crystal/src/scanner.c let b:ale_fix_on_save=1 | let b:ale_fixers = ['clang-format']
+    autocmd BufEnter ~/src/tree-sitter-crystal/src/scanner.c,~/src/tree-sitter-crystal/src/unicode.c let b:ale_fix_on_save=1 | let b:ale_fixers = ['clang-format']
 
     " For rendering-api-testing-framework, make sure jest runs with correct
     " project options
@@ -551,6 +553,30 @@ require'nvim-treesitter.configs'.setup {
   indent = {
     enable = true
   },
+  playground = {
+    enable = true
+  },
+  textobjects = {
+    select = {
+      enable = true,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+    }
+  },
+}
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.crystal = {
+  install_info = {
+    url = "~/src/tree-sitter-crystal", -- local path or git repo
+    files = {"src/parser.c", "src/scanner.c"},
+    -- optional entries:
+    branch = "upstream", -- default branch in case of git repo if different from master
+    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+  },
+  filetype = "cr", -- if filetype does not match the parser name
 }
 EOF
 

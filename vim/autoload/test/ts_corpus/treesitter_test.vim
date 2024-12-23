@@ -38,7 +38,7 @@ func! s:find_nearest(position) abort
     endfor
 
     if found_idx != -1
-        return ['--filter', shellescape(lines[found_idx+1])]
+        return ['--include', shellescape('^' . lines[found_idx+1] . '$')]
     endif
 
     return []
