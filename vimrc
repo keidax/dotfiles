@@ -306,6 +306,15 @@ nnoremap <Leader>nwl :botright vnew<CR>
 nnoremap <Leader>> :exe "vertical resize " . (winwidth(0) * 4/3)<CR>
 nnoremap <Leader>< :exe "vertical resize " . (winwidth(0) * 3/4)<CR>
 
+nnoremap <silent> <M-h> :tabp<CR>
+nnoremap <silent> <M-l> :tabn<CR>
+
+" nnoremap gt <Nop>
+" nnoremap gT <Nop>
+
+nnoremap <silent> <M-H> :tabm -<CR>
+nnoremap <silent> <M-L> :tabm +<CR>
+
 " vim-test mappings
 map <silent> <Leader>t :update \| TestFile<CR>
 map <silent> <Leader>s :update \| TestNearest<CR>
@@ -364,7 +373,7 @@ nnoremap <Leader>W :tabc<CR>
 nnoremap <silent> ZZ
     \ :exec 'exec "normal! ZZ" \| bd ' . bufnr('%')<CR>
 nnoremap <silent> ZQ
-    \ :bd!<CR>
+    \ :exec 'exec "normal! ZQ" \| bd! '. bufnr('%')<CR>
 
 " alias for ZQ that's easier to type for a bunch of buffers in a row
 nmap QQ ZQ
