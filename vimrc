@@ -521,6 +521,9 @@ let g:splitjoin_ruby_options_as_arguments = 1
 " Jump to existing window with :Buffers
 let g:fzf_buffers_jump = 1
 
+" Define empty heuristics here, other filetype settings may add more.
+let g:projectionist_heuristics = {}
+
 runtime! vimrc.d/**/*.vim
 
 call plug#end()

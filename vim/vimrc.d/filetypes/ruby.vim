@@ -1,6 +1,15 @@
 " Updated Ruby support files
 Plug 'vim-ruby/vim-ruby'
 
+" Include projectionist support for common Ruby project layouts
+Plug 'tpope/vim-rake'
+
+" Projectionist support for Gemfiles
+let g:projectionist_heuristics["Gemfile"] = {
+    \ "Gemfile": { "alternate": "Gemfile.lock" },
+    \ "Gemfile.lock": { "alternate": "Gemfile" },
+    \ }
+
 " Highlighting for YARD params
 Plug 'noprompt/vim-yardoc'
 
