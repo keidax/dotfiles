@@ -627,7 +627,9 @@ lua <<EOF
     -- rust_analyzer = {},
     -- tsserver = {},
 
-    solargraph = {},
+    standardrb = {},
+
+    ruby_lsp = {},
 
     lua_ls = {
       Lua = {
@@ -671,6 +673,18 @@ lua <<EOF
         capabilities = capabilities,
         settings = servers[server_name],
         on_attach = on_attach,
+      }
+    end,
+
+    ["ruby_lsp"] = function()
+      lspconfig.ruby_lsp.setup {
+        capabilities = capabilities,
+        settings = servers.ruby_lsp,
+        on_attach = on_attach,
+        init_options = {
+          formatter = 'standard',
+          linters = { 'standard' },
+        },
       }
     end,
 

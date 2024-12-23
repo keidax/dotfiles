@@ -1,5 +1,8 @@
 setlocal shiftwidth=2 softtabstop=2
-setlocal foldmethod=syntax
+
+" Use tree-sitter for folding
+setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
+setlocal foldmethod=expr
 
 " Run crystal formatter on save
 let b:ale_fix_on_save = 1
