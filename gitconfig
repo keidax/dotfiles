@@ -77,7 +77,7 @@
 
         co = checkout
         cob = checkout -b
-        cd = ! git checkout "$(git default-branch)"
+        cd = ! bash -c 'db="$(git default-branch)" && git checkout "$db"'
         coa = "! git checkout -- $1; git submodule foreach --recursive '[ -f $1 ] && git checkout -- $1 || true'"
 
         # ccd = <see definition in shell/functions>
@@ -99,7 +99,7 @@
         push-first = "! git push --set-upstream ${1:-origin} $(git symbolic-ref --short HEAD) #"
 
         rc = rebase --continue
-        rid = ! git rebase -i "$(git default-branch --with-remote)"
+        rid = ! git rebase -i "$(git default-branch --remote)"
 
         sl = stash list
         sp = stash pop
@@ -121,8 +121,11 @@
         cmd = nvim +DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
         trustExitCode = true
 [pull]
-	ff = only
+        ff = only
 
 # Rewrite remote URLS, including submodules, to use SSH protocol
 [url "git@github.com:"]
-	insteadOf = https://github.com/
+        insteadOf = https://github.com/
+
+[init]
+        defaultBranch = main
