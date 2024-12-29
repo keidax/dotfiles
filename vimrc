@@ -459,34 +459,6 @@ nnoremap <expr> <BS> (v:count ? '<Del>' : '<BS>')
 " Use <count><Enter> as a shortcut for :<count><Enter>
 nnoremap <expr> <CR> (v:count ? 'G' : '<CR>')
 
-" The indent-blankline plugin doesn't know when folds are revealed, so we need
-" to supplement the builtin fold mappings.
-" https://github.com/lukas-reineke/indent-blankline.nvim/issues/449
-for foldmap in [
-    \ 'zo',
-    \ 'zO',
-    \ 'zc',
-    \ 'zC',
-    \ 'za',
-    \ 'zA',
-    \ 'zv',
-    \ 'zx',
-    \ 'zX',
-    \ 'zm',
-    \ 'zM',
-    \ 'zr',
-    \ 'zR',
-    \ 'zn',
-    \ 'zN',
-    \ 'zi'
-    \]
-
-    call nvim_set_keymap('n', foldmap, foldmap . '<CMD>IndentBlanklineRefresh<CR>', {
-        \ 'noremap': v:true,
-        \ 'silent': v:true,
-        \ 'desc': 'Fold while refreshing indent guides'})
-endfor
-
 " Disable plugin mappings that are covered below
 let g:endwise_no_mappings = 1
 let g:UltiSnipsRemoveSelectModeMappings = 0
@@ -555,6 +527,22 @@ if filereadable(expand('~/.vimrc_background'))
 
     source ~/.vimrc_background
 endif
+
+" Configure indent
+lua <<LUA
+require("ibl").setup {
+  exclude = {
+    filetypes = { "diff" },
+  },
+  scope = {
+    char = "┆",
+    -- ︰ ⡇ ⠅ ⁚ ⍿ 𐄁 ¦ ┆ ┊
+    highlight = "DiagnosticInfo",
+    show_start = false,
+    show_end = false,
+  }
+}
+LUA
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
