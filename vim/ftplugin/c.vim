@@ -1,7 +1,8 @@
 " Suggest 80-char limit
 setlocal colorcolumn=100
-" Use syntax folding
-setlocal foldmethod=syntax
+" Use tree-sitter for folding
+setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
+setlocal foldmethod=expr
 " Use single-line comments
 setlocal commentstring=//\ %s
 

@@ -7,8 +7,8 @@ setlocal regexpengine=1
 " !, ?, and = can end method names
 setlocal iskeyword+=?,!,=
 
-" Syntax-based folding is too slow, let's try this
-setlocal foldmethod=indent
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 
 " Check spelling (see after/syntax/ruby.vim for more details)
 setlocal spell

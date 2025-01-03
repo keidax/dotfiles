@@ -45,5 +45,4 @@ alias tap='terraform apply -parallelism=100'
 alias sc='script/console'
 alias suq='script/update -q'
 
-alias tsg='tree-sitter generate'
-alias tst='tree-sitter test'
+alias ts='tree-sitter'

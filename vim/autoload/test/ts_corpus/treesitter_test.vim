@@ -27,18 +27,23 @@ func! s:find_nearest(position) abort
     let lines = reverse(getbufline(filename, 1, start_line))
 
     let idx=0
-    let found_idx=-1
+    let header_end_idx=-1
+    let header_start_idx=-1
 
     for line in lines
         if line =~# '\v^\=+$'
-            let found_idx = idx
-            break
+            if header_end_idx == -1
+                let header_end_idx = idx
+            else
+                let header_start_idx = idx
+                break
+            endif
         endif
         let idx += 1
     endfor
 
-    if found_idx != -1
-        return ['--include', shellescape('^' . lines[found_idx+1] . '$')]
+    if header_start_idx != -1
+        return ['--include', shellescape('^' . lines[header_start_idx-1] . '$')]
     endif
 
     return []

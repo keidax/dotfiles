@@ -21,3 +21,5 @@ zstyle ':completion:*' format '%F{5}%B%d%b%f'
 # Assign completions for custom commands
 compdef _rspec rspec-branch
 compdef _rubocop rubocop-branch
+
+eval "$(tree-sitter complete --shell zsh)"

@@ -91,6 +91,8 @@ if has('nvim-0.5.0')
     Plug 'nvim-treesitter/playground'
 endif
 
+Plug 'tree-sitter-grammars/tree-sitter-test', {'do': 'mkdir parser && tree-sitter build -o parser/test.so'}
+
 
 """""""""""""
 "  General  "
@@ -239,7 +241,8 @@ augroup vimrc_local
     " Clear previously-set local autocommands
     au!
 
-    "autocmd BufEnter ~/src/tree-sitter-crystal/*.cr let b:ale_fix_on_save=0
+    autocmd BufEnter ~/src/tree-sitter-crystal/*.cr let b:ale_fix_on_save=0
+    autocmd BufEnter ~/src/tree-sitter-crystal/test/*.cr let b:ale_fix_on_save=1
     autocmd BufEnter ~/src/tree-sitter-crystal/*.js let b:ale_fix_on_save=1 | let b:ale_fixers = ['eslint']
     autocmd BufEnter ~/src/tree-sitter-crystal/src/scanner.c,~/src/tree-sitter-crystal/src/unicode.c let b:ale_fix_on_save=1 | let b:ale_fixers = ['clang-format']
 
@@ -546,7 +549,14 @@ LUA
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "hcl" },
+  ensure_installed = {
+    "c",
+    "comment",
+    "hcl",
+    "javascript",
+    "query",
+    "ruby",
+  },
   highlight = {
     enable = true
   },
@@ -678,6 +688,7 @@ lua <<EOF
     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', '<space>cf', vim.lsp.buf.format, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   end
 
