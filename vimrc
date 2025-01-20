@@ -398,7 +398,7 @@ function! SuspendWithEvents()
 endfunction
 nnoremap <silent> <C-z> :call SuspendWithEvents() <CR>
 
-nnoremap <A-f> :FloatermToggle<CR>
+nnoremap <silent> <A-f> :FloatermToggle<CR>
 if has('nvim')
     tnoremap <silent> <A-f> <C-\><C-n>:FloatermToggle<CR>
     tnoremap <Esc> <C-\><C-n>
@@ -493,6 +493,9 @@ nnoremap Q <nop>
 " Open diffs in a new tab
 let g:plug_pwindow = 'tabe'
 
+" Open floaterm as a horizontal split
+let g:floaterm_height = 0.3
+let g:floaterm_wintype = 'split'
 
 " Maximizer settings
 " Turn off mappings since we don't want them in insert mode
