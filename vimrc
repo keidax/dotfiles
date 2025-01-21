@@ -243,6 +243,7 @@ augroup vimrc_local
 
     autocmd BufEnter ~/src/tree-sitter-crystal/*.cr let b:ale_fix_on_save=0
     autocmd BufEnter ~/src/tree-sitter-crystal/test/*.cr let b:ale_fix_on_save=1
+    autocmd BufEnter ~/src/tree-sitter-crystal/test/highlight/*.cr let b:ale_fix_on_save=0
     autocmd BufEnter ~/src/tree-sitter-crystal/*.js let b:ale_fix_on_save=1 | let b:ale_fixers = ['eslint']
     autocmd BufEnter ~/src/tree-sitter-crystal/src/scanner.c,~/src/tree-sitter-crystal/src/unicode.c let b:ale_fix_on_save=1 | let b:ale_fixers = ['clang-format']
 
@@ -591,6 +592,9 @@ parser_config.crystal = {
   },
   filetype = "cr", -- if filetype does not match the parser name
 }
+-- temporary workaround
+-- https://github.com/neovim/neovim/issues/31675#issuecomment-2558405042
+vim.hl = vim.highlight
 EOF
 
 lua <<EOF
