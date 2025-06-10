@@ -42,7 +42,6 @@ Plug 'tpope/vim-projectionist'
 
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
-Plug 'simrat39/rust-tools.nvim'
 
 " Improve blockwise copy/paste in Neovim.
 " See https://github.com/neovim/neovim/issues/1822
@@ -699,46 +698,36 @@ lua <<EOF
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   end
 
-  -- Set up mason
-  require("mason").setup()
-  local mason_lspconfig = require("mason-lspconfig")
-  mason_lspconfig.setup {
-    ensure_installed = vim.tbl_keys(servers)
-  }
-
-  -- LSP setup
-  local lspconfig = require('lspconfig')
+  -- Add the same capabilities to ALL server configurations.
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+  vim.lsp.config("*", {
+    capabilities = capabilities,
+    on_attach = on_attach,
+  })
 
-  mason_lspconfig.setup_handlers {
-    function(server_name)
-      lspconfig[server_name].setup {
-        capabilities = capabilities,
-        settings = servers[server_name],
-        on_attach = on_attach,
-      }
-    end,
+  -- Individual LSP configurations
+  vim.lsp.config("ruby_lsp", {
+    init_options = {
+      formatter = 'standard',
+      linters = { 'standard' },
+    }
+  })
 
-    ["ruby_lsp"] = function()
-      lspconfig.ruby_lsp.setup {
-        capabilities = capabilities,
-        settings = servers.ruby_lsp,
-        on_attach = on_attach,
-        init_options = {
-          formatter = 'standard',
-          linters = { 'standard' },
-        },
-      }
-    end,
+  vim.lsp.config("lua_ls", {
+    settings = {
+      Lua = {
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
+      },
+    }
+  })
 
-    ["rust_analyzer"] = function ()
-      require("rust-tools").setup {
-        server = {
-            capabilities = capabilities,
-            on_attach = on_attach,
-        }
-      }
-    end
-  }
+  -- Set up mason
+  require("mason").setup()
+
+  require('mason-lspconfig').setup({
+    ensure_installed = vim.tbl_keys(servers),
+    automatic_enable = true
+  })
 EOF
