@@ -7,10 +7,6 @@ augroup vimrc
     " Transparent background colors
     au ColorScheme * :highlight Normal ctermbg=none
 
-    " Better indent guide colors for base16 dark colorscheme
-    au ColorScheme * :highlight IndentGuidesOdd  ctermbg=19 ctermfg=18
-    au ColorScheme * :highlight IndentGuidesEven ctermbg=18 ctermfg=19
-
     " Muted colors for invisible characters
     au ColorScheme * call Base16hi('SpecialKey', g:base16_gui02, '', g:base16_cterm02, '')
     au ColorScheme * call Base16hi('NonText', g:base16_gui02, '', g:base16_cterm02, '')
@@ -69,6 +65,11 @@ augroup vimrc
 
     " Missing @symbol highlight group
     au ColorScheme * :highlight link @symbol @constant
+
+    " Older base16 coloring for PmenuSel is the inverse of Pmenu, which
+    " cancels out the effect of `gui=reverse`. We just want the effect.
+    au ColorScheme * :highlight clear PmenuSel
+    au ColorScheme * :highlight PmenuSel gui=reverse blend=0
 
     " Other tweaks
     au ColorScheme * :highlight link @string.special Special
