@@ -20,7 +20,7 @@ GEM
     neovim (0.10.0)
       msgpack (~> 1.1)
       multi_json (~> 1.0)
-    nokogiri (1.18.8)
+    nokogiri (1.18.9)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     observer (0.1.2)
