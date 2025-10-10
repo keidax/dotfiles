@@ -32,9 +32,6 @@
         diff = $DOTDIR/bin/git-diff-decorate.sh | less
         # Don't page list of branches if they fit on screen
         branch = less -FX
-[help]
-        # Automatically use git's "Did you mean...?" after 2 seconds
-        autocorrect = 20
 [advice]
         waitingForEditor = false
 [color]
