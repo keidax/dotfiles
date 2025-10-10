@@ -119,9 +119,6 @@ prepend_to_path "$HOME/.cargo/bin"
 prepend_to_path "$HOME/.local/bin"
 prepend_to_path "$HOME/bin"
 
-# Include current dir on PATH
-PATH=".:$PATH"
-
 export PATH
 
 while async_queue_read_line manpath line; do
