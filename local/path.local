@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Local-only path modifications
+#
+# This file is sourced from shell/path, so helper functions like append_to_path
+# can be used here.
