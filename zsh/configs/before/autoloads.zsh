@@ -10,3 +10,8 @@ select-word-style normal
 
 # Use more comprehensive help functions
 autoload -Uz run-help{,-git,-ip,-sudo}
+
+# Add additional function autoload locations
+if [[ -d ~/.zfunc ]]; then
+    fpath+=~/.zfunc
+fi
