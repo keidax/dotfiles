@@ -33,7 +33,7 @@
     ~/.tmux: tmux
     ~/.tmux.conf: tmux/tmux.conf
     ~/.config/karabiner: karabiner
-    ~/.config/rofi/config: rofi
+    ~/.config/rofi/config.rasi: rofi.rasi
     ~/.config/termite/config: termite
     ~/.config/yamllint/config: yamllint
     # Add scripts to the ~/bin/ directory
