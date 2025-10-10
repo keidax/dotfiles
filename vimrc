@@ -244,13 +244,6 @@ augroup vimrc_local
     autocmd BufEnter ~/src/tree-sitter-crystal/*.js let b:ale_fix_on_save=1 | let b:ale_fixers = ['eslint']
     autocmd BufEnter ~/src/tree-sitter-crystal/src/scanner.c,~/src/tree-sitter-crystal/src/unicode.c let b:ale_fix_on_save=1 | let b:ale_fixers = ['clang-format']
 
-    " For rendering-api-testing-framework, make sure jest runs with correct
-    " project options
-    autocmd BufEnter ~/code/rendering-api-testing-framework/*.js
-        \ let g:test#javascript#jest#executable = 'npm run test:unit --'
-
-    autocmd BufEnter ~/code/browser-testing-framework/*.js
-        \ let g:test#javascript#mocha#executable = 'npm run test:unit --'
 augroup END
 
 
