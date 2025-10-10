@@ -112,6 +112,9 @@ prepend_to_path "$GOPATH/bin"
 # Include Rust binaries
 prepend_to_path "$HOME/.cargo/bin"
 
+# Include local-only path modifications
+[ -e "$DOTDIR/local/path.local" ] && . "$DOTDIR/local/path.local"
+
 # Include user's local bin folder(s)
 prepend_to_path "$HOME/.local/bin"
 prepend_to_path "$HOME/bin"
