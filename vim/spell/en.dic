@@ -175,11 +175,13 @@ lefthook/N
 lex/V
 lhs/N
 lifecycle/N
+limerence/N
 lint/V
 linter/N
 localhost/N
 lockfile/N
 lodash/N
+Lua/N
 macOS/N
 mahjong/N
 mapfile
@@ -225,6 +227,7 @@ papertrail/N
 param/N
 paren/N
 pcre/N
+PCRE2/N
 pcre2/N
 PDF/N
 pdf/N
@@ -240,6 +243,7 @@ prerelease/N
 proc/N
 pryrc/N
 quickfix/N
+Quiddler/N
 qux
 r
 Rails/N
@@ -247,6 +251,7 @@ rasterize/N
 rbenv
 readme/N
 rebase/V
+recurse/V
 reenqueue/V
 refactor/V
 regex/N
