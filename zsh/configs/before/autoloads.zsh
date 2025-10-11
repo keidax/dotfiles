@@ -15,3 +15,7 @@ autoload -Uz run-help{,-git,-ip,-sudo}
 if [[ -d ~/.zfunc ]]; then
     fpath+=~/.zfunc
 fi
+
+if [[ -d "$HOME/.local/share/zsh/site-functions/" ]]; then
+    fpath+="$HOME/.local/share/zsh/site-functions/"
+fi
