@@ -671,13 +671,20 @@ lua <<EOF
 
     standardrb = {},
 
-    ruby_lsp = {},
+    ruby_lsp = {
+      init_options = {
+        formatter = 'standard',
+        linters = { 'standard' },
+      }
+    },
 
     lua_ls = {
-      Lua = {
-        workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
-      },
+      settings = {
+        Lua = {
+          workspace = { checkThirdParty = false },
+          telemetry = { enable = false },
+        },
+      }
     },
   }
 
@@ -707,27 +714,19 @@ lua <<EOF
   })
 
   -- Individual LSP configurations
-  vim.lsp.config("ruby_lsp", {
-    init_options = {
-      formatter = 'standard',
-      linters = { 'standard' },
-    }
-  })
+  vim.lsp.config("ruby_lsp", servers["ruby_lsp"])
 
-  vim.lsp.config("lua_ls", {
-    settings = {
-      Lua = {
-        workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
-      },
-    }
-  })
+  vim.lsp.config("lua_ls", servers["lua_ls"])
 
   -- Set up mason
   require("mason").setup()
 
   require('mason-lspconfig').setup({
     ensure_installed = vim.tbl_keys(servers),
-    automatic_enable = true
+    automatic_enable = false
   })
+
+  vim.lsp.enable('ruby_lsp')
+
+  vim.diagnostic.config({ virtual_text = true })
 EOF
