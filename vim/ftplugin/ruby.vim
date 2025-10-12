@@ -2,13 +2,8 @@
 setlocal shiftwidth=2 softtabstop=2
 " Suggest 100-char limit
 setlocal colorcolumn=81,101
-" The old RE engine also seems to give better performance for Ruby syntax highlighting
-setlocal regexpengine=1
 " !, ?, and = can end method names
 setlocal iskeyword+=?,!,=
-
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
 
 " Check spelling (see after/syntax/ruby.vim for more details)
 setlocal spell

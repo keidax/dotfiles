@@ -85,9 +85,7 @@ EOF
 endif
 
 if has('nvim-0.5.0')
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    Plug 'nvim-treesitter/playground'
+    Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'main', 'do': ':TSUpdate'}
 endif
 
 Plug 'tree-sitter-grammars/tree-sitter-test', {'do': 'mkdir parser && tree-sitter build -o parser/test.so'}
@@ -551,46 +549,50 @@ require("ibl").setup {
 LUA
 
 lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {
-    "c",
-    "comment",
-    "hcl",
-    "javascript",
-    "query",
-    "ruby",
-  },
-  highlight = {
-    enable = true
-  },
-  indent = {
-    enable = true
-  },
-  playground = {
-    enable = true
-  },
-  textobjects = {
-    select = {
-      enable = true,
+require'nvim-treesitter'.install {
+  'c',
+  'comment',
+  'javascript',
+  'query',
+  'ruby',
+  'terraform',
+}
 
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {
+    'c',
+    'crystal',
+    'javascript',
+    'query',
+    'ruby',
+    'terraform',
+  },
+  callback = function()
+    -- syntax highlighting, provided by Neovim
+    vim.treesitter.start()
+    -- folds, provided by Neovim
+    vim.wo.foldmethod = 'expr'
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    -- indentation, provided by nvim-treesitter
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = 'TSUpdate',
+  callback = function()
+    require('nvim-treesitter.parsers').crystal = {
+      install_info = {
+        path = "~/src/tree-sitter-crystal",
+        generate = false,
+        generate_from_json = false,
+        queries = 'queries/nvim'
+      },
     }
-  },
-}
+  end,
+})
+vim.treesitter.language.register("crystal", { "cr" })
 
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.crystal = {
-  install_info = {
-    url = "~/src/tree-sitter-crystal", -- local path or git repo
-    files = {"src/parser.c", "src/scanner.c"},
-    -- optional entries:
-    branch = "upstream", -- default branch in case of git repo if different from master
-    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-  },
-  filetype = "cr", -- if filetype does not match the parser name
-}
 -- temporary workaround
 -- https://github.com/neovim/neovim/issues/31675#issuecomment-2558405042
 vim.hl = vim.highlight
@@ -671,13 +673,20 @@ lua <<EOF
 
     standardrb = {},
 
-    ruby_lsp = {},
+    ruby_lsp = {
+      init_options = {
+        formatter = 'standard',
+        linters = { 'standard' },
+      }
+    },
 
     lua_ls = {
-      Lua = {
-        workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
-      },
+      settings = {
+        Lua = {
+          workspace = { checkThirdParty = false },
+          telemetry = { enable = false },
+        },
+      }
     },
   }
 
@@ -707,27 +716,19 @@ lua <<EOF
   })
 
   -- Individual LSP configurations
-  vim.lsp.config("ruby_lsp", {
-    init_options = {
-      formatter = 'standard',
-      linters = { 'standard' },
-    }
-  })
+  vim.lsp.config("ruby_lsp", servers["ruby_lsp"])
 
-  vim.lsp.config("lua_ls", {
-    settings = {
-      Lua = {
-        workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
-      },
-    }
-  })
+  vim.lsp.config("lua_ls", servers["lua_ls"])
 
   -- Set up mason
   require("mason").setup()
 
   require('mason-lspconfig').setup({
     ensure_installed = vim.tbl_keys(servers),
-    automatic_enable = true
+    automatic_enable = false
   })
+
+  vim.lsp.enable('ruby_lsp')
+
+  vim.diagnostic.config({ virtual_text = true })
 EOF
