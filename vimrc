@@ -507,7 +507,7 @@ runtime! vimrc.d/**/*.vim
 call plug#end()
 
 " Use matching colorscheme from terminal theme
-if filereadable(expand('~/.vimrc_background'))
+if !exists('g:colors_name') || g:colors_name != 'base16-$BASE16_THEME'
     if $TERM =~ 'konsole.*'
         " No 256 colorspace
         set termguicolors
@@ -522,7 +522,7 @@ if filereadable(expand('~/.vimrc_background'))
         set background=dark
     endif
 
-    source ~/.vimrc_background
+    colorscheme base16-$BASE16_THEME
 endif
 
 " Configure indent
