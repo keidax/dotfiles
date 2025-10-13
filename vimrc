@@ -244,13 +244,6 @@ augroup vimrc_local
     autocmd BufEnter ~/src/tree-sitter-crystal/*.js let b:ale_fix_on_save=1 | let b:ale_fixers = ['eslint']
     autocmd BufEnter ~/src/tree-sitter-crystal/src/scanner.c,~/src/tree-sitter-crystal/src/unicode.c let b:ale_fix_on_save=1 | let b:ale_fixers = ['clang-format']
 
-    " For rendering-api-testing-framework, make sure jest runs with correct
-    " project options
-    autocmd BufEnter ~/code/rendering-api-testing-framework/*.js
-        \ let g:test#javascript#jest#executable = 'npm run test:unit --'
-
-    autocmd BufEnter ~/code/browser-testing-framework/*.js
-        \ let g:test#javascript#mocha#executable = 'npm run test:unit --'
 augroup END
 
 
@@ -506,6 +499,10 @@ let g:splitjoin_ruby_options_as_arguments = 1
 " Jump to existing window with :Buffers
 let g:fzf_buffers_jump = 1
 
+" Configure FZF preview window to adapt based on screen width
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = ['right,50%,border-line,<80(up,40%)', 'ctrl-/']
+
 " Define empty heuristics here, other filetype settings may add more.
 let g:projectionist_heuristics = {}
 
@@ -514,7 +511,7 @@ runtime! vimrc.d/**/*.vim
 call plug#end()
 
 " Use matching colorscheme from terminal theme
-if filereadable(expand('~/.vimrc_background'))
+if !exists('g:colors_name') || g:colors_name != 'base16-$BASE16_THEME'
     if $TERM =~ 'konsole.*'
         " No 256 colorspace
         set termguicolors
@@ -529,7 +526,7 @@ if filereadable(expand('~/.vimrc_background'))
         set background=dark
     endif
 
-    source ~/.vimrc_background
+    colorscheme base16-$BASE16_THEME
 endif
 
 " Configure indent
@@ -552,6 +549,7 @@ lua <<EOF
 require'nvim-treesitter'.install {
   'c',
   'comment',
+  'elixir',
   'javascript',
   'query',
   'ruby',
@@ -562,6 +560,7 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = {
     'c',
     'crystal',
+    'elixir',
     'javascript',
     'query',
     'ruby',

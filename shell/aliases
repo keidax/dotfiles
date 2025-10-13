@@ -42,7 +42,7 @@ alias dc='docker compose'
 alias tf='terraform'
 alias tap='terraform apply -parallelism=100'
 
-alias sc='script/console'
-alias suq='script/update -q'
-
 alias ts='tree-sitter'
+
+# Include local-only path modifications
+[ -e "$DOTDIR/local/aliases" ] && . "$DOTDIR/local/aliases"
