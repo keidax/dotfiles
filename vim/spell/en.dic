@@ -141,6 +141,7 @@ heredoc/N
 Holodak/N
 holodakg/N
 Homebrew/N
+hostname/N
 https
 Hunspell
 IAM/N
@@ -307,6 +308,7 @@ symlink/NV
 sys
 systemctl
 t
+teardown/N
 Technica
 terraform/N
 tfvars
