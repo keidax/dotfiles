@@ -499,6 +499,10 @@ let g:splitjoin_ruby_options_as_arguments = 1
 " Jump to existing window with :Buffers
 let g:fzf_buffers_jump = 1
 
+" Configure FZF preview window to adapt based on screen width
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = ['right,50%,border-line,<80(up,40%)', 'ctrl-/']
+
 " Define empty heuristics here, other filetype settings may add more.
 let g:projectionist_heuristics = {}
 
