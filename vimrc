@@ -545,6 +545,7 @@ lua <<EOF
 require'nvim-treesitter'.install {
   'c',
   'comment',
+  'elixir',
   'javascript',
   'query',
   'ruby',
@@ -555,6 +556,7 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = {
     'c',
     'crystal',
+    'elixir',
     'javascript',
     'query',
     'ruby',
