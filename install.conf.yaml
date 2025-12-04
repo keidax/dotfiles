@@ -31,6 +31,7 @@
     ~/.pryrc: pryrc
     ~/.tmux: tmux
     ~/.tmux.conf: tmux/tmux.conf
+    ~/.config/ghostty/config: ghostty
     ~/.config/karabiner: karabiner
     ~/.config/rofi/config.rasi: rofi.rasi
     ~/.config/termite/config: termite

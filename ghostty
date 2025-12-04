@@ -1,0 +1,13 @@
+# vim: ft=ghostty
+
+font-family = Darn
+font-size = 14
+
+bold-color = bright
+mouse-hide-while-typing
+window-padding-balance = true
+# adjust-cursor-thickness = 100%
+
+keybind = ctrl+shift+f=write_screen_file:open
+keybind = ctrl+page_up=goto_split:previous
+keybind = ctrl+page_down=goto_split:next
