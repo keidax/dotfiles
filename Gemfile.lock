@@ -6,7 +6,7 @@ GEM
     benchmark (0.4.1)
     diff-lcs (1.6.2)
     jaro_winkler (1.6.1)
-    json (2.15.1)
+    json (2.15.2.1)
     kramdown (2.5.1)
       rexml (>= 3.3.9)
     kramdown-parser-gfm (1.1.0)
